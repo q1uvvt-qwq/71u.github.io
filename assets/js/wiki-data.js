@@ -11,7 +11,7 @@
 window.WIKI = [
 	{
 		"id": "00-基础",
-		"title": "00-基础",
+		"title": "基础",
 		"children": [
 			{
 				"id": "00-基础/HTTP-请求头与ABNF语法",
@@ -177,7 +177,7 @@ window.WIKI = [
 	},
 	{
 		"id": "01-信息收集",
-		"title": "01-信息收集",
+		"title": "信息收集",
 		"children": [
 			{
 				"id": "01-信息收集/目录扫描-dirsearch",
@@ -1651,54 +1651,54 @@ window.WIKI = [
 						"source": "web263（dirmap 加 session）"
 					}
 				]
+			},
+			{
+				"id": "web知识/12-爆破",
+				"title": "爆破",
+				"children": [
+					{
+						"id": "web知识/12-爆破/HTTP-Basic认证爆破",
+						"title": "HTTP Basic 认证爆破",
+						"path": "web知识/12-爆破/HTTP-Basic认证爆破.md",
+						"order": 5,
+						"tags": [
+							"HTTPBasic",
+							"WWW-Authenticate",
+							"401",
+							"Burp",
+							"狙击枪",
+							"自定义迭代器",
+							"base64"
+						],
+						"source": ""
+					},
+					{
+						"id": "web知识/12-爆破/php_mt_seed-伪随机种子爆破",
+						"title": "php_mt_seed：PHP 伪随机种子爆破",
+						"path": "web知识/12-爆破/php_mt_seed-伪随机种子爆破.md",
+						"order": 6,
+						"tags": [
+							"php_mt_seed",
+							"mt_rand",
+							"mt_srand",
+							"伪随机",
+							"种子",
+							"CTF"
+						],
+						"source": ""
+					}
+				]
 			}
 		]
 	},
 	{
 		"id": "11-逻辑漏洞",
-		"title": "11-逻辑漏洞",
+		"title": "逻辑漏洞",
 		"children": []
 	},
 	{
-		"id": "12-爆破",
-		"title": "12-爆破",
-		"children": [
-			{
-				"id": "12-爆破/HTTP-Basic认证爆破",
-				"title": "HTTP Basic 认证爆破",
-				"path": "12-爆破/HTTP-Basic认证爆破.md",
-				"order": 5,
-				"tags": [
-					"HTTPBasic",
-					"WWW-Authenticate",
-					"401",
-					"Burp",
-					"狙击枪",
-					"自定义迭代器",
-					"base64"
-				],
-				"source": ""
-			},
-			{
-				"id": "12-爆破/php_mt_seed-伪随机种子爆破",
-				"title": "php_mt_seed：PHP 伪随机种子爆破",
-				"path": "12-爆破/php_mt_seed-伪随机种子爆破.md",
-				"order": 6,
-				"tags": [
-					"php_mt_seed",
-					"mt_rand",
-					"mt_srand",
-					"伪随机",
-					"种子",
-					"CTF"
-				],
-				"source": ""
-			}
-		]
-	},
-	{
 		"id": "13-实战与攻击链",
-		"title": "13-实战与攻击链",
+		"title": "实战与攻击链",
 		"children": [
 			{
 				"id": "13-实战与攻击链/漏洞复现的方法论",
@@ -1769,7 +1769,7 @@ window.WIKI = [
 	},
 	{
 		"id": "14-工具与环境",
-		"title": "14-工具与环境",
+		"title": "工具与环境",
 		"children": [
 			{
 				"id": "14-工具与环境/靶场与实验环境搭建",

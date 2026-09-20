@@ -17,9 +17,11 @@
 	源目录里 RCE/ sql/ base/ 等未整理的原始笔记目录会被自动排除。
 
 	web知识/ 是**容器目录**（见 CONTAINERS）：它自己不是分区，只是若干分区的归类，
-	wiki/ 里没有它的对应目录；它下面每个「数字-名称」子目录各是一个分区，
-	在树里去掉数字前缀显示（分组已经表达了归属），并按最小子分区的编号决定
-	容器在顶层的次序。分区内的分组（如 01-信息收集/爆破）仍然是普通过滤。
+	wiki/ 里没有它的对应目录；它下面每个「数字-名称」子目录各是一个分区。
+	容器在顶层的次序按它最小子分区的编号推导，自动落在该组该在的位置上。
+
+	树里所有分区都去掉「数字-」前缀显示（基础、信息收集、SQL注入 …），但 id 与
+	文件路径保留前缀，和源目录逐字对应——编号在源目录里仍是排序依据，只是不显示。
 
 	注意：每次运行都会先整个删除并重建 wiki/，所以**不要往 wiki/ 里手写内容**，
 	那个目录是源笔记的投影。要加笔记，请加到源目录后重跑本脚本。
@@ -140,13 +142,14 @@ function topOrder(name, memberNames) {
 }
 
 // 生成一个分区节点。id / 文件路径都用真实相对路径（含数字前缀，与源目录逐字对应），
-// title 单独给，因为容器内的分区在树里要去掉「数字-」前缀。
-function partitionNode(relDir, title) {
+// 只有 title 去掉「数字-」前缀——编号在源目录里还承担排序作用，但没必要显示给人看。
+function partitionNode(relDir) {
 	const children = scanDir(path.join(SRC, relDir.split('/').join(path.sep)), relDir);
 	for (const node of children) {
 		collectAndCopy(node);
 	}
-	return { id: toPosix(relDir), title, children };
+	const id = toPosix(relDir);
+	return { id, title: id.split('/').pop().replace(PARTITION_RE, ''), children };
 }
 
 function main() {
@@ -183,11 +186,10 @@ function main() {
 				id: name,
 				title: name,
 				order: topOrder(name, members),
-				children: members.map(member =>
-					partitionNode(name + '/' + member, member.replace(PARTITION_RE, '')))
+				children: members.map(member => partitionNode(name + '/' + member))
 			});
 		} else {
-			tree.push(Object.assign(partitionNode(name, name), { order: topOrder(name, []) }));
+			tree.push(Object.assign(partitionNode(name), { order: topOrder(name, []) }));
 		}
 	}
 
