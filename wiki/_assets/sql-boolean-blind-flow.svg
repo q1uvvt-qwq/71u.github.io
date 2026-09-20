@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="470" viewBox="0 0 900 470" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="470" fill="#fafafa"/>
+
+  <text x="450" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#111827">布尔盲注判定流程</text>
+  <text x="450" y="55" text-anchor="middle" font-size="12.5" fill="#6b7280">页面无回显时，用「密码错误 / 查询失败」两种文案的差异反推条件的真假</text>
+
+  <!-- 注入点 -->
+  <rect x="330" y="78" width="240" height="52" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="450" y="101" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1e3a8a">注入点：username 字段</text>
+  <text x="450" y="120" text-anchor="middle" font-size="12" fill="#1e40af">if(条件, 0, 1)</text>
+
+  <!-- 分叉箭头 -->
+  <path d="M450,130 L450,152" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+  <path d="M450,152 L215,152 L215,176" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+  <path d="M450,152 L685,152 L685,176" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <text x="325" y="147" font-size="12.5" fill="#15803d" font-weight="bold">条件为真</text>
+  <text x="510" y="147" font-size="12.5" fill="#b91c1c" font-weight="bold">条件为假</text>
+
+  <!-- 左分支 -->
+  <rect x="95" y="178" width="240" height="44" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="215" y="206" text-anchor="middle" font-size="13" fill="#14532d">返回 0 → username = 0</text>
+
+  <path d="M215,222 L215,246" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="95" y="248" width="240" height="60" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.4"/>
+  <text x="215" y="270" text-anchor="middle" font-size="12.5" fill="#166534">'admin' 被转成数字 0</text>
+  <text x="215" y="289" text-anchor="middle" font-size="12.5" fill="#166534">num_rows &gt; 0，命中记录</text>
+
+  <path d="M215,308 L215,332" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="95" y="334" width="240" height="52" rx="8" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.8"/>
+  <text x="215" y="356" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#14532d">页面回显「密码错误」</text>
+  <text x="215" y="374" text-anchor="middle" font-size="11.5" fill="#166534">→ 推断：条件成立</text>
+
+  <!-- 右分支 -->
+  <rect x="565" y="178" width="240" height="44" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.6"/>
+  <text x="685" y="206" text-anchor="middle" font-size="13" fill="#7f1d1d">返回 1 → username = 1</text>
+
+  <path d="M685,222 L685,246" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="565" y="248" width="240" height="60" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="1.4"/>
+  <text x="685" y="270" text-anchor="middle" font-size="12.5" fill="#991b1b">不存在用户名为 '1' 的用户</text>
+  <text x="685" y="289" text-anchor="middle" font-size="12.5" fill="#991b1b">num_rows = 0，无记录</text>
+
+  <path d="M685,308 L685,332" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="565" y="334" width="240" height="52" rx="8" fill="#fecaca" stroke="#dc2626" stroke-width="1.8"/>
+  <text x="685" y="356" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7f1d1d">页面回显「查询失败」</text>
+  <text x="685" y="374" text-anchor="middle" font-size="11.5" fill="#991b1b">→ 推断：条件不成立</text>
+
+  <!-- 底部结论 -->
+  <rect x="240" y="408" width="420" height="44" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="450" y="429" text-anchor="middle" font-size="13" fill="#78350f">把待测内容写进「条件」里 → 回显即答案</text>
+  <text x="450" y="445" text-anchor="middle" font-size="11.5" fill="#92400e">逐字符猜解，配合 regexp / substr 可读出任意数据</text>
+
+  <path d="M215,386 L215,430 L236,430" stroke="#f59e0b" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+  <path d="M685,386 L685,430 L664,430" stroke="#f59e0b" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+</svg>

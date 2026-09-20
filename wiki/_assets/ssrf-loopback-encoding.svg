@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="640" viewBox="0 0 980 640" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="640" fill="#fafafa"/>
+
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">127.0.0.1 的等价写法：同一个 32 位整数，无数种写法</text>
+  <text x="490" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">黑名单只匹配字符串，解析器只认数值 —— 写法与语义之间的落差就是绕过空间</text>
+
+  <!-- binary -->
+  <rect x="40" y="86" width="900" height="132" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+  <text x="60" y="112" font-size="13" font-weight="bold" fill="#334155">本质：IPv4 地址就是一个 32 位无符号整数（4 个字节）</text>
+
+  <rect x="70" y="126" width="180" height="40" rx="5" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="160" y="152" text-anchor="middle" font-size="14" font-family="Consolas,monospace" fill="#1e3a8a">01111111</text>
+  <rect x="262" y="126" width="180" height="40" rx="5" fill="#e0e7ff" stroke="#6366f1"/>
+  <text x="352" y="152" text-anchor="middle" font-size="14" font-family="Consolas,monospace" fill="#312e81">00000000</text>
+  <rect x="454" y="126" width="180" height="40" rx="5" fill="#e0e7ff" stroke="#6366f1"/>
+  <text x="544" y="152" text-anchor="middle" font-size="14" font-family="Consolas,monospace" fill="#312e81">00000000</text>
+  <rect x="646" y="126" width="180" height="40" rx="5" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="736" y="152" text-anchor="middle" font-size="14" font-family="Consolas,monospace" fill="#1e3a8a">00000001</text>
+
+  <text x="160" y="186" text-anchor="middle" font-size="11.5" fill="#1e40af">字节1 = 127</text>
+  <text x="352" y="186" text-anchor="middle" font-size="11.5" fill="#3730a3">字节2 = 0</text>
+  <text x="544" y="186" text-anchor="middle" font-size="11.5" fill="#3730a3">字节3 = 0</text>
+  <text x="736" y="186" text-anchor="middle" font-size="11.5" fill="#1e40af">字节4 = 1</text>
+
+  <text x="60" y="208" font-size="11" fill="#64748b">权重：字节1 乘 2^24，字节2 乘 2^16，字节3 乘 2^8，字节4 乘 2^0</text>
+
+  <!-- arithmetic -->
+  <rect x="40" y="240" width="900" height="92" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="60" y="266" font-size="12.5" font-weight="bold" fill="#78350f">换算成十进制整数</text>
+  <text x="60" y="292" font-size="12" font-family="Consolas,monospace" fill="#78350f">127 x 16777216  +  0 x 65536  +  0 x 256  +  1 x 1</text>
+  <text x="60" y="318" font-size="12" font-family="Consolas,monospace" fill="#78350f">= 2130706432 + 1 = 2130706433</text>
+
+  <path d="M490,336 L490,362" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- variants -->
+  <rect x="40" y="366" width="900" height="180" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="60" y="392" font-size="13" font-weight="bold" fill="#14532d">这些写法在 URL 里全部等价于 127.0.0.1（curl / URL 解析器都会归一到同一个数值）</text>
+
+  <rect x="60" y="406" width="270" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="74" y="428" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://127.0.0.1/flag.php</text>
+  <rect x="345" y="406" width="270" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="359" y="428" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://0177.0.0.1/flag.php</text>
+  <rect x="630" y="406" width="290" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="644" y="428" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://0x7F000001/flag.php</text>
+
+  <rect x="60" y="450" width="270" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="74" y="472" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://2130706433/flag.php</text>
+  <rect x="345" y="450" width="270" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="359" y="472" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://127.1/flag.php</text>
+  <rect x="630" y="450" width="290" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="644" y="472" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://0/flag.php</text>
+
+  <rect x="60" y="494" width="270" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="74" y="516" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://localhost/flag.php</text>
+  <rect x="345" y="494" width="270" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="359" y="516" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://[::1]/flag.php</text>
+  <rect x="630" y="494" width="290" height="34" rx="5" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="644" y="516" font-size="11.5" font-family="Consolas,monospace" fill="#14532d">http://127.0.0.2/flag.php</text>
+
+  <!-- bottom -->
+  <rect x="90" y="566" width="800" height="58" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.6"/>
+  <text x="490" y="590" text-anchor="middle" font-size="12.5" fill="#7f1d1d">黑名单通常写的是字符串匹配（如 strpos 查 “127.0.0.1”）或数值区间匹配，二者必居其一</text>
+  <text x="490" y="612" text-anchor="middle" font-size="11.5" fill="#991b1b">字符串黑的，换写法就绕；数值区间黑的，就只剩 302 跳转 / DNS 重绑定这类「换个目标」的路子</text>
+</svg>

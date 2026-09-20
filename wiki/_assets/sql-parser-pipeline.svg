@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400" viewBox="0 0 1000 400" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="ar2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="400" fill="#fafafa"/>
+
+  <text x="500" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">SQL 在 MySQL 里的解析与执行流水线</text>
+  <text x="500" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">注入发生在第 1 步与第 2 步之间；参数化查询则把数据推迟到第 3 步之后才代入</text>
+
+  <rect x="73" y="90" width="155" height="110" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="150" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e3a8a">① Web 后端</text>
+  <text x="150" y="142" text-anchor="middle" font-size="11.5" fill="#1e40af">把用户输入拼进</text>
+  <text x="150" y="161" text-anchor="middle" font-size="11.5" fill="#1e40af">SQL 模板字符串</text>
+  <text x="150" y="180" text-anchor="middle" font-size="11.5" fill="#1e40af">得到一条完整语句</text>
+
+  <rect x="254" y="90" width="150" height="110" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.6"/>
+  <text x="329" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#5b21b6">② 解析器 Parser</text>
+  <text x="329" y="142" text-anchor="middle" font-size="11.5" fill="#6d28d9">词法分析 → token</text>
+  <text x="329" y="161" text-anchor="middle" font-size="11.5" fill="#6d28d9">语法分析 → 解析树</text>
+  <text x="329" y="180" text-anchor="middle" font-size="11.5" fill="#6d28d9">语法错误在此报出</text>
+
+  <rect x="430" y="90" width="140" height="110" rx="8" fill="#cffafe" stroke="#06b6d4" stroke-width="1.6"/>
+  <text x="500" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#155e75">③ 预处理器</text>
+  <text x="500" y="142" text-anchor="middle" font-size="11.5" fill="#0e7490">语义检查</text>
+  <text x="500" y="161" text-anchor="middle" font-size="11.5" fill="#0e7490">权限验证</text>
+  <text x="500" y="180" text-anchor="middle" font-size="11.5" fill="#0e7490">表 / 列是否存在</text>
+
+  <rect x="596" y="90" width="155" height="110" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="673" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#14532d">④ 优化器 / 执行器</text>
+  <text x="673" y="142" text-anchor="middle" font-size="11.5" fill="#166534">生成执行计划</text>
+  <text x="673" y="161" text-anchor="middle" font-size="11.5" fill="#166534">真正读写数据</text>
+
+  <rect x="777" y="90" width="150" height="110" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="1.6"/>
+  <text x="852" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#0f172a">⑤ 结果集</text>
+  <text x="852" y="142" text-anchor="middle" font-size="11.5" fill="#334155">返回给应用层</text>
+  <text x="852" y="161" text-anchor="middle" font-size="11.5" fill="#334155">再渲染成页面</text>
+
+  <path d="M228,145 L252,145" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar2)" fill="none"/>
+  <path d="M404,145 L428,145" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar2)" fill="none"/>
+  <path d="M570,145 L594,145" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar2)" fill="none"/>
+  <path d="M751,145 L775,145" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar2)" fill="none"/>
+
+  <path d="M150,200 L150,228" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ar2)" fill="none"/>
+  <text x="160" y="220" font-size="11.5" fill="#b91c1c">注入发生点</text>
+
+  <rect x="40" y="230" width="920" height="70" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="60" y="258" font-size="13" font-weight="bold" fill="#991b1b">污染发生在第 1 步与第 2 步之间：解析器拿到的已经是被污染的字符串</text>
+  <text x="60" y="282" font-size="12" fill="#b91c1c">解析器不知道哪段是用户数据，只能按字符归类：逃出引号的部分一律当语法处理。</text>
+
+  <rect x="40" y="312" width="920" height="70" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="60" y="340" font-size="13" font-weight="bold" fill="#166534">参数化查询：数据在第 3 步之后才代入，永远进不了词法分析</text>
+  <text x="60" y="364" font-size="12" fill="#15803d">SQL 模板先被解析成解析树（占位符 ? 本身是语法的一部分），随后数据才绑定到占位符上。</text>
+</svg>

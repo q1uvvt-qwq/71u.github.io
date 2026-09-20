@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="660" viewBox="0 0 960 660" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arw" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="660" fill="#fafafa"/>
+
+  <text x="480" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#111827">端口转发：本地 / 远程 / 动态分别打通往哪</text>
+  <text x="480" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">三种转发的区别只有一个：谁来监听端口、流量最终落到谁身上</text>
+
+  <!-- 行 1：本地转发 -->
+  <rect x="30" y="96" width="185" height="126" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="122" y="146" text-anchor="middle" font-size="15" font-weight="bold" fill="#1e3a8a">本地转发</text>
+  <text x="122" y="176" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">-L</text>
+
+  <rect x="240" y="110" width="210" height="48" rx="7" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="345" y="140" text-anchor="middle" font-size="12" fill="#1e3a8a">攻击机 127.0.0.1:8080</text>
+
+  <path d="M452,134 L506,134" stroke="#4b5563" stroke-width="1.8" marker-end="url(#arw)" fill="none"/>
+
+  <rect x="510" y="110" width="220" height="48" rx="7" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="620" y="140" text-anchor="middle" font-size="12" fill="#1e3a8a">内网目标 10.0.0.5:80</text>
+
+  <text x="240" y="188" font-size="12" fill="#374151">ssh -L 8080:10.0.0.5:80 &lt;用户&gt;@&lt;跳板机&gt;</text>
+  <text x="240" y="210" font-size="11.5" fill="#6b7280">本机先监听 8080，再由 SSH 隧道把流量送到内网目标 —— 从外网「钻」进内网</text>
+
+  <!-- 行 2：远程转发 -->
+  <rect x="30" y="252" width="185" height="126" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.6"/>
+  <text x="122" y="302" text-anchor="middle" font-size="15" font-weight="bold" fill="#4c1d95">远程转发</text>
+  <text x="122" y="332" text-anchor="middle" font-size="16" font-weight="bold" fill="#7c3aed">-R</text>
+
+  <rect x="240" y="266" width="210" height="48" rx="7" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="345" y="296" text-anchor="middle" font-size="12" fill="#4c1d95">公网 VPS 监听 :9000</text>
+
+  <path d="M452,290 L506,290" stroke="#4b5563" stroke-width="1.8" marker-end="url(#arw)" fill="none"/>
+
+  <rect x="510" y="266" width="220" height="48" rx="7" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="620" y="296" text-anchor="middle" font-size="12" fill="#4c1d95">内网本机 127.0.0.1:3306</text>
+
+  <text x="240" y="344" font-size="12" fill="#374151">ssh -R 9000:127.0.0.1:3306 &lt;用户&gt;@&lt;公网VPS&gt;</text>
+  <text x="240" y="366" font-size="11.5" fill="#6b7280">由内网机器主动连出去，把内网服务「推」到公网 —— 没有公网入口也能被访问</text>
+
+  <!-- 行 3：动态转发 -->
+  <rect x="30" y="408" width="185" height="126" rx="10" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="122" y="458" text-anchor="middle" font-size="15" font-weight="bold" fill="#14532d">动态转发</text>
+  <text x="122" y="488" text-anchor="middle" font-size="16" font-weight="bold" fill="#16a34a">-D</text>
+
+  <rect x="240" y="422" width="210" height="48" rx="7" fill="#ffffff" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="345" y="452" text-anchor="middle" font-size="12" fill="#14532d">本机 SOCKS5 127.0.0.1:1080</text>
+
+  <path d="M452,446 L506,446" stroke="#4b5563" stroke-width="1.8" marker-end="url(#arw)" fill="none"/>
+
+  <rect x="510" y="422" width="220" height="48" rx="7" fill="#ffffff" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="620" y="452" text-anchor="middle" font-size="12" fill="#14532d">任意内网主机:任意端口</text>
+
+  <text x="240" y="500" font-size="12" fill="#374151">ssh -D 1080 &lt;用户&gt;@&lt;跳板机&gt;</text>
+  <text x="240" y="522" font-size="11.5" fill="#6b7280">本机开一个 SOCKS 代理，目标地址在连接时才决定 —— 一次开代理，访问整个内网</text>
+
+  <!-- 结论 -->
+  <rect x="60" y="566" width="840" height="72" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="1.6"/>
+  <text x="480" y="594" text-anchor="middle" font-size="13" fill="#1e293b">记忆口诀：-L 是「本机监听、打向远端」，-R 是「远端监听、打回本机」，-D 是「本机监听、目标随连接定」</text>
+  <text x="480" y="618" text-anchor="middle" font-size="11.5" fill="#475569">靶场里最常见的两种需求：把内网服务拉出来看（-L / -D），或把本地监听暴露到公网（-R，即反弹）</text>
+</svg>

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="640" viewBox="0 0 980 640" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="640" fill="#fafafa"/>
+
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">gopher：把「任意 TCP 字节流」塞进一个 URL</text>
+  <text x="490" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">http 只能拼出「请求行 + 头」，gopher 能拼出任意字节 —— 所以它能打 Redis / MySQL / FastCGI</text>
+
+  <!-- step 1 -->
+  <rect x="40" y="86" width="200" height="120" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="140" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e3a8a">① 原始协议报文</text>
+  <text x="140" y="136" text-anchor="middle" font-size="10.5" fill="#1e40af">按目标服务的规范拼</text>
+  <text x="140" y="158" text-anchor="middle" font-size="10.5" fill="#1e40af">字节级精确</text>
+  <text x="140" y="180" text-anchor="middle" font-size="10.5" fill="#1e40af">含 CR LF 等控制字符</text>
+
+  <!-- step 2 -->
+  <rect x="280" y="86" width="200" height="120" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.6"/>
+  <text x="380" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#312e81">② 整体 URL 编码</text>
+  <text x="380" y="136" text-anchor="middle" font-size="10.5" fill="#3730a3">0x01 / 空格 / 冒号 / 换行</text>
+  <text x="380" y="158" text-anchor="middle" font-size="10.5" fill="#3730a3">全部转成 %XX</text>
+  <text x="380" y="180" text-anchor="middle" font-size="10.5" fill="#3730a3">否则 URL 本身被截断</text>
+
+  <!-- step 3 -->
+  <rect x="520" y="86" width="200" height="120" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="620" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#78350f">③ 拼成 gopher URL</text>
+  <text x="620" y="136" text-anchor="middle" font-size="10.5" fill="#78350f">gopher://host:port/_</text>
+  <text x="620" y="158" text-anchor="middle" font-size="10.5" fill="#92400e">下划线占位</text>
+  <text x="620" y="180" text-anchor="middle" font-size="10.5" fill="#92400e">（首字符会被丢弃）</text>
+
+  <!-- step 4 -->
+  <rect x="760" y="86" width="190" height="120" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="855" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#14532d">④ curl 解码后</text>
+  <text x="855" y="136" text-anchor="middle" font-size="10.5" fill="#166534">原样写入 socket</text>
+  <text x="855" y="158" text-anchor="middle" font-size="10.5" fill="#166534">目标服务收到</text>
+  <text x="855" y="180" text-anchor="middle" font-size="10.5" fill="#166534">一条「合法」命令</text>
+
+  <path d="M242,146 L276,146" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M482,146 L516,146" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M722,146 L756,146" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- byte example -->
+  <rect x="40" y="232" width="900" height="180" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+  <text x="60" y="258" font-size="13" font-weight="bold" fill="#334155">字节流示例：用 gopher 给 Redis(6379) 发一条命令</text>
+
+  <text x="60" y="288" font-size="11.5" fill="#0f172a">目标服务要求的原始字节（Redis 协议：参数个数 + 每个参数的长度和内容）</text>
+  <rect x="60" y="298" width="860" height="34" rx="5" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <text x="74" y="320" font-size="11.5" font-family="Consolas,monospace" fill="#0f172a">*1 CRLF $8 CRLF flushall CRLF      每个 CRLF 实际是 0D 0A 两个字节</text>
+
+  <text x="60" y="360" font-size="11.5" fill="#0f172a">整体 URL 编码后（所有特殊字节变成 %XX）</text>
+  <rect x="60" y="370" width="860" height="34" rx="5" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <text x="74" y="392" font-size="11.5" font-family="Consolas,monospace" fill="#0f172a">%2A1%0D%0A%248%0D%0Aflushall%0D%0A</text>
+
+  <!-- payload box -->
+  <rect x="40" y="438" width="900" height="76" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.6"/>
+  <text x="60" y="464" font-size="12.5" font-weight="bold" fill="#b91c1c">最终交给 SSRF 参数的 payload</text>
+  <text x="60" y="490" font-size="11.5" font-family="Consolas,monospace" fill="#7f1d1d">url=gopher://127.0.0.1:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A</text>
+  <text x="60" y="507" font-size="10.5" fill="#991b1b">curl 会把 %XX 还原成真实字节，直接写进到 6379 的 TCP 连接里</text>
+
+  <!-- comparison -->
+  <text x="490" y="552" text-anchor="middle" font-size="13" font-weight="bold" fill="#334155">为什么 http:// 做不到</text>
+
+  <rect x="40" y="566" width="440" height="58" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.3"/>
+  <text x="260" y="588" text-anchor="middle" font-size="11.5" fill="#334155">http:// 只能生成「请求行 + 若干头 + 正文」</text>
+  <text x="260" y="609" text-anchor="middle" font-size="11.5" fill="#334155">目标必须能听懂 HTTP —— 只对 Web 服务有效</text>
+
+  <rect x="500" y="566" width="440" height="58" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.3"/>
+  <text x="720" y="588" text-anchor="middle" font-size="11.5" fill="#14532d">gopher:// 对字节不作任何解释</text>
+  <text x="720" y="609" text-anchor="middle" font-size="11.5" fill="#14532d">Redis / MySQL / FastCGI / SMTP 都能打</text>
+</svg>

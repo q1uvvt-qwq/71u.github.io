@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="71u 的个人笔记站，记录项目、技术与思考的全过程，专注安全、AI 与工程化。" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/wiki.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -34,6 +35,7 @@
 							<ul>
 								<li><a href="#intro">个人介绍</a></li>
 								<li><a href="#blog">博客</a></li>
+								<li><a href="#wiki">知识库</a></li>
 								<li><a href="#contact">联系我</a></li>
 							</ul>
 						</nav>
@@ -62,6 +64,17 @@
 							<article id="blog">
 								<h2 class="major">博客目录</h2>
 								<ul class="alt" id="post-list"></ul>
+							</article>
+
+						<!-- Wiki -->
+							<article id="wiki">
+								<h2 class="major">知识库</h2>
+								<div class="wiki-layout">
+									<nav class="wiki-tree"></nav>
+									<div class="wiki-body">
+										<p class="wiki-placeholder">从左侧选择一篇笔记。</p>
+									</div>
+								</div>
 							</article>
 
 						<!-- Contact -->
@@ -95,6 +108,9 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/posts.js"></script>
 			<script src="assets/js/blog.js"></script>
+			<script src="assets/js/marked.umd.js"></script>
+			<script src="assets/js/wiki-data.js"></script>
+			<script src="assets/js/wiki.js"></script>
 			<script src="assets/js/main.js"></script>
 
 	</body>

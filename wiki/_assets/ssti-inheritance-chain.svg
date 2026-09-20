@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="820" viewBox="0 0 1060 820" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="1060" height="820" fill="#fafafa"/>
+
+  <text x="530" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">Jinja2 继承链：从 () 一路爬到 os.popen</text>
+  <text x="530" y="57" text-anchor="middle" font-size="12.5" fill="#6b7280">模板上下文里没有 os、没有 builtins，只能从「随手可得的对象」出发，借 Python 的类继承体系爬出去</text>
+
+  <!-- hop 1 -->
+  <rect x="40" y="80" width="560" height="64" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="60" y="104" font-size="13" font-weight="bold" fill="#1e3a8a">①  ()  /  ''  /  []</text>
+  <text x="60" y="126" font-size="11.5" fill="#1e40af">模板里随手可得的普通对象（元组、空串、空列表）</text>
+  <rect x="620" y="80" width="400" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="640" y="104" font-size="11.5" fill="#374151">目的：先拿到一个「起点」。</text>
+  <text x="640" y="124" font-size="11.5" fill="#374151">三种写法等价，只为了绕过滤而换形。</text>
+
+  <path d="M320,144 L320,164" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 2 -->
+  <rect x="40" y="166" width="560" height="64" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.6"/>
+  <text x="60" y="190" font-size="13" font-weight="bold" fill="#312e81">②  .__class__</text>
+  <text x="60" y="212" font-size="11.5" fill="#3730a3">取「这个对象属于哪个类」，如 () → &lt;class 'tuple'&gt;</text>
+  <rect x="620" y="166" width="400" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="640" y="190" font-size="11.5" fill="#374151">目的：进入类型体系。每个对象都能</text>
+  <text x="640" y="210" font-size="11.5" fill="#374151">报出自己的类，这是第一跳。</text>
+
+  <path d="M320,230 L320,250" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 3 -->
+  <rect x="40" y="252" width="560" height="64" rx="8" fill="#c7d2fe" stroke="#4f46e5" stroke-width="1.6"/>
+  <text x="60" y="276" font-size="13" font-weight="bold" fill="#312e81">③  .__base__   （或 .__mro__[1] ）</text>
+  <text x="60" y="298" font-size="11.5" fill="#3730a3">沿父类往上走一层，最终落到 &lt;class 'object'&gt;</text>
+  <rect x="620" y="252" width="400" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="640" y="276" font-size="11.5" fill="#374151">目的：object 是 Python 所有类的根，</text>
+  <text x="640" y="296" font-size="11.5" fill="#374151">只有站到它上面，才能看到全体子类。</text>
+
+  <path d="M320,316 L320,336" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 4 -->
+  <rect x="40" y="338" width="560" height="64" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="60" y="362" font-size="13" font-weight="bold" fill="#78350f">④  .__subclasses__()</text>
+  <text x="60" y="384" font-size="11.5" fill="#92400e">返回 object 当前所有已加载的子类列表（几百个）</text>
+  <rect x="620" y="338" width="400" height="64" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.4"/>
+  <text x="640" y="362" font-size="11.5" fill="#78350f">★ 关键的「跃迁点」：从一个孤立对象</text>
+  <text x="640" y="382" font-size="11.5" fill="#78350f">跳到整个解释器装载过的所有类。</text>
+
+  <path d="M320,402 L320,422" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 5 -->
+  <rect x="40" y="424" width="560" height="64" rx="8" fill="#fde68a" stroke="#d97706" stroke-width="1.6"/>
+  <text x="60" y="448" font-size="13" font-weight="bold" fill="#78350f">⑤  [ i ]   （挑一个「带装备」的子类）</text>
+  <text x="60" y="470" font-size="11.5" fill="#92400e">如 os._wrap_close、warnings.catch_warnings、FileLoader…</text>
+  <rect x="620" y="424" width="400" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="640" y="448" font-size="11.5" fill="#374151">目的：这些类的模块里 import 过 os 等</text>
+  <text x="640" y="468" font-size="11.5" fill="#374151">模块，才能顺藤摸到危险函数。</text>
+
+  <path d="M320,488 L320,508" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 6 -->
+  <rect x="40" y="510" width="560" height="64" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="60" y="534" font-size="13" font-weight="bold" fill="#14532d">⑥  .__init__</text>
+  <text x="60" y="556" font-size="11.5" fill="#166534">取该类的构造函数对象（一个 function 对象）</text>
+  <rect x="620" y="510" width="400" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="640" y="534" font-size="11.5" fill="#374151">目的：函数对象身上带着 __globals__，</text>
+  <text x="640" y="554" font-size="11.5" fill="#374151">而类对象本身没有这个属性。</text>
+
+  <path d="M320,574 L320,594" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 7 -->
+  <rect x="40" y="596" width="560" height="64" rx="8" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.6"/>
+  <text x="60" y="620" font-size="13" font-weight="bold" fill="#14532d">⑦  .__globals__</text>
+  <text x="60" y="642" font-size="11.5" fill="#166534">这个函数定义时所在模块的全局命名空间（dict）</text>
+  <rect x="620" y="596" width="400" height="64" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="640" y="620" font-size="11.5" fill="#374151">目的：模块里 import 进来的名字全在这里，</text>
+  <text x="640" y="640" font-size="11.5" fill="#374151">os / linecache / __builtins__ 一览无余。</text>
+
+  <path d="M320,660 L320,680" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 8 -->
+  <rect x="40" y="682" width="560" height="64" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.6"/>
+  <text x="60" y="706" font-size="13" font-weight="bold" fill="#7f1d1d">⑧  ['popen']  或  ['__builtins__']</text>
+  <text x="60" y="728" font-size="11.5" fill="#991b1b">从命名空间字典里取出真正能干活的函数</text>
+  <rect x="620" y="682" width="400" height="64" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.4"/>
+  <text x="640" y="706" font-size="11.5" fill="#b91c1c">目的：拿到可执行命令 / 可 eval 的入口，</text>
+  <text x="640" y="726" font-size="11.5" fill="#b91c1c">这一步才真正触达「代码执行」。</text>
+
+  <path d="M320,746 L320,764" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- hop 9 -->
+  <rect x="40" y="766" width="560" height="46" rx="8" fill="#fecdd3" stroke="#e11d48" stroke-width="1.8"/>
+  <text x="60" y="795" font-size="13" font-weight="bold" fill="#881337">⑨  ('id').read() / ('cat /flag').read()  →  命令回显</text>
+  <rect x="620" y="766" width="400" height="46" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.4"/>
+  <text x="640" y="794" font-size="11.5" fill="#78350f">read() 只是为了把命令输出读回来，形成回显。</text>
+
+  <!-- bottom takeaway -->
+  <text x="40" y="812" font-size="11" fill="#6b7280">核心：模板上下文里没有 os，但 Python 的类继承体系让任何对象都能爬到「已加载模块的全局命名空间」，os 就在那里。</text>
+</svg>

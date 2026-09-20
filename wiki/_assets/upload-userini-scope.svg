@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="540" viewBox="0 0 950 540" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <rect width="950" height="540" fill="#fafafa"/>
+
+  <text x="475" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">.user.ini 的生效范围</text>
+  <text x="475" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">从脚本所在目录开始，逐级向上查找 .user.ini；配置只对「该目录及其子目录」里的 PHP 脚本生效</text>
+
+  <!-- left panel: directory tree -->
+  <rect x="24" y="84" width="580" height="424" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4"/>
+  <text x="44" y="110" font-size="13" font-weight="bold" fill="#334155">目录结构（以 /var/www/html 为站点根目录）</text>
+
+  <g font-family="Consolas,'Courier New',monospace" font-size="13.5">
+    <text x="44" y="150" fill="#0f172a">/var/www/html/</text>
+    <text x="44" y="190" fill="#64748b">├── index.php</text>
+    <text x="44" y="230" fill="#1d4ed8">└── upload/</text>
+    <text x="44" y="270" fill="#b45309">     ├── .user.ini</text>
+    <text x="44" y="310" fill="#15803d">     ├── index.php</text>
+    <text x="44" y="350" fill="#15803d">     ├── e.png</text>
+    <text x="44" y="390" fill="#1d4ed8">     └── sub/</text>
+    <text x="44" y="430" fill="#15803d">          └── a.php</text>
+  </g>
+
+  <!-- status labels -->
+  <g font-size="12">
+    <text x="300" y="150" fill="#94a3b8">← doc_root（站点根目录）</text>
+    <text x="300" y="190" fill="#94a3b8">不受影响（查找只向上，不向下）</text>
+    <text x="300" y="230" fill="#1d4ed8">配置与木马所在的目录</text>
+    <text x="300" y="270" fill="#b45309">auto_prepend_file=e.png</text>
+    <text x="300" y="310" fill="#15803d">✔ 受影响 · 触发器</text>
+    <text x="300" y="350" fill="#15803d">✔ 被自动 include 的木马</text>
+    <text x="300" y="390" fill="#1d4ed8">子目录</text>
+    <text x="300" y="430" fill="#15803d">✔ 随目录继承，同样受影响</text>
+  </g>
+
+  <!-- right panel: rules -->
+  <rect x="624" y="84" width="302" height="424" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+  <text x="644" y="110" font-size="13" font-weight="bold" fill="#334155">三条规则</text>
+
+  <rect x="644" y="126" width="262" height="82" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.3"/>
+  <text x="658" y="148" font-size="12.5" font-weight="bold" fill="#1e40af">① 查找方向</text>
+  <text x="658" y="170" font-size="11.5" fill="#1e3a8a">从「脚本所在目录」开始，</text>
+  <text x="658" y="189" font-size="11.5" fill="#1e3a8a">逐级向上到 doc_root 查找。</text>
+
+  <rect x="644" y="222" width="262" height="82" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.3"/>
+  <text x="658" y="244" font-size="12.5" font-weight="bold" fill="#166534">② 覆盖范围</text>
+  <text x="658" y="266" font-size="11.5" fill="#14532d">对本目录 + 所有子目录里的</text>
+  <text x="658" y="285" font-size="11.5" fill="#14532d">PHP 脚本生效。</text>
+
+  <rect x="644" y="318" width="262" height="82" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.3"/>
+  <text x="658" y="340" font-size="12.5" font-weight="bold" fill="#991b1b">③ 不覆盖</text>
+  <text x="658" y="362" font-size="11.5" fill="#7f1d1d">上级目录、平级目录里的脚本</text>
+  <text x="658" y="381" font-size="11.5" fill="#7f1d1d">不受这份 .user.ini 影响。</text>
+
+  <text x="644" y="428" font-size="11" fill="#64748b">关键前提：访问的必须是一个</text>
+  <text x="644" y="446" font-size="11" fill="#64748b">.php 脚本（如 index.php），</text>
+  <text x="644" y="464" font-size="11" fill="#64748b">PHP 解释器启动后才会读 .user.ini。</text>
+  <text x="644" y="482" font-size="11" fill="#64748b">直接访问 e.png 不会执行木马。</text>
+
+  <!-- bottom note -->
+  <text x="475" y="525" text-anchor="middle" font-size="11.5" fill="#6b7280">.user.ini 由 PHP 读取（需 php-fpm / CGI 模式）；对应的 Apache 方案是 .htaccess（由 Web 服务器读取，改的是解析规则）</text>
+</svg>

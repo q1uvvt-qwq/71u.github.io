@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="660" viewBox="0 0 980 660" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrowB" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="660" fill="#fafafa"/>
+
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">include 的解析链路：从参数到「当代码执行」</text>
+  <text x="490" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">同一个 include()，喂进去的东西不同，最终结果完全不同</text>
+
+  <!-- top flow -->
+  <rect x="30" y="88" width="160" height="66" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.6"/>
+  <text x="110" y="112" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#374151">① 用户参数</text>
+  <text x="110" y="132" text-anchor="middle" font-size="11" fill="#4b5563">?file=...</text>
+  <text x="110" y="147" text-anchor="middle" font-size="11" fill="#4b5563">完全由攻击者控制</text>
+
+  <rect x="220" y="88" width="160" height="66" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.6"/>
+  <text x="300" y="112" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#374151">② 识别前缀</text>
+  <text x="300" y="132" text-anchor="middle" font-size="11" fill="#4b5563">含 :// → 用该包装器</text>
+  <text x="300" y="147" text-anchor="middle" font-size="11" fill="#4b5563">无 → 默认 file://</text>
+
+  <rect x="410" y="88" width="160" height="66" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.6"/>
+  <text x="490" y="112" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#374151">③ 取到字节流</text>
+  <text x="490" y="132" text-anchor="middle" font-size="11" fill="#4b5563">包装器返回原始字节</text>
+  <text x="490" y="147" text-anchor="middle" font-size="11" fill="#4b5563">（此刻尚未执行）</text>
+
+  <rect x="600" y="88" width="160" height="66" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="680" y="112" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#78350f">④ PHP 引擎</text>
+  <text x="680" y="132" text-anchor="middle" font-size="11" fill="#92400e">把字节流当 PHP 代码</text>
+  <text x="680" y="147" text-anchor="middle" font-size="11" fill="#92400e">解释 / 执行</text>
+
+  <rect x="790" y="88" width="160" height="66" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.6"/>
+  <text x="870" y="112" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#374151">⑤ 输出</text>
+  <text x="870" y="132" text-anchor="middle" font-size="11" fill="#4b5563">执行结果</text>
+  <text x="870" y="147" text-anchor="middle" font-size="11" fill="#4b5563">或原样文本</text>
+
+  <path d="M190,121 L216,121" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M380,121 L406,121" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M570,121 L596,121" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M760,121 L786,121" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <path d="M300,154 L257,196" stroke="#3b82f6" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrowB)"/>
+  <path d="M680,154 L722,196" stroke="#16a34a" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrowG)"/>
+
+  <!-- panel A -->
+  <rect x="30" y="200" width="455" height="336" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="257" y="228" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1e3a8a">直接路径 / file://  →  内容被当代码执行</text>
+  <text x="52" y="258" font-size="11.5" fill="#1e40af">参数：?file=../index.php</text>
+  <text x="52" y="282" font-size="11.5" fill="#1e40af">字节流 = 目标文件的原始内容（含 &lt;?php ... ?&gt;）</text>
+  <text x="52" y="308" font-size="11.5" fill="#1e40af">PHP 引擎逐行处理：</text>
+  <text x="70" y="330" font-size="11.5" fill="#1e40af">&lt;?php ... ?&gt;  →  执行，源码不显示</text>
+  <text x="70" y="352" font-size="11.5" fill="#1e40af">?&gt; 之外的 HTML  →  原样输出</text>
+  <text x="52" y="382" font-size="11.5" fill="#1e40af">结果：只看到「执行结果」</text>
+  <text x="52" y="406" font-size="11.5" fill="#1e40af">页面显示 Welcome, Admin!</text>
+  <text x="52" y="428" font-size="11.5" fill="#1e40af">却永远看不到 $title = "My Homepage";</text>
+  <text x="52" y="462" font-size="11.5" fill="#1e40af">若文件没有 PHP 标签（如 /etc/passwd）</text>
+  <text x="52" y="484" font-size="11.5" fill="#1e40af">→ 无代码可执行 → 内容原样显示</text>
+  <text x="52" y="516" font-size="11" fill="#64748b">注意：include 读不了目录，只能读文件</text>
+
+  <!-- panel B -->
+  <rect x="495" y="200" width="455" height="336" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="722" y="228" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#14532d">php://filter  →  内容被当数据</text>
+  <text x="517" y="258" font-size="11.5" fill="#166534">参数：?file=php://filter/convert.base64-encode/resource=index.php</text>
+  <text x="517" y="282" font-size="11.5" fill="#166534">字节流 = 原始内容 → 先整体 base64 编码</text>
+  <text x="517" y="306" font-size="11.5" fill="#166534">编码结果只含 A-Za-z0-9+/=</text>
+  <text x="517" y="330" font-size="11.5" fill="#166534">→ 不含 &lt; ? &gt;，开标签消失了</text>
+  <text x="517" y="360" font-size="11.5" fill="#166534">PHP 引擎找不到 &lt;?php → 不执行</text>
+  <text x="517" y="384" font-size="11.5" fill="#166534">→ 把整段文本原样吐出</text>
+  <text x="517" y="414" font-size="11.5" fill="#166534">你看到的就是一串 base64</text>
+  <text x="517" y="438" font-size="11.5" fill="#166534">解码后 = 完整源码（含注释、密码）</text>
+  <text x="517" y="470" font-size="11.5" fill="#16a34a" font-weight="bold">同一份文件，两条链路</text>
+  <text x="517" y="492" font-size="11.5" fill="#16a34a">差别只在「字节流有没有被改造」</text>
+  <text x="517" y="516" font-size="11" fill="#64748b">php://filter 用于 include 时不受 allow_url_include 限制</text>
+
+  <!-- bottom -->
+  <rect x="120" y="562" width="740" height="72" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="490" y="588" text-anchor="middle" font-size="12.5" fill="#78350f">关键：include 的语义是「执行」，它没有「只读不执行」的开关</text>
+  <text x="490" y="612" text-anchor="middle" font-size="11.5" fill="#92400e">想让服务端把文件内容交出来，就必须让内容「天然不可执行」——这正是 Base64 的用武之地（详见 00-基础/08）</text>
+</svg>

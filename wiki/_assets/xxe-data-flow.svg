@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="700" fill="#fafafa"/>
+
+  <text x="450" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#111827">XXE 数据流向</text>
+  <text x="450" y="53" text-anchor="middle" font-size="12.5" fill="#6b7280">恶意 XML 从请求体进入服务端解析器，实体在服务端被展开，文件内容顺着响应回到攻击者手里</text>
+
+  <!-- 1 攻击者构造 XML -->
+  <rect x="250" y="72" width="400" height="54" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="450" y="94" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1e3a8a">攻击者：构造恶意 XML 文档</text>
+  <text x="450" y="114" text-anchor="middle" font-size="12" fill="#1e40af">&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;</text>
+
+  <path d="M450,126 L450,156" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 2 请求体送达 -->
+  <rect x="250" y="158" width="400" height="54" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="1.6"/>
+  <text x="450" y="180" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1e293b">① 随 POST 请求体送达服务端</text>
+  <text x="450" y="200" text-anchor="middle" font-size="12" fill="#475569">Content-Type: application/xml</text>
+
+  <path d="M450,212 L450,242" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 3 解析器加载 -->
+  <rect x="250" y="244" width="400" height="76" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.6"/>
+  <text x="450" y="268" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#4c1d95">② 服务端用 XML 解析器加载</text>
+  <text x="450" y="290" text-anchor="middle" font-size="12" fill="#5b21b6">$dom = new DOMDocument();</text>
+  <text x="450" y="308" text-anchor="middle" font-size="12" fill="#5b21b6">$dom-&gt;loadXML($xml, LIBXML_NOENT | LIBXML_DTDLOAD);</text>
+
+  <!-- 侧向：读取本地文件 -->
+  <rect x="690" y="244" width="200" height="76" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.6"/>
+  <text x="790" y="270" text-anchor="middle" font-size="13" font-weight="bold" fill="#991b1b">③ 读取本地文件</text>
+  <text x="790" y="292" text-anchor="middle" font-size="12" fill="#991b1b">file:///etc/passwd</text>
+  <text x="790" y="310" text-anchor="middle" font-size="11.5" fill="#b91c1c">SYSTEM 标识符触发</text>
+
+  <path d="M652,272 L686,272" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arrowRed)" fill="none"/>
+  <path d="M686,300 L652,300" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arrowRed)" fill="none"/>
+  <text x="669" y="264" text-anchor="middle" font-size="10.5" fill="#dc2626">取</text>
+  <text x="669" y="316" text-anchor="middle" font-size="10.5" fill="#dc2626">回</text>
+
+  <path d="M450,320 L450,350" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 4 实体展开 -->
+  <rect x="250" y="352" width="400" height="62" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="450" y="376" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#14532d">④ 实体 &amp;xxe; 被替换为文件内容</text>
+  <text x="450" y="397" text-anchor="middle" font-size="12" fill="#166534">解析器把引用位置直接替换成读到的文本</text>
+
+  <path d="M450,414 L450,444" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 5 应用层取出并输出 -->
+  <rect x="250" y="446" width="400" height="62" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.6"/>
+  <text x="450" y="470" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#713f12">⑤ 应用层取出节点并输出</text>
+  <text x="450" y="491" text-anchor="middle" font-size="12" fill="#854d0e">simplexml_import_dom($dom) -&gt; echo $creds-&gt;admin</text>
+
+  <path d="M450,508 L450,538" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 6 回显 -->
+  <rect x="250" y="540" width="400" height="56" rx="8" fill="#fecaca" stroke="#dc2626" stroke-width="1.8"/>
+  <text x="450" y="564" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7f1d1d">⑥ 文件内容随 HTTP 响应返回</text>
+  <text x="450" y="584" text-anchor="middle" font-size="11.5" fill="#991b1b">页面 / 接口回显里出现 /etc/passwd 的内容</text>
+
+  <!-- 回环：攻击者拿到内容 -->
+  <path d="M250,568 L108,568 L108,99 L246,99" stroke="#16a34a" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="96" y="340" text-anchor="middle" font-size="12" fill="#15803d" transform="rotate(-90 96 340)">攻击者拿到文件内容</text>
+
+  <!-- 结论 -->
+  <rect x="180" y="622" width="540" height="54" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="450" y="645" text-anchor="middle" font-size="13" fill="#78350f">关键点：解析器主动去「取」SYSTEM 指向的资源，并把内容填进文档</text>
+  <text x="450" y="665" text-anchor="middle" font-size="11.5" fill="#92400e">取到的内容能不能被攻击者看到，取决于第 ⑤ 步有没有回显</text>
+
+  <path d="M450,596 L450,620" stroke="#f59e0b" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+</svg>

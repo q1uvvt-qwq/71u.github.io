@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" font-family="Segoe UI, Microsoft YaHei, Arial, sans-serif">
+  <rect width="880" height="470" fill="#f7f9fc"/>
+  <text x="440" y="34" font-size="21" font-weight="bold" fill="#1f2d3d" text-anchor="middle">目录扫描在信息收集中的位置</text>
+
+  <!-- flow arrows background -->
+  <g stroke="#8fa3bf" stroke-width="2" fill="none">
+    <line x1="150" y1="118" x2="240" y2="118" marker-end="url(#arr)"/>
+    <line x1="390" y1="118" x2="480" y2="118" marker-end="url(#arr)"/>
+    <line x1="630" y1="118" x2="720" y2="118" marker-end="url(#arr)"/>
+  </g>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 z" fill="#8fa3bf"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1 -->
+  <rect x="30" y="80" width="120" height="76" rx="10" fill="#e3f0ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="90" y="110" font-size="15" font-weight="bold" fill="#1e40af" text-anchor="middle">1. 存活探测</text>
+  <text x="90" y="132" font-size="12" fill="#334155" text-anchor="middle">nmap -sn</text>
+  <text x="90" y="148" font-size="12" fill="#334155" text-anchor="middle">确定靶机在线</text>
+
+  <!-- Step 2 -->
+  <rect x="240" y="80" width="150" height="76" rx="10" fill="#e0f7ec" stroke="#10b981" stroke-width="2"/>
+  <text x="315" y="110" font-size="15" font-weight="bold" fill="#047857" text-anchor="middle">2. 端口 / 服务</text>
+  <text x="315" y="132" font-size="12" fill="#334155" text-anchor="middle">nmap -sV -p-</text>
+  <text x="315" y="148" font-size="12" fill="#334155" text-anchor="middle">发现 80 / 8080 …</text>
+
+  <!-- Step 3 highlighted -->
+  <rect x="480" y="72" width="150" height="92" rx="10" fill="#fff4d6" stroke="#f59e0b" stroke-width="3"/>
+  <text x="555" y="102" font-size="15" font-weight="bold" fill="#b45309" text-anchor="middle">3. 目录扫描</text>
+  <text x="555" y="124" font-size="12" fill="#334155" text-anchor="middle">dirsearch</text>
+  <text x="555" y="142" font-size="12" fill="#334155" text-anchor="middle">找隐藏文件 / 备份</text>
+  <text x="555" y="158" font-size="12" fill="#b45309" text-anchor="middle">← 本篇主角</text>
+
+  <!-- Step 4 -->
+  <rect x="720" y="80" width="130" height="76" rx="10" fill="#f3e8ff" stroke="#a855f7" stroke-width="2"/>
+  <text x="785" y="110" font-size="15" font-weight="bold" fill="#7e22ce" text-anchor="middle">4. 漏洞利用</text>
+  <text x="785" y="132" font-size="12" fill="#334155" text-anchor="middle">注入 / 上传 / 包含</text>
+  <text x="785" y="148" font-size="12" fill="#334155" text-anchor="middle">拿 flag</text>
+
+  <!-- inputs to step3 -->
+  <rect x="240" y="215" width="150" height="60" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="315" y="240" font-size="13" font-weight="bold" fill="#1f2d3d" text-anchor="middle">字典</text>
+  <text x="315" y="260" font-size="11" fill="#475569" text-anchor="middle">dirb/common.txt 等</text>
+
+  <rect x="420" y="215" width="150" height="60" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="495" y="240" font-size="13" font-weight="bold" fill="#1f2d3d" text-anchor="middle">后缀 -e</text>
+  <text x="495" y="260" font-size="11" fill="#475569" text-anchor="middle">php,txt,bak,zip,env</text>
+
+  <rect x="600" y="215" width="160" height="60" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="680" y="240" font-size="13" font-weight="bold" fill="#1f2d3d" text-anchor="middle">状态码 -i</text>
+  <text x="680" y="260" font-size="11" fill="#475569" text-anchor="middle">只看 200 / 301 / 302</text>
+
+  <g stroke="#cbd5e1" stroke-width="1.5" fill="none">
+    <line x1="315" y1="215" x2="470" y2="170"/>
+    <line x1="495" y1="215" x2="530" y2="172"/>
+    <line x1="680" y1="215" x2="600" y2="172"/>
+  </g>
+
+  <!-- output -->
+  <rect x="240" y="320" width="400" height="110" rx="10" fill="#0f172a"/>
+  <text x="260" y="346" font-size="13" fill="#7dd3fc" font-family="Consolas, monospace">[12:00:01] 200 - 1KB - /admin.php</text>
+  <text x="260" y="368" font-size="13" fill="#86efac" font-family="Consolas, monospace">[12:00:02] 301 - 0B  - /backup  -&gt; /backup/</text>
+  <text x="260" y="390" font-size="13" fill="#fca5a5" font-family="Consolas, monospace">[12:00:03] 403 - 280B- /.git/</text>
+  <text x="260" y="412" font-size="13" fill="#fde68a" font-family="Consolas, monospace">[12:00:04] 200 - 3KB - /config.php.bak</text>
+  <line x1="555" y1="164" x2="440" y2="320" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
+
+  <text x="440" y="455" font-size="12" fill="#64748b" text-anchor="middle">扫描结果 = 新的攻击面：一个 200 的后端文件、一个 301 的目录、一个 403 的 .git 都是入口</text>
+</svg>

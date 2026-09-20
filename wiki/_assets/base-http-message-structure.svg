@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" font-family="Segoe UI, Microsoft YaHei, Arial, sans-serif">
+  <rect width="900" height="520" fill="#f7f9fc"/>
+  <text x="450" y="34" font-size="21" font-weight="bold" fill="#1f2d3d" text-anchor="middle">HTTP 请求报文与响应报文结构</text>
+
+  <!-- Request -->
+  <text x="40" y="72" font-size="16" font-weight="bold" fill="#1d4ed8">请求报文（Request）</text>
+  <rect x="30" y="84" width="390" height="330" rx="10" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+
+  <rect x="45" y="100" width="360" height="46" fill="#dbeafe"/>
+  <text x="58" y="120" font-size="12" font-weight="bold" fill="#1e3a8a">① 请求行 request-line</text>
+  <text x="58" y="138" font-size="12" fill="#334155" font-family="Consolas, monospace">GET /index.php?a=1 HTTP/1.1</text>
+
+  <rect x="45" y="156" width="360" height="150" fill="#eef6ff"/>
+  <text x="58" y="176" font-size="12" font-weight="bold" fill="#1e3a8a">② 请求头 request-headers</text>
+  <text x="58" y="196" font-size="12" fill="#334155" font-family="Consolas, monospace">Host: example.com</text>
+  <text x="58" y="214" font-size="12" fill="#334155" font-family="Consolas, monospace">User-Agent: Mozilla/5.0 ...</text>
+  <text x="58" y="232" font-size="12" fill="#334155" font-family="Consolas, monospace">Cookie: PHPSESSID=abc</text>
+  <text x="58" y="250" font-size="12" fill="#334155" font-family="Consolas, monospace">Content-Type: application/x-www...</text>
+  <text x="58" y="268" font-size="12" fill="#334155" font-family="Consolas, monospace">Content-Length: 27</text>
+  <text x="58" y="292" font-size="12" fill="#b91c1c" font-family="Consolas, monospace">Host 是 HTTP/1.1 唯一必需的头</text>
+
+  <rect x="45" y="316" width="360" height="16" fill="#f1f5f9"/>
+  <text x="58" y="329" font-size="11" fill="#64748b">③ 空行 CRLF（分隔头与体）</text>
+
+  <rect x="45" y="340" width="360" height="60" fill="#dcfce7"/>
+  <text x="58" y="360" font-size="12" font-weight="bold" fill="#14532d">④ 消息体 body（GET 无，POST 有）</text>
+  <text x="58" y="382" font-size="12" fill="#334155" font-family="Consolas, monospace">username=admin&amp;password=123</text>
+
+  <!-- Response -->
+  <text x="480" y="72" font-size="16" font-weight="bold" fill="#047857">响应报文（Response）</text>
+  <rect x="470" y="84" width="400" height="330" rx="10" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+
+  <rect x="485" y="100" width="370" height="46" fill="#d1fae5"/>
+  <text x="498" y="120" font-size="12" font-weight="bold" fill="#065f46">① 状态行 status-line</text>
+  <text x="498" y="138" font-size="12" fill="#334155" font-family="Consolas, monospace">HTTP/1.1 200 OK</text>
+
+  <rect x="485" y="156" width="370" height="150" fill="#effaf3"/>
+  <text x="498" y="176" font-size="12" font-weight="bold" fill="#065f46">② 响应头 response-headers</text>
+  <text x="498" y="196" font-size="12" fill="#334155" font-family="Consolas, monospace">Server: nginx/1.18.0</text>
+  <text x="498" y="214" font-size="12" fill="#334155" font-family="Consolas, monospace">Date: Tue, 15 Nov 1994 08:12:31 GMT</text>
+  <text x="498" y="232" font-size="12" fill="#334155" font-family="Consolas, monospace">Content-Type: text/html; charset=utf-8</text>
+  <text x="498" y="250" font-size="12" fill="#334155" font-family="Consolas, monospace">Content-Length: 348</text>
+  <text x="498" y="268" font-size="12" fill="#334155" font-family="Consolas, monospace">Set-Cookie: ...</text>
+  <text x="498" y="292" font-size="12" fill="#b91c1c" font-family="Consolas, monospace">401 + WWW-Authenticate: Basic</text>
+
+  <rect x="485" y="316" width="370" height="16" fill="#f1f5f9"/>
+  <text x="498" y="329" font-size="11" fill="#64748b">③ 空行 CRLF</text>
+
+  <rect x="485" y="340" width="370" height="60" fill="#fef9c3"/>
+  <text x="498" y="360" font-size="12" font-weight="bold" fill="#713f12">④ 响应体 body</text>
+  <text x="498" y="382" font-size="12" fill="#334155" font-family="Consolas, monospace">&lt;html&gt;...被请求的资源...</text>
+
+  <!-- bottom note -->
+  <rect x="30" y="432" width="840" height="66" rx="10" fill="#0f172a"/>
+  <text x="50" y="458" font-size="13" fill="#7dd3fc" font-family="Consolas, monospace">request-line  = method SP request-target SP HTTP-version CRLF</text>
+  <text x="50" y="482" font-size="13" fill="#86efac" font-family="Consolas, monospace">status-line   = HTTP-version SP status-code SP reason-phrase CRLF</text>
+</svg>

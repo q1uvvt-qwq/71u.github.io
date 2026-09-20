@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="430" viewBox="0 0 920 430" font-family="'Segoe UI',Arial,sans-serif">
+  <rect width="920" height="430" fill="#f6f8fc"/>
+
+  <text x="460" y="36" text-anchor="middle" font-size="22" font-weight="bold" fill="#16233d">数字型 vs 字符型：为什么一个要闭合、一个不用</text>
+
+  <rect x="30" y="62" width="400" height="336" rx="12" fill="#ffffff" stroke="#a9d6b5"/>
+  <rect x="30" y="62" width="400" height="44" rx="12" fill="#2b8a3e"/>
+  <rect x="30" y="94" width="400" height="12" fill="#2b8a3e"/>
+  <text x="230" y="91" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">数字型：拼接进「数字上下文」</text>
+
+  <text x="52" y="136" font-size="13" fill="#5b6b85">服务端拼接</text>
+  <rect x="52" y="146" width="356" height="34" rx="6" fill="#f1f5f9"/>
+  <text x="64" y="168" font-size="12.5" fill="#33415c">SELECT * FROM users WHERE id = 1</text>
+
+  <text x="52" y="208" font-size="13" fill="#5b6b85">攻击者输入</text>
+  <rect x="52" y="218" width="356" height="34" rx="6" fill="#eafaf0"/>
+  <text x="64" y="240" font-size="12.5" fill="#1b5e20">1 or 1=1</text>
+
+  <text x="52" y="280" font-size="13" fill="#5b6b85">最终 SQL</text>
+  <rect x="52" y="290" width="356" height="34" rx="6" fill="#f1f5f9"/>
+  <text x="64" y="312" font-size="12.5" fill="#33415c">SELECT * FROM users WHERE id = 1 or 1=1</text>
+
+  <rect x="52" y="336" width="356" height="46" rx="8" fill="#e6f5ec"/>
+  <text x="66" y="356" font-size="12.5" fill="#1b5e20">无需闭合：输入直接成为 SQL 语法的一部分</text>
+  <text x="66" y="374" font-size="12.5" fill="#1b5e20">and 1=2 会立刻影响结果 → 可判定为数字型</text>
+
+  <rect x="490" y="62" width="400" height="336" rx="12" fill="#ffffff" stroke="#f0a5bd"/>
+  <rect x="490" y="62" width="400" height="44" rx="12" fill="#c2255c"/>
+  <rect x="490" y="94" width="400" height="12" fill="#c2255c"/>
+  <text x="690" y="91" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">字符型：被引号困在「字符串里」</text>
+
+  <text x="512" y="136" font-size="13" fill="#5b6b85">服务端拼接</text>
+  <rect x="512" y="146" width="356" height="34" rx="6" fill="#f1f5f9"/>
+  <text x="524" y="168" font-size="12.5" fill="#33415c">SELECT * FROM users WHERE name = ' '</text>
+
+  <text x="512" y="208" font-size="13" fill="#5b6b85">攻击者输入</text>
+  <rect x="512" y="218" width="356" height="34" rx="6" fill="#fdeef3"/>
+  <text x="524" y="240" font-size="12.5" fill="#8e1b3f">admin' or '1'='1</text>
+
+  <text x="512" y="280" font-size="13" fill="#5b6b85">最终 SQL</text>
+  <rect x="512" y="290" width="356" height="34" rx="6" fill="#f1f5f9"/>
+  <text x="524" y="312" font-size="12.5" fill="#33415c">WHERE name = 'admin' or '1'='1'</text>
+
+  <rect x="512" y="336" width="356" height="46" rx="8" fill="#fdeef3"/>
+  <text x="526" y="356" font-size="12.5" fill="#8e1b3f">必须先补一个 ' 逃出字符串，再写自己的 SQL</text>
+  <text x="526" y="374" font-size="12.5" fill="#8e1b3f">空闭合时 and 1=2 被当字符串，回显不变 → 字符型</text>
+</svg>

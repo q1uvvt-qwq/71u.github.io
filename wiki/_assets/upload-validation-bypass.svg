@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="640" viewBox="0 0 980 640" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrowR" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="640" fill="#fafafa"/>
+
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111827">文件上传校验链路与绕过点</text>
+  <text x="490" y="58" text-anchor="middle" font-size="12.5" fill="#6b7280">从浏览器到解析执行共 5 个环节，每一环的校验都有对应的绕过手法</text>
+
+  <!-- stage 1 -->
+  <rect x="34" y="88" width="166" height="64" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.6"/>
+  <text x="117" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e3a8a">① 前端 JS 校验</text>
+  <text x="117" y="134" text-anchor="middle" font-size="11" fill="#1e40af">accept / exts 白名单</text>
+  <text x="117" y="147" text-anchor="middle" font-size="11" fill="#1e40af">发生在浏览器</text>
+
+  <!-- stage 2 -->
+  <rect x="220" y="88" width="166" height="64" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.6"/>
+  <text x="303" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#312e81">② HTTP 请求</text>
+  <text x="303" y="134" text-anchor="middle" font-size="11" fill="#3730a3">filename / Content-Type</text>
+  <text x="303" y="147" text-anchor="middle" font-size="11" fill="#3730a3">/ 文件正文</text>
+
+  <!-- stage 3 -->
+  <rect x="406" y="88" width="166" height="64" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="489" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#78350f">③ 服务端校验</text>
+  <text x="489" y="134" text-anchor="middle" font-size="11" fill="#92400e">后缀 / MIME / 魔术字节</text>
+  <text x="489" y="147" text-anchor="middle" font-size="11" fill="#92400e">/ 内容正则</text>
+
+  <!-- stage 4 -->
+  <rect x="592" y="88" width="166" height="64" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.6"/>
+  <text x="675" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#14532d">④ 落盘</text>
+  <text x="675" y="134" text-anchor="middle" font-size="11" fill="#166534">保存路径 + 文件名</text>
+  <text x="675" y="147" text-anchor="middle" font-size="11" fill="#166534">（后缀已定型）</text>
+
+  <!-- stage 5 -->
+  <rect x="778" y="88" width="166" height="64" rx="8" fill="#fce7f3" stroke="#ec4899" stroke-width="1.6"/>
+  <text x="861" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#831843">⑤ 解析执行</text>
+  <text x="861" y="134" text-anchor="middle" font-size="11" fill="#9d174d">PHP-FPM 按扩展名</text>
+  <text x="861" y="147" text-anchor="middle" font-size="11" fill="#9d174d">映射解释器</text>
+
+  <!-- arrows between stages -->
+  <path d="M200,120 L216,120" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M386,120 L402,120" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M572,120 L588,120" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M758,120 L774,120" stroke="#4b5563" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- dashed connectors to callouts -->
+  <path d="M117,152 L117,214" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrowR)"/>
+  <path d="M303,152 L303,214" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrowR)"/>
+  <path d="M489,152 L489,214" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrowR)"/>
+  <path d="M675,152 L675,214" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrowR)"/>
+  <path d="M861,152 L861,214" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrowR)"/>
+
+  <!-- callout 1 -->
+  <rect x="34" y="216" width="166" height="176" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5"/>
+  <text x="117" y="240" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b91c1c">绕过点 ①</text>
+  <text x="117" y="266" text-anchor="middle" font-size="11.5" fill="#7f1d1d">禁用浏览器 JS</text>
+  <text x="117" y="290" text-anchor="middle" font-size="11.5" fill="#7f1d1d">控制台改校验函数</text>
+  <text x="117" y="314" text-anchor="middle" font-size="11.5" fill="#7f1d1d">Burp 抓包直接发包</text>
+  <text x="117" y="344" text-anchor="middle" font-size="10.5" fill="#991b1b">校验在客户端执行</text>
+  <text x="117" y="362" text-anchor="middle" font-size="10.5" fill="#991b1b">→ 必然可绕</text>
+
+  <!-- callout 2 -->
+  <rect x="220" y="216" width="166" height="176" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5"/>
+  <text x="303" y="240" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b91c1c">绕过点 ②</text>
+  <text x="303" y="266" text-anchor="middle" font-size="11.5" fill="#7f1d1d">filename 改回 .php</text>
+  <text x="303" y="290" text-anchor="middle" font-size="11.5" fill="#7f1d1d">Content-Type 伪造</text>
+  <text x="303" y="308" text-anchor="middle" font-size="11.5" fill="#7f1d1d">image/png</text>
+  <text x="303" y="332" text-anchor="middle" font-size="11.5" fill="#7f1d1d">正文头部加 GIF89a</text>
+  <text x="303" y="362" text-anchor="middle" font-size="10.5" fill="#991b1b">请求头/文件名</text>
+  <text x="303" y="380" text-anchor="middle" font-size="10.5" fill="#991b1b">全部由客户端掌控</text>
+
+  <!-- callout 3 -->
+  <rect x="406" y="216" width="166" height="176" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5"/>
+  <text x="489" y="240" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b91c1c">绕过点 ③</text>
+  <text x="489" y="266" text-anchor="middle" font-size="11.5" fill="#7f1d1d">后缀变种 php5/phtml</text>
+  <text x="489" y="290" text-anchor="middle" font-size="11.5" fill="#7f1d1d">大小写 .PHP / .Php</text>
+  <text x="489" y="314" text-anchor="middle" font-size="11.5" fill="#7f1d1d">双扩展名 a.jpg.php</text>
+  <text x="489" y="338" text-anchor="middle" font-size="11.5" fill="#7f1d1d">内容: 大写 / 短标签</text>
+  <text x="489" y="362" text-anchor="middle" font-size="10.5" fill="#991b1b">黑名单漏项</text>
+  <text x="489" y="380" text-anchor="middle" font-size="10.5" fill="#991b1b">+ 解析器配置差异</text>
+
+  <!-- callout 4 -->
+  <rect x="592" y="216" width="166" height="176" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5"/>
+  <text x="675" y="240" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b91c1c">绕过点 ④</text>
+  <text x="675" y="266" text-anchor="middle" font-size="11.5" fill="#7f1d1d">../ 目录穿越</text>
+  <text x="675" y="290" text-anchor="middle" font-size="11.5" fill="#7f1d1d">文件名注入</text>
+  <text x="675" y="314" text-anchor="middle" font-size="11.5" fill="#7f1d1d">空字节 %00 截断</text>
+  <text x="675" y="338" text-anchor="middle" font-size="11.5" fill="#7f1d1d">覆盖已有脚本文件</text>
+  <text x="675" y="362" text-anchor="middle" font-size="10.5" fill="#991b1b">路径拼接未过滤</text>
+  <text x="675" y="380" text-anchor="middle" font-size="10.5" fill="#991b1b">→ 写到任意目录</text>
+
+  <!-- callout 5 -->
+  <rect x="778" y="216" width="166" height="176" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5"/>
+  <text x="861" y="240" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b91c1c">绕过点 ⑤</text>
+  <text x="861" y="266" text-anchor="middle" font-size="11.5" fill="#7f1d1d">上传 .user.ini</text>
+  <text x="861" y="290" text-anchor="middle" font-size="11.5" fill="#7f1d1d">auto_prepend_file</text>
+  <text x="861" y="314" text-anchor="middle" font-size="11.5" fill="#7f1d1d">上传 .htaccess</text>
+  <text x="861" y="338" text-anchor="middle" font-size="11.5" fill="#7f1d1d">指定文件被当作 PHP</text>
+  <text x="861" y="362" text-anchor="middle" font-size="10.5" fill="#991b1b">让"不能解析的图片"</text>
+  <text x="861" y="380" text-anchor="middle" font-size="10.5" fill="#991b1b">也跑起 PHP 代码</text>
+
+  <!-- conclusion -->
+  <rect x="120" y="424" width="740" height="60" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="490" y="449" text-anchor="middle" font-size="13" fill="#78350f">核心判据：校验发生在「客户端」→ 抓包必然绕过；校验发生在「服务端」→ 只能绕过其规则本身</text>
+  <text x="490" y="471" text-anchor="middle" font-size="11.5" fill="#92400e">服务端校验又分「只查后缀 / 只查 Content-Type / 查魔术字节 / 查文件内容」四种强度，逐一对应不同手法</text>
+
+  <!-- bottom note -->
+  <text x="490" y="520" text-anchor="middle" font-size="11.5" fill="#6b7280">黑名单 ≈ 枚举不完整，永远有漏网后缀；白名单更严格，需配合解析规则（.user.ini / .htaccess / 配置漏洞）突破</text>
+  <text x="490" y="546" text-anchor="middle" font-size="11.5" fill="#6b7280">上传成功的最终目的：让「我们可控的内容」被 PHP 解释器执行，从而拿到 webshell</text>
+</svg>
