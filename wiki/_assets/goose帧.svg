@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 700" width="880" height="700" font-family="monospace">
+  <rect x="0" y="0" width="880" height="700" fill="#ffffff"/>
+
+  <text x="440" y="36" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">IEC 61850 GOOSE 帧结构</text>
+  <line x1="190" y1="50" x2="690" y2="50" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="440" y="70" text-anchor="middle" font-size="12" fill="#888">二层直接封装（不经 TCP/IP）· 组播 MAC 01-0C-CD-01-xx-xx · EtherType 0x88B8 · 4ms 级快速重传</text>
+
+  <!-- Ethernet header -->
+  <text x="60" y="100" font-size="13" fill="#2c7fb8">Ethernet 头</text>
+  <g transform="rotate(-0.3 145 150)">
+    <rect x="60" y="110" width="150" height="74" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="135" y="136" text-anchor="middle" font-size="12" fill="#2c7fb8">目的 MAC</text>
+    <text x="135" y="156" text-anchor="middle" font-size="11" fill="#333">01-0C-CD-01-xx-xx</text>
+    <text x="135" y="174" text-anchor="middle" font-size="10" fill="#888">6 字节 · GOOSE 组播</text>
+  </g>
+  <g transform="rotate(0.35 300 150)">
+    <rect x="215" y="110" width="150" height="74" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="290" y="136" text-anchor="middle" font-size="12" fill="#2c7fb8">源 MAC</text>
+    <text x="290" y="156" text-anchor="middle" font-size="11" fill="#333">发布者网卡地址</text>
+    <text x="290" y="174" text-anchor="middle" font-size="10" fill="#888">6 字节</text>
+  </g>
+  <g transform="rotate(-0.4 450 150)">
+    <rect x="370" y="110" width="120" height="74" fill="none" stroke="#333" stroke-width="1.8" stroke-dasharray="5 4" rx="5"/>
+    <text x="430" y="136" text-anchor="middle" font-size="12" fill="#333">可选 VLAN</text>
+    <text x="430" y="156" text-anchor="middle" font-size="11" fill="#333">0x8100 + tag</text>
+    <text x="430" y="174" text-anchor="middle" font-size="10" fill="#888">4 字节（常见）</text>
+  </g>
+  <g transform="rotate(0.3 570 150)">
+    <rect x="495" y="110" width="130" height="74" fill="#d9534f" fill-opacity="0.10" stroke="#d9534f" stroke-width="2.2" rx="5"/>
+    <text x="560" y="136" text-anchor="middle" font-size="13" fill="#d9534f">0x88B8</text>
+    <text x="560" y="156" text-anchor="middle" font-size="11" fill="#333">EtherType</text>
+    <text x="560" y="174" text-anchor="middle" font-size="10" fill="#888">GOOSE 标识</text>
+  </g>
+  <text x="660" y="140" font-size="10" fill="#888">识别法：看到</text>
+  <text x="660" y="156" font-size="10" fill="#888">01-0C-CD-01 开头 +</text>
+  <text x="660" y="172" font-size="10" fill="#888">0x88B8，即为 GOOSE</text>
+
+  <!-- GOOSE header -->
+  <text x="60" y="222" font-size="13" fill="#2c7fb8">GOOSE 头</text>
+  <g transform="rotate(0.3 125 260)">
+    <rect x="60" y="232" width="130" height="62" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="125" y="256" text-anchor="middle" font-size="12" fill="#2c7fb8">APPID</text>
+    <text x="125" y="276" text-anchor="middle" font-size="10" fill="#888">2 字节 · 应用标识</text>
+  </g>
+  <g transform="rotate(-0.35 260 260)">
+    <rect x="195" y="232" width="130" height="62" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="260" y="256" text-anchor="middle" font-size="12" fill="#2c7fb8">Length</text>
+    <text x="260" y="276" text-anchor="middle" font-size="10" fill="#888">2 字节 · PDU 长度</text>
+  </g>
+  <g transform="rotate(0.35 395 260)">
+    <rect x="330" y="232" width="130" height="62" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="395" y="256" text-anchor="middle" font-size="12" fill="#333">Reserved 1</text>
+    <text x="395" y="276" text-anchor="middle" font-size="10" fill="#888">2 字节 · 默认 0</text>
+  </g>
+  <g transform="rotate(-0.3 530 260)">
+    <rect x="465" y="232" width="130" height="62" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="530" y="256" text-anchor="middle" font-size="12" fill="#333">Reserved 2</text>
+    <text x="530" y="276" text-anchor="middle" font-size="10" fill="#888">2 字节 · 默认 0</text>
+  </g>
+
+  <!-- PDU -->
+  <text x="60" y="326" font-size="13" fill="#d9534f">GOOSE PDU 字段</text>
+  <text x="820" y="326" text-anchor="end" font-size="11" fill="#888">ASN.1 BER 编码 · 顺序固定</text>
+
+  <g>
+    <rect x="60" y="336" width="760" height="24" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.2" rx="3"/>
+    <text x="76" y="353" font-size="12" fill="#2c7fb8">gocbRef</text>
+    <text x="300" y="353" font-size="11" fill="#666">控制块引用（GOOSE Control Block Reference），指向发布者</text>
+
+    <rect x="60" y="362" width="760" height="24" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="76" y="379" font-size="12" fill="#333">timeAllowedToLive</text>
+    <text x="300" y="379" font-size="11" fill="#666">允许存活时间(ms)，订阅方超时未收即判链路中断</text>
+
+    <rect x="60" y="388" width="760" height="24" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.2" rx="3"/>
+    <text x="76" y="405" font-size="12" fill="#2c7fb8">datSet</text>
+    <text x="300" y="405" font-size="11" fill="#666">数据集引用，决定 allData 里每个值的语义顺序</text>
+
+    <rect x="60" y="414" width="760" height="24" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="76" y="431" font-size="12" fill="#333">goID</text>
+    <text x="300" y="431" font-size="11" fill="#666">GOOSE 标识（可选，便于人读）</text>
+
+    <rect x="60" y="440" width="760" height="24" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="76" y="457" font-size="12" fill="#333">t</text>
+    <text x="300" y="457" font-size="11" fill="#666">事件时标（UTC），用于顺序判定与取证</text>
+
+    <rect x="60" y="466" width="760" height="24" fill="#d9534f" fill-opacity="0.08" stroke="#d9534f" stroke-width="1.4" rx="3"/>
+    <text x="76" y="483" font-size="12" fill="#d9534f">stNum</text>
+    <text x="300" y="483" font-size="11" fill="#666">状态号：每次数据集状态变化 +1（部署记录要求 stNum &gt; 41）</text>
+
+    <rect x="60" y="492" width="760" height="24" fill="#d9534f" fill-opacity="0.08" stroke="#d9534f" stroke-width="1.4" rx="3"/>
+    <text x="76" y="509" font-size="12" fill="#d9534f">sqNum</text>
+    <text x="300" y="509" font-size="11" fill="#666">序号：同一状态下重发计数，状态变化后归零（要求 sqNum = 0）</text>
+
+    <rect x="60" y="518" width="760" height="24" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="76" y="535" font-size="12" fill="#333">confRev</text>
+    <text x="300" y="535" font-size="11" fill="#666">配置版本号，数据集结构变更时递增，订阅方据此重载</text>
+
+    <rect x="60" y="544" width="760" height="24" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="76" y="561" font-size="12" fill="#333">ndsRev</text>
+    <text x="300" y="561" font-size="11" fill="#666">数据集条目版本，用于校验发布者与订阅方视图一致</text>
+
+    <rect x="60" y="570" width="760" height="24" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="76" y="587" font-size="12" fill="#333">numDatSetEntries</text>
+    <text x="300" y="587" font-size="11" fill="#666">数据集条目数量，应与 allData 元素个数一致</text>
+
+    <rect x="60" y="596" width="760" height="26" fill="#2c7fb8" fill-opacity="0.10" stroke="#2c7fb8" stroke-width="1.6" rx="3"/>
+    <text x="76" y="614" font-size="12" fill="#2c7fb8">allData</text>
+    <text x="300" y="614" font-size="11" fill="#666">实际数据值：布尔/整型/浮点/时标，按 datSet 顺序排列</text>
+  </g>
+
+  <!-- note -->
+  <g transform="rotate(-0.25 440 664)">
+    <rect x="60" y="634" width="760" height="46" fill="none" stroke="#d9534f" stroke-width="1.6" stroke-dasharray="6 4" rx="5"/>
+    <text x="76" y="654" font-size="11" fill="#d9534f">靶场 GOOSE 保护链落点：PTUV1.Op.general=true → XCBR1.Pos.stVal=open → CTRL.GRID_ENABLE → HR93=0</text>
+    <text x="76" y="672" font-size="11" fill="#888">GOOSE 本身无加密无认证：靠 stNum/sqNum 判新鲜度，靠 test 标志区分测试与生产，二者都必须逐跳校验</text>
+  </g>
+</svg>

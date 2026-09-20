@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" width="900" height="660" font-family="monospace">
+  <rect x="0" y="0" width="900" height="660" fill="#ffffff"/>
+
+  <text x="450" y="36" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">风电工控靶场 · 三条攻击链一图总览</text>
+  <line x1="150" y1="50" x2="750" y2="50" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="450" y="70" text-anchor="middle" font-size="11" fill="#888">每条链标出：入口 → 中间手法 → 协议落点 → 业务影响　（授权靶场与教学环境）</text>
+
+  <!-- ================= 平原链 ================= -->
+  <g transform="rotate(-0.25 450 168)">
+    <rect x="40" y="92" width="820" height="152" fill="#2c7fb8" fill-opacity="0.04" stroke="#2c7fb8" stroke-width="1.8" rx="6"/>
+  </g>
+  <text x="58" y="116" font-size="14" fill="#2c7fb8">① 平原链</text>
+  <text x="150" y="116" font-size="11" fill="#888">Web 应用层 → 数据库层 → 对象授权层 → 工业协议层</text>
+
+  <g transform="rotate(0.3 135 158)">
+    <rect x="58" y="130" width="130" height="58" fill="none" stroke="#2c7fb8" stroke-width="1.8" rx="5"/>
+    <text x="123" y="152" text-anchor="middle" font-size="11" fill="#2c7fb8">报表门户</text>
+    <text x="123" y="170" text-anchor="middle" font-size="9" fill="#666">10.0.7.10:8080</text>
+  </g>
+  <line x1="190" y1="159" x2="212" y2="159" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(-0.35 270 158)">
+    <rect x="214" y="130" width="130" height="58" fill="none" stroke="#2c7fb8" stroke-width="1.8" rx="5"/>
+    <text x="279" y="152" text-anchor="middle" font-size="11" fill="#2c7fb8">SQL 注入 + IDOR</text>
+    <text x="279" y="170" text-anchor="middle" font-size="9" fill="#666">export id=387</text>
+  </g>
+  <line x1="346" y1="159" x2="368" y2="159" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(0.35 426 158)">
+    <rect x="370" y="130" width="130" height="58" fill="none" stroke="#2c7fb8" stroke-width="1.8" rx="5"/>
+    <text x="435" y="152" text-anchor="middle" font-size="11" fill="#2c7fb8">SSH 通信网关</text>
+    <text x="435" y="170" text-anchor="middle" font-size="9" fill="#666">plain_diag@10.0.6.8</text>
+  </g>
+  <line x1="502" y1="159" x2="524" y2="159" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(-0.3 600 158)">
+    <rect x="526" y="126" width="150" height="66" fill="#d9534f" fill-opacity="0.10" stroke="#d9534f" stroke-width="2.4" rx="5"/>
+    <text x="601" y="148" text-anchor="middle" font-size="12" fill="#d9534f">协议落点</text>
+    <text x="601" y="166" text-anchor="middle" font-size="11" fill="#333">Modbus FC06</text>
+    <text x="601" y="184" text-anchor="middle" font-size="10" fill="#666">HR93 = 0</text>
+  </g>
+  <line x1="678" y1="159" x2="700" y2="159" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(0.25 789 158)">
+    <rect x="702" y="130" width="140" height="58" fill="#333" fill-opacity="0.06" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="772" y="152" text-anchor="middle" font-size="11" fill="#333">业务影响</text>
+    <text x="772" y="170" text-anchor="middle" font-size="9" fill="#666">总有功归零</text>
+  </g>
+
+  <text x="58" y="216" font-size="10" fill="#888">入口：前端源码暴露 /api/reports/export　·　关键凭据：gateway_diag_key.pem　·　告警：POWER_LIMIT_ZERO</text>
+  <text x="58" y="234" font-size="10" fill="#888">恢复：向三台 RTU 写 HR94=1（AlarmReset）</text>
+
+  <!-- ================= 山区链 ================= -->
+  <g transform="rotate(0.3 450 332)">
+    <rect x="40" y="256" width="820" height="152" fill="#d9534f" fill-opacity="0.04" stroke="#d9534f" stroke-width="1.8" rx="6"/>
+  </g>
+  <text x="58" y="280" font-size="14" fill="#d9534f">② 山区链</text>
+  <text x="150" y="280" font-size="11" fill="#888">借浏览器身份 → 借运维主机 → 借二层位置 → 借测试通道</text>
+
+  <g transform="rotate(-0.3 135 322)">
+    <rect x="58" y="294" width="130" height="58" fill="none" stroke="#d9534f" stroke-width="1.8" rx="5"/>
+    <text x="123" y="316" text-anchor="middle" font-size="11" fill="#d9534f">工单系统</text>
+    <text x="123" y="334" text-anchor="middle" font-size="9" fill="#666">10.0.2.8 存储型 XSS</text>
+  </g>
+  <line x1="190" y1="323" x2="212" y2="323" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(0.35 270 322)">
+    <rect x="214" y="294" width="130" height="58" fill="none" stroke="#d9534f" stroke-width="1.8" rx="5"/>
+    <text x="279" y="316" text-anchor="middle" font-size="11" fill="#d9534f">窃取维护凭据</text>
+    <text x="279" y="334" text-anchor="middle" font-size="9" fill="#666">10.0.4.6 ssh_password</text>
+  </g>
+  <line x1="346" y1="323" x2="368" y2="323" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(-0.35 426 322)">
+    <rect x="370" y="294" width="130" height="58" fill="none" stroke="#d9534f" stroke-width="1.8" rx="5"/>
+    <text x="435" y="316" text-anchor="middle" font-size="11" fill="#d9534f">ARP MITM + 抓包</text>
+    <text x="435" y="334" text-anchor="middle" font-size="9" fill="#666">tcpdump :2404</text>
+  </g>
+  <line x1="502" y1="323" x2="524" y2="323" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(0.3 600 322)">
+    <rect x="526" y="290" width="150" height="66" fill="#d9534f" fill-opacity="0.10" stroke="#d9534f" stroke-width="2.4" rx="5"/>
+    <text x="601" y="312" text-anchor="middle" font-size="12" fill="#d9534f">协议落点</text>
+    <text x="601" y="330" text-anchor="middle" font-size="11" fill="#333">IEC104 C_SC_NA_1</text>
+    <text x="601" y="348" text-anchor="middle" font-size="10" fill="#666">CA=3 IOA=10490 Test 0</text>
+  </g>
+  <line x1="678" y1="323" x2="700" y2="323" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(-0.25 789 322)">
+    <rect x="702" y="294" width="140" height="58" fill="#333" fill-opacity="0.06" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="772" y="316" text-anchor="middle" font-size="11" fill="#333">业务影响</text>
+    <text x="772" y="334" text-anchor="middle" font-size="9" fill="#666">WT08 停机</text>
+  </g>
+
+  <text x="58" y="380" font-size="10" fill="#888">入口：remote-maint.js 暴露 current-session　·　手法：SBO 先选后控，同一 TCP 内两帧　·　告警：POWER_LIMIT_ZERO</text>
+  <text x="58" y="398" font-size="10" fill="#888">恢复：重置 RTU / SCADA 状态，结束 arpspoof 并关闭 ip_forward</text>
+
+  <!-- ================= 海上链 ================= -->
+  <g transform="rotate(-0.3 450 496)">
+    <rect x="40" y="420" width="820" height="152" fill="#333" fill-opacity="0.03" stroke="#333" stroke-width="1.8" rx="6"/>
+  </g>
+  <text x="58" y="444" font-size="14" fill="#333">③ 海上链</text>
+  <text x="150" y="444" font-size="11" fill="#888">SSRF 拿密钥 → 自签令牌扩权 → 借 Web Terminal 跨区 → 改保护阈值</text>
+
+  <g transform="rotate(0.35 135 486)">
+    <rect x="58" y="458" width="130" height="58" fill="none" stroke="#2c7fb8" stroke-width="1.8" rx="5"/>
+    <text x="123" y="480" text-anchor="middle" font-size="11" fill="#2c7fb8">趋势门户 SSRF</text>
+    <text x="123" y="498" text-anchor="middle" font-size="9" fill="#666">10.0.11.8 source_url</text>
+  </g>
+  <line x1="190" y1="487" x2="212" y2="487" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(-0.3 270 486)">
+    <rect x="214" y="458" width="130" height="58" fill="none" stroke="#2c7fb8" stroke-width="1.8" rx="5"/>
+    <text x="279" y="480" text-anchor="middle" font-size="11" fill="#2c7fb8">JWT_SECRET 泄露</text>
+    <text x="279" y="498" text-anchor="middle" font-size="9" fill="#666">/actuator/env</text>
+  </g>
+  <line x1="346" y1="487" x2="368" y2="487" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(0.3 426 486)">
+    <rect x="370" y="458" width="130" height="58" fill="none" stroke="#2c7fb8" stroke-width="1.8" rx="5"/>
+    <text x="435" y="480" text-anchor="middle" font-size="11" fill="#2c7fb8">自签 JWT 扩 scope</text>
+    <text x="435" y="498" text-anchor="middle" font-size="9" fill="#666">maintenance.connect</text>
+  </g>
+  <line x1="502" y1="487" x2="524" y2="487" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(-0.35 600 486)">
+    <rect x="526" y="454" width="150" height="66" fill="#d9534f" fill-opacity="0.10" stroke="#d9534f" stroke-width="2.4" rx="5"/>
+    <text x="601" y="476" text-anchor="middle" font-size="12" fill="#d9534f">协议落点</text>
+    <text x="601" y="494" text-anchor="middle" font-size="11" fill="#333">OPC UA Method Call</text>
+    <text x="601" y="512" text-anchor="middle" font-size="10" fill="#666">→ Modbus HR96</text>
+  </g>
+  <line x1="678" y1="487" x2="700" y2="487" stroke="#333" stroke-width="1.6" marker-end="url(#k1)"/>
+  <g transform="rotate(0.25 789 486)">
+    <rect x="702" y="458" width="140" height="58" fill="#333" fill-opacity="0.06" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="772" y="480" text-anchor="middle" font-size="11" fill="#333">业务影响</text>
+    <text x="772" y="498" text-anchor="middle" font-size="9" fill="#666">Turbine08 脱网</text>
+  </g>
+
+  <text x="58" y="544" font-size="10" fill="#888">入口：datasource.js 暴露内部服务名　·　跨区：Web Terminal 代理（10.0.11 → 10.0.12）　·　告警：TEMP_THRESHOLD_TRIP</text>
+  <text x="58" y="562" font-size="10" fill="#888">恢复：Call ResetProtection，并轮换 JWT_SECRET 使已签发令牌立即失效</text>
+
+  <!-- footer comparison -->
+  <g transform="rotate(-0.2 450 616)">
+    <rect x="40" y="584" width="820" height="52" fill="none" stroke="#333" stroke-width="1.6" stroke-dasharray="6 4" rx="6"/>
+    <text x="58" y="604" font-size="11" fill="#333">共性：三条链最终都落到"改寄存器/改阈值"，且都未触发协议层错误——破坏发生在业务语义层，而非协议层。</text>
+    <text x="58" y="624" font-size="11" fill="#888">差异：平原=场站整体限功率归零　山区=单机遥控停机　海上=单机保护停机脱网（告警语义各不相同，取证时是关键区分点）</text>
+  </g>
+
+  <defs>
+    <marker id="k1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" width="900" height="680" font-family="monospace">
+  <rect x="0" y="0" width="900" height="680" fill="#ffffff"/>
+
+  <text x="450" y="36" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">OPC UA 架构：Client / Server · 通道 · 会话 · 地址空间 · 服务集</text>
+  <line x1="120" y1="50" x2="780" y2="50" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- client -->
+  <g transform="rotate(-0.4 155 160)">
+    <rect x="40" y="90" width="230" height="140" fill="#d9534f" fill-opacity="0.06" stroke="#d9534f" stroke-width="2.2" rx="6"/>
+    <text x="155" y="116" text-anchor="middle" font-size="14" fill="#d9534f">OPC UA Client</text>
+    <text x="155" y="138" text-anchor="middle" font-size="10" fill="#666">offshore-maint-ws 上的工具集</text>
+    <text x="55" y="162" font-size="10" fill="#333">discover.py / browse.py</text>
+    <text x="55" y="180" font-size="10" fill="#333">read.py / call_method.py</text>
+    <text x="55" y="202" font-size="10" fill="#888">攻击者经 Web Terminal 代理使用</text>
+    <text x="55" y="220" font-size="10" fill="#888">攻击机不可直连 10.0.12.0/24</text>
+  </g>
+
+  <!-- stack: secure channel / session / services -->
+  <g transform="rotate(0.3 440 122)">
+    <rect x="310" y="90" width="260" height="52" fill="#2c7fb8" fill-opacity="0.10" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="440" y="112" text-anchor="middle" font-size="12" fill="#2c7fb8">Endpoint</text>
+    <text x="440" y="131" text-anchor="middle" font-size="10" fill="#666">opc.tcp://10.0.12.8:4840/windfarm/offshore/</text>
+  </g>
+  <g transform="rotate(-0.35 440 186)">
+    <rect x="310" y="152" width="260" height="52" fill="#2c7fb8" fill-opacity="0.10" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="440" y="174" text-anchor="middle" font-size="12" fill="#2c7fb8">SecureChannel 安全通道</text>
+    <text x="440" y="193" text-anchor="middle" font-size="10" fill="#666">签名 / 加密 / 序列号 / 密钥协商</text>
+  </g>
+  <g transform="rotate(0.35 440 250)">
+    <rect x="310" y="216" width="260" height="52" fill="#2c7fb8" fill-opacity="0.10" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="440" y="238" text-anchor="middle" font-size="12" fill="#2c7fb8">Session 会话</text>
+    <text x="440" y="257" text-anchor="middle" font-size="10" fill="#666">用户身份 / 角色 / 超时 / 审计主体</text>
+  </g>
+  <g transform="rotate(-0.3 440 316)">
+    <rect x="310" y="280" width="260" height="72" fill="#333" fill-opacity="0.06" stroke="#333" stroke-width="2.2" rx="5"/>
+    <text x="440" y="302" text-anchor="middle" font-size="12" fill="#333">Service Set 服务集</text>
+    <text x="440" y="322" text-anchor="middle" font-size="10" fill="#d9534f">Browse · Read · Write · Call</text>
+    <text x="440" y="340" text-anchor="middle" font-size="10" fill="#888">方法级授权应在此层拦截</text>
+  </g>
+
+  <!-- server -->
+  <g transform="rotate(0.4 750 160)">
+    <rect x="630" y="90" width="230" height="140" fill="#2c7fb8" fill-opacity="0.06" stroke="#2c7fb8" stroke-width="2.2" rx="6"/>
+    <text x="745" y="116" text-anchor="middle" font-size="14" fill="#2c7fb8">OPC UA Server</text>
+    <text x="745" y="138" text-anchor="middle" font-size="10" fill="#666">offshore-opcua-gateway</text>
+    <text x="645" y="160" font-size="10" fill="#333">Namespaces（Discover 得到）</text>
+    <text x="645" y="180" font-size="10" fill="#888">ns=0 opcfoundation.org/UA/</text>
+    <text x="645" y="197" font-size="10" fill="#888">ns=1 freeopcua:python:server</text>
+    <text x="645" y="214" font-size="10" fill="#d9534f">ns=2 windfarm:njust:offshore</text>
+  </g>
+
+  <line x1="272" y1="160" x2="306" y2="160" stroke="#333" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <line x1="574" y1="160" x2="626" y2="160" stroke="#333" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <text x="290" y="152" text-anchor="middle" font-size="9" fill="#888">请求</text>
+  <text x="600" y="152" text-anchor="middle" font-size="9" fill="#888">响应</text>
+
+  <!-- arrow to address space -->
+  <line x1="440" y1="352" x2="440" y2="386" stroke="#333" stroke-width="1.8" marker-end="url(#m4)"/>
+  <text x="520" y="374" font-size="10" fill="#888">地址空间 Address Space</text>
+
+  <!-- address space tree -->
+  <g transform="rotate(-0.25 450 510)">
+    <rect x="50" y="392" width="800" height="232" fill="none" stroke="#333" stroke-width="1.8" stroke-dasharray="7 5" rx="6"/>
+    <text x="70" y="416" font-size="12" fill="#333">地址空间（Browse 的可见范围）　—— 攻击路径用橙红标出</text>
+
+    <text x="70" y="446" font-size="12" fill="#333">WindFarm</text>
+    <text x="92" y="466" font-size="12" fill="#333">└ Offshore</text>
+    <text x="126" y="486" font-size="12" fill="#333">├ Turbine07</text>
+    <text x="126" y="506" font-size="12" fill="#d9534f">├ Turbine08</text>
+    <text x="160" y="526" font-size="11" fill="#666">├ Telemetry　temperature=73.0　active_power=342.0</text>
+    <text x="160" y="544" font-size="11" fill="#666">├ Grid　grid_state=ON_GRID</text>
+    <text x="160" y="562" font-size="11" fill="#d9534f">├ Protection</text>
+    <text x="196" y="580" font-size="11" fill="#d9534f">├ SetTemperatureLimit(40.0)　← Method Call 落点（写 Modbus HR96）</text>
+    <text x="196" y="598" font-size="11" fill="#2c7fb8">└ ResetProtection()　← 恢复现场</text>
+    <text x="160" y="616" font-size="11" fill="#666">├ State　RUNNING → PROTECTION_STOP　└ Alarm　NONE → TEMP_THRESHOLD_TRIP</text>
+
+    <text x="600" y="466" font-size="11" fill="#888">发现方式：</text>
+    <text x="600" y="486" font-size="11" fill="#888">Browse 逐层遍历</text>
+    <text x="600" y="504" font-size="11" fill="#888">Read 取值定阈值</text>
+    <text x="600" y="522" font-size="11" fill="#888">Call 执行改阈值</text>
+    <text x="600" y="546" font-size="11" fill="#888">首页不展示 Turbine /</text>
+    <text x="600" y="564" font-size="11" fill="#888">Protection，只能协议发现</text>
+  </g>
+
+  <text x="450" y="652" text-anchor="middle" font-size="12" fill="#333">入口是 OPC UA，落点仍是 Modbus：SetTemperatureLimit → HR96 → 风机保护逻辑自行停机</text>
+  <text x="450" y="672" text-anchor="middle" font-size="10" fill="#888">攻击者未发任何"停机"指令，破坏由设备自身合法的保护逻辑完成</text>
+
+  <defs>
+    <marker id="m4" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" font-family="monospace">
+  <rect x="0" y="0" width="880" height="560" fill="#ffffff"/>
+
+  <text x="440" y="38" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">Modbus TCP 报文结构（MBAP + PDU）</text>
+  <line x1="160" y1="52" x2="720" y2="52" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- MBAP bracket -->
+  <text x="60" y="100" font-size="14" fill="#2c7fb8">MBAP 头 · 7 字节</text>
+  <path d="M60,112 L60,132 L620,132 L620,112" fill="none" stroke="#2c7fb8" stroke-width="1.6"/>
+  <text x="640" y="128" font-size="11" fill="#888">Protocol Header</text>
+
+  <!-- MBAP fields -->
+  <g transform="rotate(-0.3 145 190)">
+    <rect x="60" y="150" width="120" height="80" fill="#2c7fb8" fill-opacity="0.08" stroke="#2c7fb8" stroke-width="2" rx="5"/>
+    <text x="120" y="178" text-anchor="middle" font-size="12" fill="#2c7fb8">事务标识</text>
+    <text x="120" y="198" text-anchor="middle" font-size="11" fill="#666">Transaction ID</text>
+    <text x="120" y="218" text-anchor="middle" font-size="12" fill="#333">2 字节</text>
+  </g>
+  <g transform="rotate(0.35 280 190)">
+    <rect x="195" y="150" width="120" height="80" fill="#2c7fb8" fill-opacity="0.08" stroke="#2c7fb8" stroke-width="2" rx="5"/>
+    <text x="255" y="178" text-anchor="middle" font-size="12" fill="#2c7fb8">协议标识</text>
+    <text x="255" y="198" text-anchor="middle" font-size="11" fill="#666">Protocol ID</text>
+    <text x="255" y="218" text-anchor="middle" font-size="12" fill="#333">2 字节</text>
+    <text x="255" y="238" text-anchor="middle" font-size="10" fill="#888">Modbus = 0x0000</text>
+  </g>
+  <g transform="rotate(-0.4 415 190)">
+    <rect x="330" y="150" width="120" height="80" fill="#2c7fb8" fill-opacity="0.08" stroke="#2c7fb8" stroke-width="2" rx="5"/>
+    <text x="390" y="178" text-anchor="middle" font-size="12" fill="#2c7fb8">长度</text>
+    <text x="390" y="198" text-anchor="middle" font-size="11" fill="#666">Length</text>
+    <text x="390" y="218" text-anchor="middle" font-size="12" fill="#333">2 字节</text>
+    <text x="390" y="238" text-anchor="middle" font-size="10" fill="#888">Unit ID + PDU</text>
+  </g>
+  <g transform="rotate(0.3 535 190)">
+    <rect x="465" y="150" width="120" height="80" fill="#2c7fb8" fill-opacity="0.08" stroke="#2c7fb8" stroke-width="2" rx="5"/>
+    <text x="525" y="178" text-anchor="middle" font-size="12" fill="#2c7fb8">单元标识</text>
+    <text x="525" y="198" text-anchor="middle" font-size="11" fill="#666">Unit ID</text>
+    <text x="525" y="218" text-anchor="middle" font-size="12" fill="#333">1 字节</text>
+    <text x="525" y="238" text-anchor="middle" font-size="10" fill="#888">靶场 = 1</text>
+  </g>
+  <text x="120" y="146" text-anchor="middle" font-size="10" fill="#888">0..1</text>
+  <text x="255" y="146" text-anchor="middle" font-size="10" fill="#888">2..3</text>
+  <text x="390" y="146" text-anchor="middle" font-size="10" fill="#888">4..5</text>
+  <text x="525" y="146" text-anchor="middle" font-size="10" fill="#888">6</text>
+
+  <!-- PDU bracket -->
+  <text x="700" y="100" font-size="14" fill="#d9534f" text-anchor="end">PDU</text>
+  <g transform="rotate(-0.35 700 190)">
+    <rect x="610" y="150" width="220" height="80" fill="#d9534f" fill-opacity="0.08" stroke="#d9534f" stroke-width="2" rx="5"/>
+    <text x="720" y="178" text-anchor="middle" font-size="13" fill="#d9534f">功能码 + 数据</text>
+    <text x="720" y="198" text-anchor="middle" font-size="11" fill="#666">Function Code (1B)</text>
+    <text x="720" y="218" text-anchor="middle" font-size="11" fill="#666">+ Data (N 字节)</text>
+  </g>
+
+  <line x1="585" y1="190" x2="608" y2="190" stroke="#333" stroke-width="1.4" stroke-dasharray="4 3"/>
+
+  <!-- Example frames -->
+  <text x="60" y="296" font-size="14" fill="#333">读：FC03 Read Holding Registers （HR93 · modpoll -t 4 -c 1）</text>
+  <g transform="rotate(0.25 440 340)">
+    <rect x="60" y="308" width="760" height="60" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.8" rx="5"/>
+    <text x="78" y="332" font-size="12" fill="#2c7fb8">MBAP</text>
+    <text x="78" y="352" font-size="13" fill="#333">00 01 | 00 00 | 00 06 | 01</text>
+    <text x="470" y="332" font-size="12" fill="#d9534f">PDU</text>
+    <text x="470" y="352" font-size="13" fill="#333">03 | 00 5D | 00 01</text>
+  </g>
+  <text x="60" y="390" font-size="11" fill="#888">03 = 读保持寄存器　00 5D = 起始地址 93（zero_based_pdu → HR93）　00 01 = 读 1 个寄存器</text>
+  <text x="60" y="410" font-size="11" fill="#888">响应 PDU：03 | 02 | 00 64　（02 = 字节数，00 64 = 100 → ActivePowerLimitPercent = 100%）</text>
+
+  <text x="60" y="452" font-size="14" fill="#333">写：FC06 Write Single Register （HR93 = 0 · modpoll 末尾加写值）</text>
+  <g transform="rotate(-0.3 440 496)">
+    <rect x="60" y="464" width="760" height="60" fill="#d9534f" fill-opacity="0.05" stroke="#d9534f" stroke-width="1.8" rx="5"/>
+    <text x="78" y="488" font-size="12" fill="#2c7fb8">MBAP</text>
+    <text x="78" y="508" font-size="13" fill="#333">00 02 | 00 00 | 00 06 | 01</text>
+    <text x="470" y="488" font-size="12" fill="#d9534f">PDU</text>
+    <text x="470" y="508" font-size="13" fill="#333">06 | 00 5D | 00 00</text>
+  </g>
+  <text x="60" y="546" font-size="11" fill="#888">06 = 写单个保持寄存器　00 5D = 寄存器地址 93　00 00 = 写入值 0 → 有功出力限制为 0%</text>
+
+  <!-- difference callout -->
+  <g transform="rotate(0.4 740 268)">
+    <rect x="610" y="246" width="240" height="46" fill="none" stroke="#333" stroke-width="1.5" stroke-dasharray="5 4" rx="5"/>
+    <text x="730" y="266" text-anchor="middle" font-size="11" fill="#333">FC03 读 / FC06 写：差一个功能码字节</text>
+    <text x="730" y="283" text-anchor="middle" font-size="10" fill="#888">读无数据段，写带目标值</text>
+  </g>
+</svg>

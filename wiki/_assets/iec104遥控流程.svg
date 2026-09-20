@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 700" width="880" height="700" font-family="monospace">
+  <rect x="0" y="0" width="880" height="700" fill="#ffffff"/>
+
+  <text x="440" y="36" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">IEC104 SBO 遥控时序（Select-Before-Operate）</text>
+  <line x1="140" y1="50" x2="740" y2="50" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="440" y="70" text-anchor="middle" font-size="12" fill="#888">C_SC_NA_1 · CA=3 · IOA=10490 (WT08_STOP_CMD) · Test 位 1→0 · 同一 TCP 连接内完成 SBO</text>
+
+  <!-- actor headers -->
+  <g transform="rotate(-0.4 185 110)">
+    <rect x="70" y="86" width="230" height="62" fill="#d9534f" fill-opacity="0.08" stroke="#d9534f" stroke-width="2.2" rx="6"/>
+    <text x="185" y="112" text-anchor="middle" font-size="14" fill="#d9534f">Rogue IEC104 Master</text>
+    <text x="185" y="133" text-anchor="middle" font-size="10" fill="#666">攻击机自写脚本 / 伪造前置机角色</text>
+  </g>
+  <g transform="rotate(0.4 705 110)">
+    <rect x="600" y="86" width="220" height="62" fill="#2c7fb8" fill-opacity="0.08" stroke="#2c7fb8" stroke-width="2.2" rx="6"/>
+    <text x="710" y="112" text-anchor="middle" font-size="14" fill="#2c7fb8">conpot RTU</text>
+    <text x="710" y="133" text-anchor="middle" font-size="10" fill="#666">10.0.4.5 : 2404</text>
+  </g>
+
+  <!-- lifelines -->
+  <line x1="185" y1="148" x2="185" y2="640" stroke="#333" stroke-width="1.6" stroke-dasharray="8 6"/>
+  <line x1="705" y1="148" x2="705" y2="640" stroke="#333" stroke-width="1.6" stroke-dasharray="8 6"/>
+
+  <!-- 1 TCP -->
+  <g transform="rotate(0.25 445 180)">
+    <line x1="185" y1="176" x2="705" y2="176" stroke="#333" stroke-width="2" marker-end="url(#m1)"/>
+    <text x="445" y="170" text-anchor="middle" font-size="10" fill="#888">TCP 三次握手 → 建立连接</text>
+  </g>
+
+  <!-- 2 STARTDT act -->
+  <g transform="rotate(-0.2 445 216)">
+    <line x1="185" y1="212" x2="705" y2="212" stroke="#333" stroke-width="2" marker-end="url(#m1)"/>
+    <text x="445" y="206" text-anchor="middle" font-size="11" fill="#333">STARTDT act　680407000000　（U 格式 0x07 启动传输）</text>
+  </g>
+
+  <!-- 3 STARTDT con -->
+  <g transform="rotate(0.3 445 250)">
+    <line x1="705" y1="246" x2="185" y2="246" stroke="#2c7fb8" stroke-width="2" marker-end="url(#m2)"/>
+    <text x="445" y="240" text-anchor="middle" font-size="11" fill="#2c7fb8">STARTDT con　68040b000000　（U 格式 0x0b）</text>
+  </g>
+
+  <!-- select -->
+  <g transform="rotate(-0.3 445 306)">
+    <line x1="185" y1="302" x2="705" y2="302" stroke="#d9534f" stroke-width="2.4" marker-end="url(#m3)"/>
+    <text x="445" y="282" text-anchor="middle" font-size="11" fill="#d9534f">Select　680e000000002d01060003000028fa80</text>
+    <text x="445" y="296" text-anchor="middle" font-size="10" fill="#888">COT=6 activation　SCO=0x80（S/E=1 选择，SCS=0）</text>
+  </g>
+
+  <!-- select act_con -->
+  <g transform="rotate(0.25 445 346)">
+    <line x1="705" y1="342" x2="185" y2="342" stroke="#2c7fb8" stroke-width="2" marker-end="url(#m2)"/>
+    <text x="445" y="336" text-anchor="middle" font-size="11" fill="#2c7fb8">ACT_CON　…2d0107…　（选择确认）</text>
+  </g>
+
+  <!-- execute -->
+  <g transform="rotate(-0.2 445 400)">
+    <line x1="185" y1="396" x2="705" y2="396" stroke="#d9534f" stroke-width="2.4" marker-end="url(#m3)"/>
+    <text x="445" y="376" text-anchor="middle" font-size="11" fill="#d9534f">Execute　680e020002002d01060003000028fa00</text>
+    <text x="445" y="390" text-anchor="middle" font-size="10" fill="#888">N(S)=1 N(R)=1　SCO=0x00（S/E=0 执行，SCS=0）</text>
+  </g>
+
+  <!-- exec act_con -->
+  <g transform="rotate(0.25 445 438)">
+    <line x1="705" y1="434" x2="185" y2="434" stroke="#2c7fb8" stroke-width="2" marker-end="url(#m2)"/>
+    <text x="445" y="428" text-anchor="middle" font-size="11" fill="#2c7fb8">ACT_CON　…2d0107…　（执行确认）</text>
+  </g>
+
+  <!-- telemetry -->
+  <g transform="rotate(-0.3 445 476)">
+    <line x1="705" y1="472" x2="185" y2="472" stroke="#333" stroke-width="2" marker-end="url(#m1)"/>
+    <text x="445" y="466" text-anchor="middle" font-size="11" fill="#333">M_SP_NA_1 遥测上报　…01010b…29fa…　（IOA=10746，WT08 状态变化）</text>
+  </g>
+
+  <!-- act_term -->
+  <g transform="rotate(0.2 445 512)">
+    <line x1="705" y1="508" x2="185" y2="508" stroke="#2c7fb8" stroke-width="2" marker-end="url(#m2)"/>
+    <text x="445" y="502" text-anchor="middle" font-size="11" fill="#2c7fb8">ACT_TERM　…2d010a…　（命令终止，流程闭合）</text>
+  </g>
+
+  <!-- note -->
+  <g transform="rotate(-0.35 445 566)">
+    <rect x="120" y="534" width="650" height="52" fill="#d9534f" fill-opacity="0.05" stroke="#d9534f" stroke-width="1.6" stroke-dasharray="6 4" rx="5"/>
+    <text x="140" y="556" font-size="11" fill="#d9534f">关键：抓包中业务报文 Test=1（测试通道）；攻击脚本唯一改动就是把 Test 位清 0，并自行补齐 Select 帧。</text>
+    <text x="140" y="576" font-size="11" fill="#888">SBO 只是流程约束（防误操作），不提供任何认证——同一 socket 内发两帧即可满足。</text>
+  </g>
+
+  <text x="440" y="666" text-anchor="middle" font-size="12" fill="#333">结果：conpot 执行 WT08_STOP_CMD　→　HMI 显示 WT08 停机 / 功率归零 / POWER_LIMIT_ZERO</text>
+  <text x="440" y="688" text-anchor="middle" font-size="10" fill="#888">NEG_CON 会返回 …2d0147…；本流程期望 ACT_CON(2d0107) 与 ACT_TERM(2d010a)</text>
+
+  <defs>
+    <marker id="m1" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#333"/>
+    </marker>
+    <marker id="m2" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#2c7fb8"/>
+    </marker>
+    <marker id="m3" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#d9534f"/>
+    </marker>
+  </defs>
+</svg>

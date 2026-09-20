@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 660" width="880" height="660" font-family="monospace">
+  <rect x="0" y="0" width="880" height="660" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="440" y="40" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">工控四层模型 · 电力分区 · 边界设备</text>
+  <line x1="130" y1="54" x2="750" y2="54" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="440" y="74" text-anchor="middle" font-size="12" fill="#888">现场层 / 控制层 / 监控层 / 管理层　+　生产控制大区(一区·二区) / 管理信息大区(三区)</text>
+
+  <!-- right side zone bands -->
+  <rect x="700" y="96" width="150" height="300" fill="#2c7fb8" fill-opacity="0.06" stroke="#2c7fb8" stroke-width="1.5" stroke-dasharray="7 5" transform="rotate(-0.3 775 246)"/>
+  <text x="775" y="130" text-anchor="middle" font-size="13" fill="#2c7fb8">生产控制大区</text>
+  <text x="775" y="150" text-anchor="middle" font-size="12" fill="#2c7fb8">一区 实时控制区</text>
+  <text x="775" y="180" text-anchor="middle" font-size="11" fill="#888">监控层 + 控制层</text>
+  <text x="775" y="330" text-anchor="middle" font-size="12" fill="#2c7fb8">二区 非控制生产区</text>
+  <text x="775" y="352" text-anchor="middle" font-size="11" fill="#888">监视 / 报表 / 优化</text>
+  <text x="775" y="378" text-anchor="middle" font-size="11" fill="#888">(管理层部分)</text>
+
+  <rect x="700" y="420" width="150" height="120" fill="#d9534f" fill-opacity="0.05" stroke="#d9534f" stroke-width="1.5" stroke-dasharray="7 5" transform="rotate(0.35 775 480)"/>
+  <text x="775" y="452" text-anchor="middle" font-size="13" fill="#d9534f">管理信息大区</text>
+  <text x="775" y="474" text-anchor="middle" font-size="12" fill="#d9534f">三区 管理信息区</text>
+  <text x="775" y="500" text-anchor="middle" font-size="11" fill="#888">ERP / OA / 报表门户</text>
+
+  <!-- layer 1: management -->
+  <g transform="rotate(-0.35 330 165)">
+    <rect x="60" y="115" width="600" height="100" fill="none" stroke="#333" stroke-width="2.2" rx="6" stroke-linejoin="round"/>
+    <text x="80" y="142" font-size="16" fill="#333">管理层　Management</text>
+    <text x="80" y="168" font-size="12" fill="#666">ERP / 生产管理 / 报表门户 · 电子邮件 · 办公网</text>
+    <text x="80" y="190" font-size="12" fill="#666">典型节点：plain-report-portal　offshore-edge-portal</text>
+    <text x="620" y="174" text-anchor="end" font-size="11" fill="#888">三区</text>
+  </g>
+
+  <!-- boundary: industrial firewall -->
+  <g transform="rotate(0.25 330 238)">
+    <rect x="200" y="222" width="320" height="34" fill="#d9534f" fill-opacity="0.12" stroke="#d9534f" stroke-width="2" rx="4"/>
+    <text x="360" y="244" text-anchor="middle" font-size="13" fill="#d9534f">工业防火墙 / 单向访问控制</text>
+  </g>
+  <line x1="640" y1="239" x2="700" y2="239" stroke="#888" stroke-width="1.2" stroke-dasharray="4 4"/>
+
+  <!-- layer 2: supervision -->
+  <g transform="rotate(0.3 330 300)">
+    <rect x="60" y="260" width="600" height="100" fill="none" stroke="#333" stroke-width="2.2" rx="6" stroke-linejoin="round"/>
+    <text x="80" y="287" font-size="16" fill="#333">监控层　Supervision</text>
+    <text x="80" y="313" font-size="12" fill="#666">SCADA / HMI / 前置机 / 历史库 / 工程师站</text>
+    <text x="80" y="335" font-size="12" fill="#666">典型节点：plain-scada-hmi　offshore-scada-hmi　Historian</text>
+    <text x="620" y="319" text-anchor="end" font-size="11" fill="#888">一区</text>
+  </g>
+
+  <!-- boundary: vertical encryption -->
+  <g transform="rotate(-0.4 330 380)">
+    <rect x="200" y="364" width="320" height="34" fill="#2c7fb8" fill-opacity="0.12" stroke="#2c7fb8" stroke-width="2" rx="4"/>
+    <text x="360" y="386" text-anchor="middle" font-size="13" fill="#2c7fb8">纵向加密认证装置</text>
+  </g>
+
+  <!-- layer 3: control -->
+  <g transform="rotate(-0.25 330 430)">
+    <rect x="60" y="402" width="600" height="100" fill="none" stroke="#333" stroke-width="2.2" rx="6" stroke-linejoin="round"/>
+    <text x="80" y="429" font-size="16" fill="#333">控制层　Control</text>
+    <text x="80" y="455" font-size="12" fill="#666">通信网关 / RTU / PLC / 远动装置(frontend)</text>
+    <text x="80" y="477" font-size="12" fill="#666">典型节点：plain_scada_gateway(10.0.6.8)　conpot RTU　PLC3</text>
+    <text x="620" y="461" text-anchor="end" font-size="11" fill="#888">一区</text>
+  </g>
+
+  <!-- boundary: forward/reverse isolation -->
+  <g transform="rotate(0.35 330 522)">
+    <rect x="170" y="506" width="380" height="34" fill="#333" fill-opacity="0.07" stroke="#333" stroke-width="2" rx="4"/>
+    <text x="360" y="528" text-anchor="middle" font-size="13" fill="#333">正反向隔离装置（正向/反向 数据单向摆渡）</text>
+  </g>
+  <line x1="60" y1="523" x2="-10" y2="523" stroke="#888" stroke-width="1.2" stroke-dasharray="4 4"/>
+
+  <!-- layer 4: field -->
+  <g transform="rotate(-0.3 330 572)">
+    <rect x="60" y="544" width="600" height="86" fill="none" stroke="#333" stroke-width="2.2" rx="6" stroke-linejoin="round"/>
+    <text x="80" y="571" font-size="16" fill="#333">现场层　Field</text>
+    <text x="80" y="595" font-size="12" fill="#666">风机 / 变流器 / 传感器 / 执行机构 / 保护测控</text>
+    <text x="80" y="616" font-size="12" fill="#666">典型对象：WT01-WT03 RTU　WT08 / Turbine08　XCBR1</text>
+  </g>
+
+  <!-- left protocol annotation -->
+  <text x="30" y="150" font-size="11" fill="#888" transform="rotate(-90 30 150)">协议面向管理</text>
+  <text x="30" y="440" font-size="11" fill="#888" transform="rotate(-90 30 440)">协议面向设备</text>
+
+  <!-- data flow arrows on the far left -->
+  <line x1="42" y1="200" x2="42" y2="270" stroke="#2c7fb8" stroke-width="2" marker-end="url(#ar1)"/>
+  <line x1="42" y1="355" x2="42" y2="412" stroke="#2c7fb8" stroke-width="2" marker-end="url(#ar1)"/>
+  <defs>
+    <marker id="ar1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="#2c7fb8"/>
+    </marker>
+  </defs>
+</svg>

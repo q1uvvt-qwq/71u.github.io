@@ -1692,6 +1692,662 @@ window.WIKI = [
 		]
 	},
 	{
+		"id": "工控安全",
+		"title": "工控安全",
+		"children": [
+			{
+				"id": "00-工控基础",
+				"title": "工控基础",
+				"children": [
+					{
+						"id": "00-工控基础/工控是什么",
+						"title": "工控是什么",
+						"path": "00-工控基础/工控是什么.md",
+						"order": 1,
+						"tags": [
+							"OT",
+							"IT",
+							"可用性优先"
+						],
+						"source": "工控协议.md、工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "00-工控基础/分层与分区",
+						"title": "分层与分区",
+						"path": "00-工控基础/分层与分区.md",
+						"order": 2,
+						"tags": [
+							"IEC 62443",
+							"Zone",
+							"安全分区"
+						],
+						"source": "风电场系统安全区归属表.md、IEC 62443.md、安全设备VM部署与边界策略.md"
+					},
+					{
+						"id": "00-工控基础/点表与寄存器",
+						"title": "点表与寄存器",
+						"path": "00-工控基础/点表与寄存器.md",
+						"order": 3,
+						"tags": [
+							"点表",
+							"Holding Register",
+							"点号"
+						],
+						"source": "风电场点表与数据模型设计.md、工控协议.md、平原链攻击链指南.md"
+					},
+					{
+						"id": "00-工控基础/威胁模型",
+						"title": "威胁模型",
+						"path": "00-工控基础/威胁模型.md",
+						"order": 4,
+						"tags": [
+							"ICS ATT&CK",
+							"战术链",
+							"攻击面"
+						],
+						"source": "ICS ATT&CK.md、工控协议权威资料与学习方案.md、三条攻击链指南"
+					}
+				],
+				"order": 0
+			},
+			{
+				"id": "01-工控设备",
+				"title": "工控设备",
+				"children": [
+					{
+						"id": "01-工控设备/HMI与SCADA",
+						"title": "HMI与SCADA",
+						"path": "01-工控设备/HMI与SCADA.md",
+						"order": 1,
+						"tags": [
+							"HMI",
+							"SCADA",
+							"组态"
+						],
+						"source": "工控协议.md、风电场点表与数据模型设计.md、平原链攻击链指南.md"
+					},
+					{
+						"id": "01-工控设备/PLC与RTU",
+						"title": "PLC与RTU",
+						"path": "01-工控设备/PLC与RTU.md",
+						"order": 2,
+						"tags": [
+							"PLC",
+							"RTU",
+							"Modbus"
+						],
+						"source": "工控协议.md、风电场点表与数据模型设计.md、平原链攻击链指南.md"
+					},
+					{
+						"id": "01-工控设备/网关前置机",
+						"title": "网关前置机",
+						"path": "01-工控设备/网关前置机.md",
+						"order": 3,
+						"tags": [
+							"通信网关",
+							"前置机",
+							"DTU"
+						],
+						"source": "平原链攻击链指南.md、工控协议权威资料与学习方案.md、风电场点表与数据模型设计.md"
+					},
+					{
+						"id": "01-工控设备/IED与升压站",
+						"title": "IED与升压站",
+						"path": "01-工控设备/IED与升压站.md",
+						"order": 4,
+						"tags": [
+							"IED",
+							"IEC 61850",
+							"保护联锁"
+						],
+						"source": "工控协议.md、风电场点表与数据模型设计.md、风电场系统安全区归属表.md"
+					},
+					{
+						"id": "01-工控设备/Historian",
+						"title": "Historian",
+						"path": "01-工控设备/Historian.md",
+						"order": 5,
+						"tags": [
+							"历史库",
+							"时序数据",
+							"审计"
+						],
+						"source": "风电场点表与数据模型设计.md、风电场系统安全区归属表.md、工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "01-工控设备/工程师站",
+						"title": "工程师站",
+						"path": "01-工控设备/工程师站.md",
+						"order": 6,
+						"tags": [
+							"工程师站",
+							"远程维护",
+							"高价值跳板"
+						],
+						"source": "风电场系统安全区归属表.md、工控协议权威资料与学习方案.md、三条攻击链指南"
+					},
+					{
+						"id": "01-工控设备/边界设备",
+						"title": "边界设备",
+						"path": "01-工控设备/边界设备.md",
+						"order": 7,
+						"tags": [
+							"工业防火墙",
+							"隔离装置",
+							"纵向加密"
+						],
+						"source": "安全设备VM部署与边界策略.md、风电场系统安全区归属表.md、工控协议.md"
+					}
+				],
+				"order": 1
+			},
+			{
+				"id": "02-Modbus",
+				"title": "Modbus",
+				"children": [
+					{
+						"id": "02-Modbus/通信模型",
+						"title": "Modbus 通信模型：主从轮询",
+						"path": "02-Modbus/通信模型.md",
+						"order": 1,
+						"tags": [
+							"Modbus",
+							"主从模型",
+							"Unit ID",
+							"功能码",
+							"数据模型",
+							"502"
+						],
+						"source": "部署参考资料/工控协议.md、攻击链最后形态/平原链攻击链指南.md、工控协议系统学习资料/工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "02-Modbus/报文结构",
+						"title": "Modbus TCP 报文结构逐字节",
+						"path": "02-Modbus/报文结构.md",
+						"order": 2,
+						"tags": [
+							"Modbus",
+							"MBAP",
+							"PDU",
+							"FC03",
+							"FC06",
+							"异常码",
+							"报文结构"
+						],
+						"source": "部署参考资料/工控协议.md、攻击链最后形态/平原链攻击链指南.md；帧示例按 Modbus Application Protocol 规范推导"
+					},
+					{
+						"id": "02-Modbus/抓包分析",
+						"title": "Modbus 抓包分析：从链路看读写",
+						"path": "02-Modbus/抓包分析.md",
+						"order": 3,
+						"tags": [
+							"Modbus",
+							"抓包",
+							"tcpdump",
+							"Wireshark",
+							"明文",
+							"事务标识"
+						],
+						"source": "平原链攻击链指南.md（modpoll 实测输出）、部署参考资料/2026-07-26_山区IEC104三风机测试流量MITM抓包修复记录.md（抓包方法与注意事项）"
+					},
+					{
+						"id": "02-Modbus/点表映射",
+						"title": "点表映射：HR0-HR94 与业务语义",
+						"path": "02-Modbus/点表映射.md",
+						"order": 4,
+						"tags": [
+							"点表",
+							"保持寄存器",
+							"HR93",
+							"量纲",
+							"安全范围",
+							"权限"
+						],
+						"source": "攻击链最后形态/平原链攻击链指南.md（pointmap.csv 原文）、部署参考资料/风电场点表与数据模型设计.md"
+					},
+					{
+						"id": "02-Modbus/攻击面",
+						"title": "Modbus 攻击面与防护",
+						"path": "02-Modbus/攻击面.md",
+						"order": 5,
+						"tags": [
+							"Modbus",
+							"攻击面",
+							"Rogue Master",
+							"数据篡改",
+							"工业防火墙",
+							"防护"
+						],
+						"source": "攻击链最后形态/平原链攻击链指南.md、工控协议系统学习资料/协议攻击点布设模板.md、工控协议权威资料与学习方案.md"
+					}
+				],
+				"order": 2
+			},
+			{
+				"id": "03-IEC104",
+				"title": "IEC104",
+				"children": [
+					{
+						"id": "03-IEC104/远动四遥",
+						"title": "IEC 104 与远动四遥",
+						"path": "03-IEC104/远动四遥.md",
+						"order": 1,
+						"tags": [
+							"IEC104",
+							"IEC60870-5-104",
+							"遥测",
+							"遥信",
+							"遥控",
+							"遥调",
+							"2404",
+							"调度"
+						],
+						"source": "部署参考资料/工控协议.md、工控协议系统学习资料/工控协议权威资料与学习方案.md、攻击链最后形态/山区攻击链指南.md"
+					},
+					{
+						"id": "03-IEC104/报文结构",
+						"title": "IEC 104 报文结构：APCI 与 ASDU",
+						"path": "03-IEC104/报文结构.md",
+						"order": 2,
+						"tags": [
+							"IEC104",
+							"APCI",
+							"ASDU",
+							"控制域",
+							"I帧",
+							"S帧",
+							"U帧",
+							"字节序"
+						],
+						"source": "攻击链最后形态/山区攻击链指南.md、部署参考资料/iec104_3fan_single_direct_20260726.pcap（实测帧）"
+					},
+					{
+						"id": "03-IEC104/关键字段",
+						"title": "IEC 104 关键字段：谁决定什么",
+						"path": "03-IEC104/关键字段.md",
+						"order": 3,
+						"tags": [
+							"IEC104",
+							"TypeID",
+							"COT",
+							"IOA",
+							"CA",
+							"SBO",
+							"SCO",
+							"关键字段"
+						],
+						"source": "攻击链最后形态/山区攻击链指南.md、03-IEC104/报文结构.md（字段定义）、实测 pcap"
+					},
+					{
+						"id": "03-IEC104/抓包分析",
+						"title": "IEC 104 抓包分析：实测逐帧拆解",
+						"path": "03-IEC104/抓包分析.md",
+						"order": 4,
+						"tags": [
+							"IEC104",
+							"抓包",
+							"pcap",
+							"tcpdump",
+							"MITM",
+							"IOA映射",
+							"字节序",
+							"序号"
+						],
+						"source": "部署参考资料/iec104_3fan_single_direct_20260726.pcap 等 5 个实测 pcap、2026-07-26_山区IEC104三风机测试流量MITM抓包修复记录.md、2026-07-25_frontend3-lower_IEC104自动测试流量服务部署记录.md"
+					},
+					{
+						"id": "03-IEC104/链路异常",
+						"title": "IEC 104 链路异常：序号漂移、重放与注入",
+						"path": "03-IEC104/链路异常.md",
+						"order": 5,
+						"tags": [
+							"IEC104",
+							"APCI",
+							"序号漂移",
+							"starvation",
+							"重放",
+							"报文注入",
+							"DEGRADED"
+						],
+						"source": "部署参考资料/山区主链新测试方法-IEC104会话异常与报文注入.md、2026-07-25_frontend3-lower_IEC104自动测试流量服务部署记录.md"
+					},
+					{
+						"id": "03-IEC104/攻击面",
+						"title": "IEC 104 攻击面与防护",
+						"path": "03-IEC104/攻击面.md",
+						"order": 6,
+						"tags": [
+							"IEC104",
+							"攻击面",
+							"Test位",
+							"SBO",
+							"纵向加密",
+							"工业防火墙",
+							"防护"
+						],
+						"source": "攻击链最后形态/山区攻击链指南.md、部署参考资料/山区主链新测试方法-IEC104会话异常与报文注入.md、工控协议系统学习资料/协议攻击点布设模板.md、2026-07-25_山区IEC104_RogueMaster自写脚本攻击步骤改造记录.md"
+					}
+				],
+				"order": 3
+			},
+			{
+				"id": "04-OPCUA",
+				"title": "OPCUA",
+				"children": [
+					{
+						"id": "04-OPCUA/地址空间",
+						"title": "OPC UA 地址空间与节点",
+						"path": "04-OPCUA/地址空间.md",
+						"order": 1,
+						"tags": [
+							"OPCUA",
+							"地址空间",
+							"NodeId",
+							"命名空间",
+							"信息模型"
+						],
+						"source": "海上链攻击链指南.md、工控协议.md、2026-07-24_offshore-opcua-gateway部署记录.md、2026-07-26_海上OPCUA三风机对象模型与独立控制改造记录.md"
+					},
+					{
+						"id": "04-OPCUA/通信流程",
+						"title": "OPC UA 通信流程与安全模式",
+						"path": "04-OPCUA/通信流程.md",
+						"order": 2,
+						"tags": [
+							"OPCUA",
+							"端点",
+							"SecureChannel",
+							"Session",
+							"SecurityMode",
+							"服务集"
+						],
+						"source": "海上链攻击链指南.md、工控协议.md、工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "04-OPCUA/报文与抓包",
+						"title": "OPC UA 报文结构与抓包分析",
+						"path": "04-OPCUA/报文与抓包.md",
+						"order": 3,
+						"tags": [
+							"OPCUA",
+							"抓包",
+							"Wireshark",
+							"二进制编码",
+							"MethodCall"
+						],
+						"source": "海上链攻击链指南.md、工控协议.md"
+					},
+					{
+						"id": "04-OPCUA/方法调用",
+						"title": "OPC UA 方法调用与保护停机实测",
+						"path": "04-OPCUA/方法调用.md",
+						"order": 4,
+						"tags": [
+							"OPCUA",
+							"MethodCall",
+							"保护停机",
+							"Modbus",
+							"攻击链"
+						],
+						"source": "海上链攻击链指南.md、工控协议.md、2026-07-24_offshore-opcua-gateway部署记录.md、2026-07-25_海上OPCUA到Modbus联动与HMI三子站轮询部署记录.md、2026-07-26_海上OPCUA三风机对象模型与独立控制改造记录.md"
+					},
+					{
+						"id": "04-OPCUA/攻击面",
+						"title": "OPC UA 攻击面与防护",
+						"path": "04-OPCUA/攻击面.md",
+						"order": 5,
+						"tags": [
+							"OPCUA",
+							"攻击面",
+							"匿名Browse",
+							"方法级授权",
+							"防护"
+						],
+						"source": "海上链攻击链指南.md、工控协议.md、工控协议权威资料与学习方案.md、2026-07-24_offshore-opcua-gateway部署记录.md"
+					}
+				],
+				"order": 4
+			},
+			{
+				"id": "05-IEC61850",
+				"title": "IEC61850",
+				"children": [
+					{
+						"id": "05-IEC61850/三层结构",
+						"title": "IEC 61850 三层结构与信息模型",
+						"path": "05-IEC61850/三层结构.md",
+						"order": 1,
+						"tags": [
+							"IEC61850",
+							"变电站三层",
+							"逻辑节点",
+							"SCL",
+							"MMS"
+						],
+						"source": "工控协议.md、2026-07-12_海上GOOSE保护链路部署记录.md、工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "05-IEC61850/GOOSE报文",
+						"title": "GOOSE 报文结构与时序",
+						"path": "05-IEC61850/GOOSE报文.md",
+						"order": 2,
+						"tags": [
+							"IEC61850",
+							"GOOSE",
+							"stNum",
+							"sqNum",
+							"重放",
+							"保护联锁"
+						],
+						"source": "2026-07-12_海上GOOSE保护链路部署记录.md、工控协议.md、工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "05-IEC61850/MMS与文件",
+						"title": "MMS 通信与 IEC 61850 文件服务",
+						"path": "05-IEC61850/MMS与文件.md",
+						"order": 3,
+						"tags": [
+							"IEC61850",
+							"MMS",
+							"报告控制块",
+							"文件服务",
+							"102端口"
+						],
+						"source": "工控协议.md、工控协议权威资料与学习方案.md、2026-07-12_海上GOOSE保护链路部署记录.md"
+					},
+					{
+						"id": "05-IEC61850/攻击面",
+						"title": "IEC 61850 攻击面与防护",
+						"path": "05-IEC61850/攻击面.md",
+						"order": 4,
+						"tags": [
+							"IEC61850",
+							"GOOSE重放",
+							"攻击面",
+							"防护",
+							"压板管理"
+						],
+						"source": "2026-07-12_海上GOOSE保护链路部署记录.md、工控协议.md、工控协议权威资料与学习方案.md"
+					}
+				],
+				"order": 5
+			},
+			{
+				"id": "06-其他协议",
+				"title": "其他协议",
+				"children": [
+					{
+						"id": "06-其他协议/IEC61400-25",
+						"title": "IEC 61400-25 风电场通信与信息模型",
+						"path": "06-其他协议/IEC61400-25.md",
+						"order": 1,
+						"tags": [
+							"IEC61400-25",
+							"风电",
+							"信息模型",
+							"数据对象"
+						],
+						"source": "工控协议.md、工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "06-其他协议/MQTT",
+						"title": "MQTT 发布订阅与边缘遥测",
+						"path": "06-其他协议/MQTT.md",
+						"order": 2,
+						"tags": [
+							"MQTT",
+							"发布订阅",
+							"QoS",
+							"Retained",
+							"ACL"
+						],
+						"source": "工控协议权威资料与学习方案.md、工控协议.md"
+					},
+					{
+						"id": "06-其他协议/IEC102与645",
+						"title": "IEC 60870-5-102 与 DL/T 645 电能量计量链路",
+						"path": "06-其他协议/IEC102与645.md",
+						"order": 3,
+						"tags": [
+							"IEC102",
+							"DLT645",
+							"电能量",
+							"计量"
+						],
+						"source": "工控协议.md"
+					},
+					{
+						"id": "06-其他协议/S7comm",
+						"title": "S7 通信与 S7comm 协议",
+						"path": "06-其他协议/S7comm.md",
+						"order": 4,
+						"tags": [
+							"S7comm",
+							"西门子",
+							"PLC",
+							"博图"
+						],
+						"source": "工控协议权威资料与学习方案.md"
+					}
+				],
+				"order": 6
+			},
+			{
+				"id": "07-攻击链复盘",
+				"title": "攻击链复盘",
+				"children": [
+					{
+						"id": "07-攻击链复盘/平原链",
+						"title": "平原链复盘：SQL 注入 → IDOR 备份 → SSH 网关 → Modbus 写 HR93 归零有功",
+						"path": "07-攻击链复盘/平原链.md",
+						"order": 1,
+						"tags": [
+							"复盘",
+							"SQL注入",
+							"IDOR",
+							"Modbus",
+							"SCADA",
+							"风电"
+						],
+						"source": "攻击链最后形态/平原链攻击链指南.md、部署参考资料/plain-*部署记录.md"
+					},
+					{
+						"id": "07-攻击链复盘/山区链",
+						"title": "山区链复盘：工单存储型 XSS → 维护站凭据 → ARP MITM → IEC104 SBO 遥控停机",
+						"path": "07-攻击链复盘/山区链.md",
+						"order": 2,
+						"tags": [
+							"复盘",
+							"XSS",
+							"MITM",
+							"IEC104",
+							"SBO",
+							"风电"
+						],
+						"source": "攻击链最后形态/山区攻击链指南.md、部署参考资料/山区主链新测试方法-IEC104会话异常与报文注入.md、山区 3fan pcap"
+					},
+					{
+						"id": "07-攻击链复盘/海上链",
+						"title": "海上链复盘：SSRF → JWT Secret 泄露 → Scope 提升 → OPC UA Method Call 保护停机",
+						"path": "07-攻击链复盘/海上链.md",
+						"order": 3,
+						"tags": [
+							"复盘",
+							"SSRF",
+							"JWT",
+							"OPCUA",
+							"风电",
+							"GOOSE"
+						],
+						"source": "攻击链最后形态/海上链攻击链指南.md、部署参考资料/2026-07-12_海上GOOSE保护链路部署记录.md、offshore-*部署记录.md"
+					}
+				],
+				"order": 7
+			},
+			{
+				"id": "08-工具环境",
+				"title": "工具环境",
+				"children": [
+					{
+						"id": "08-工具环境/抓包工具",
+						"title": "抓包工具 tcpdump 与 Wireshark",
+						"path": "08-工具环境/抓包工具.md",
+						"order": 1,
+						"tags": [
+							"tcpdump",
+							"Wireshark",
+							"抓包",
+							"MITM"
+						],
+						"source": "2026-07-26_山区IEC104三风机测试流量MITM抓包修复记录.md、山区攻击链指南.md"
+					},
+					{
+						"id": "08-工具环境/Modbus工具",
+						"title": "Modbus 工具 modpoll 与 mbpoll",
+						"path": "08-工具环境/Modbus工具.md",
+						"order": 2,
+						"tags": [
+							"modpoll",
+							"mbpoll",
+							"Modbus",
+							"pymodbus"
+						],
+						"source": "2026-07-24_Modbus-Poll-Slave仿真环境检查与部署报告.md、平原链攻击链指南.md"
+					},
+					{
+						"id": "08-工具环境/OPCUA工具",
+						"title": "OPC UA 工具 opcua-tools 与图形客户端",
+						"path": "08-工具环境/OPCUA工具.md",
+						"order": 3,
+						"tags": [
+							"OPCUA",
+							"opcua-tools",
+							"asyncua",
+							"open62541"
+						],
+						"source": "海上链攻击链指南.md、工控协议权威资料与学习方案.md"
+					},
+					{
+						"id": "08-工具环境/仿真环境",
+						"title": "靶场仿真环境与组件清单",
+						"path": "08-工具环境/仿真环境.md",
+						"order": 4,
+						"tags": [
+							"仿真",
+							"Docker",
+							"Conpot",
+							"OpenPLC",
+							"Mosquitto"
+						],
+						"source": "工控协议权威资料与学习方案.md、2026-07-25_Modbus子站Docker化构建记录.md、2026-07-25_Modbus子站Docker镜像导出补充记录.md、2026-07-25_山区HMI与Conpot-IEC104到Modbus联动部署记录.md"
+					}
+				],
+				"order": 8
+			}
+		]
+	},
+	{
 		"id": "11-逻辑漏洞",
 		"title": "逻辑漏洞",
 		"children": []
