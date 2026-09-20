@@ -16,8 +16,15 @@
 	只导入「两位数字 + 连字符」开头的分区目录（00-基础 … 14-工具与环境）；
 	源目录里 RCE/ sql/ base/ 等未整理的原始笔记目录会被自动排除。
 
+	web知识/ 是**容器目录**（见 CONTAINERS）：它自己不是分区，只是若干分区的归类，
+	wiki/ 里没有它的对应目录；它下面每个「数字-名称」子目录各是一个分区，
+	在树里去掉数字前缀显示（分组已经表达了归属），并按最小子分区的编号决定
+	容器在顶层的次序。分区内的分组（如 01-信息收集/爆破）仍然是普通过滤。
+
 	注意：每次运行都会先整个删除并重建 wiki/，所以**不要往 wiki/ 里手写内容**，
 	那个目录是源笔记的投影。要加笔记，请加到源目录后重跑本脚本。
+
+	对应关系：源目录的目录结构调整后，这里只需改 CONTAINERS。
 */
 
 'use strict';
@@ -31,6 +38,9 @@ const WIKI_DIR = path.join(ROOT, 'wiki');
 const OUT_JS = path.join(ROOT, 'assets/js/wiki-data.js');
 
 const PARTITION_RE = /^\d{2}-/;
+
+// 顶层容器目录：本身不是分区，只是把若干分区归到一起。源目录改名这里也要改。
+const CONTAINERS = ['web知识'];
 
 // Windows 路径转成网页用的正斜杠路径
 const toPosix = p => p.split(path.sep).join('/');
@@ -120,6 +130,25 @@ function scanDir(absDir, relDir) {
 
 /* ---------- 主流程 ---------- */
 
+// 顶层排序键：数字分区用它的编号；容器目录用它最小子分区的编号减 0.5，
+// 于是容器落在这一组分区本该在的位置上（web知识 里是 02…10，就排在 01 之后）。
+function topOrder(name, memberNames) {
+	if (!CONTAINERS.includes(name)) return parseInt(name, 10);
+
+	const numbers = memberNames.map(n => parseInt(n, 10)).filter(n => !isNaN(n));
+	return numbers.length ? Math.min.apply(null, numbers) - 0.5 : Number.MAX_SAFE_INTEGER;
+}
+
+// 生成一个分区节点。id / 文件路径都用真实相对路径（含数字前缀，与源目录逐字对应），
+// title 单独给，因为容器内的分区在树里要去掉「数字-」前缀。
+function partitionNode(relDir, title) {
+	const children = scanDir(path.join(SRC, relDir.split('/').join(path.sep)), relDir);
+	for (const node of children) {
+		collectAndCopy(node);
+	}
+	return { id: toPosix(relDir), title, children };
+}
+
 function main() {
 	if (!fs.existsSync(SRC)) {
 		console.error('源目录不存在：' + SRC);
@@ -130,27 +159,41 @@ function main() {
 	fs.rmSync(WIKI_DIR, { recursive: true, force: true });
 	ensureDir(WIKI_DIR);
 
-	const partitions = fs.readdirSync(SRC, { withFileTypes: true })
-		.filter(e => e.isDirectory() && PARTITION_RE.test(e.name))
+	const dirs = fs.readdirSync(SRC, { withFileTypes: true })
+		.filter(e => e.isDirectory() && (PARTITION_RE.test(e.name) || CONTAINERS.includes(e.name)))
 		.map(e => e.name)
 		.sort();
 
-	if (partitions.length === 0) {
+	if (dirs.length === 0) {
 		console.error('在 ' + SRC + ' 下没有找到「数字-名称」形式的分区目录');
 		process.exit(1);
 	}
 
 	const tree = [];
 
-	for (const name of partitions) {
-		const children = scanDir(path.join(SRC, name), name);
+	for (const name of dirs) {
+		if (CONTAINERS.includes(name)) {
+			// 容器目录自己不是分区，只是若干分区的归类，wiki/ 里没有它的对应目录。
+			const members = fs.readdirSync(path.join(SRC, name), { withFileTypes: true })
+				.filter(e => e.isDirectory() && PARTITION_RE.test(e.name))
+				.map(e => e.name)
+				.sort();
 
-		for (const node of children) {
-			collectAndCopy(node);
+			tree.push({
+				id: name,
+				title: name,
+				order: topOrder(name, members),
+				children: members.map(member =>
+					partitionNode(name + '/' + member, member.replace(PARTITION_RE, '')))
+			});
+		} else {
+			tree.push(Object.assign(partitionNode(name, name), { order: topOrder(name, []) }));
 		}
-
-		tree.push({ id: name, title: name, children });
 	}
+
+	tree.sort((a, b) => a.order - b.order);
+	for (const node of tree) delete node.order;
+
 	const noteCount = countNotes(tree);
 
 	// 复制图片资源：正文里统一以 ../_assets/xxx 引用，这里原样搬过来
@@ -165,8 +208,17 @@ function main() {
 
 	writeManifest(tree);
 
+	// 顶层节点 + 容器内的分区，一起算「分区数」
+	const flat = [];
+	(function flatten(nodes) {
+		for (const node of nodes) {
+			if (CONTAINERS.includes(node.id)) flatten(node.children);
+			else flat.push(node.id);
+		}
+	})(tree);
+
 	console.log('源目录   ：' + SRC);
-	console.log('分区数   ：' + partitions.length + '（' + partitions.join(' / ') + '）');
+	console.log('分区数   ：' + flat.length + '（' + flat.join(' / ') + '）');
 	console.log('笔记数   ：' + noteCount);
 	console.log('图片数   ：' + assetCount);
 	console.log('已写出   ：wiki/ 与 assets/js/wiki-data.js');
