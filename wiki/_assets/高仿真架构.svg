@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" font-family="monospace">
+  <rect x="0" y="0" width="900" height="700" fill="#ffffff"/>
+
+  <text x="450" y="36" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">漏洞专项蜜罐：Profile 驱动的仿真架构</text>
+  <line x1="200" y1="50" x2="700" y2="50" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="450" y="70" text-anchor="middle" font-size="12" fill="#888">漏洞资料进、Profile 出 · Sensor 接流量 · 采集层留证据 · 分析层出情报 · 安全控制贯穿全程</text>
+
+  <!-- 左：端到端链路 -->
+  <text x="30" y="102" font-size="13" fill="#2c7fb8">端到端链路（单向依赖）</text>
+
+  <g transform="rotate(-0.25 265 145)">
+    <rect x="30" y="112" width="470" height="58" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="46" y="134" font-size="12" fill="#333">1 漏洞情报与能力输入</text>
+    <text x="46" y="154" font-size="10" fill="#888">官方公告 / NVD / 厂商分析 · PoC / Nuclei Templates / IDS-WAF 规则 · 竞品能力沉淀</text>
+  </g>
+  <line x1="265" y1="170" x2="265" y2="184" stroke="#333" stroke-width="1.4"/>
+  <polygon points="265,190 259,180 271,180" fill="#333"/>
+
+  <g transform="rotate(0.25 265 223)">
+    <rect x="30" y="190" width="470" height="58" fill="#2c7fb8" fill-opacity="0.13" stroke="#2c7fb8" stroke-width="2.4" rx="5"/>
+    <text x="46" y="212" font-size="12" fill="#2c7fb8">2 Profile Studio（核心配置单元）</text>
+    <text x="46" y="232" font-size="10" fill="#888">漏洞 Profile 创建 · 产品指纹配置 · 响应模板配置 · IOC 与分类规则配置</text>
+  </g>
+  <line x1="265" y1="248" x2="265" y2="262" stroke="#333" stroke-width="1.4"/>
+  <polygon points="265,268 259,258 271,258" fill="#333"/>
+
+  <g transform="rotate(-0.25 265 301)">
+    <rect x="30" y="268" width="470" height="58" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="46" y="290" font-size="12" fill="#2c7fb8">3 High-Fidelity Web Sensor</text>
+    <text x="46" y="310" font-size="10" fill="#888">路由仿真 · 静态资源仿真 · Header/错误页/API 仿真 · Catch-all 请求捕获</text>
+  </g>
+  <line x1="265" y1="326" x2="265" y2="340" stroke="#333" stroke-width="1.4"/>
+  <polygon points="265,346 259,336 271,336" fill="#333"/>
+
+  <g transform="rotate(0.25 265 379)">
+    <rect x="30" y="346" width="470" height="58" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="46" y="368" font-size="12" fill="#2c7fb8">4 Traffic Recorder</text>
+    <text x="46" y="388" font-size="10" fill="#888">Header / Query / Cookie / Body · Body Hash / Preview / Raw Store · 时间线 / 会话 / 响应状态</text>
+  </g>
+  <line x1="265" y1="404" x2="265" y2="418" stroke="#333" stroke-width="1.4"/>
+  <polygon points="265,424 259,414 271,414" fill="#333"/>
+
+  <g transform="rotate(-0.25 265 457)">
+    <rect x="30" y="424" width="470" height="58" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="46" y="446" font-size="12" fill="#2c7fb8">5 Payload Analyzer</text>
+    <text x="46" y="466" font-size="10" fill="#888">解码 · 分类 · IOC 提取 · 风险评分 · 置信度与去重聚合</text>
+  </g>
+  <line x1="265" y1="482" x2="265" y2="496" stroke="#333" stroke-width="1.4"/>
+  <polygon points="265,502 259,492 271,492" fill="#333"/>
+
+  <g transform="rotate(0.25 265 535)">
+    <rect x="30" y="502" width="470" height="58" fill="#d9534f" fill-opacity="0.08" stroke="#d9534f" stroke-width="1.8" rx="5"/>
+    <text x="46" y="524" font-size="12" fill="#d9534f">6 Output &amp; Integration</text>
+    <text x="46" y="544" font-size="10" fill="#888">JSONL 日志 · IOC 列表 · 检测规则样例 · Markdown/PPT 报告 · SIEM/SOC 对接字段</text>
+  </g>
+
+  <!-- 右：安全控制层（贯穿） -->
+  <g transform="rotate(0.2 700 320)">
+    <rect x="530" y="112" width="340" height="448" fill="#d9534f" fill-opacity="0.05" stroke="#d9534f" stroke-width="2" stroke-dasharray="7 4" rx="6"/>
+  </g>
+  <text x="700" y="140" text-anchor="middle" font-size="13" fill="#d9534f">安全控制层（贯穿全链路）</text>
+  <text x="700" y="160" text-anchor="middle" font-size="10" fill="#888">独立成层，不分散在各模块里各自实现</text>
+
+  <g>
+    <rect x="552" y="178" width="296" height="42" fill="#ffffff" stroke="#d9534f" stroke-width="1.4" rx="4"/>
+    <text x="568" y="196" font-size="12" fill="#d9534f">不执行 Payload</text>
+    <text x="568" y="212" font-size="10" fill="#888">只记录和响应，不做解释执行</text>
+
+    <rect x="552" y="228" width="296" height="42" fill="#ffffff" stroke="#d9534f" stroke-width="1.4" rx="4"/>
+    <text x="568" y="246" font-size="12" fill="#d9534f">不加载真实漏洞</text>
+    <text x="568" y="262" font-size="10" fill="#888">模拟反馈，不部署易受攻击组件</text>
+
+    <rect x="552" y="278" width="296" height="42" fill="#ffffff" stroke="#d9534f" stroke-width="1.4" rx="4"/>
+    <text x="568" y="296" font-size="12" fill="#d9534f">限制 Body 大小</text>
+    <text x="568" y="312" font-size="10" fill="#888">防止被大报文打满存储与内存</text>
+
+    <rect x="552" y="328" width="296" height="42" fill="#ffffff" stroke="#d9534f" stroke-width="1.4" rx="4"/>
+    <text x="568" y="346" font-size="12" fill="#d9534f">禁止任意出网</text>
+    <text x="568" y="362" font-size="10" fill="#888">避免蜜罐被用作回连与跳板</text>
+
+    <rect x="552" y="378" width="296" height="42" fill="#ffffff" stroke="#d9534f" stroke-width="1.4" rx="4"/>
+    <text x="568" y="396" font-size="12" fill="#d9534f">只读容器</text>
+    <text x="568" y="412" font-size="10" fill="#888">运行态不可写，重启即复位</text>
+
+    <rect x="552" y="428" width="296" height="42" fill="#ffffff" stroke="#d9534f" stroke-width="1.4" rx="4"/>
+    <text x="568" y="446" font-size="12" fill="#d9534f">最小权限</text>
+    <text x="568" y="462" font-size="10" fill="#888">按最小必要授予进程与账号权限</text>
+
+    <rect x="552" y="478" width="296" height="60" fill="#ffffff" stroke="#d9534f" stroke-width="1.4" rx="4"/>
+    <text x="568" y="498" font-size="10" fill="#888">架构层取舍，不是实现细节：</text>
+    <text x="568" y="514" font-size="10" fill="#888">禁真实漏洞执行环境 · 禁自动公网运营</text>
+    <text x="568" y="530" font-size="10" fill="#888">禁 LLM 作为核心响应引擎</text>
+  </g>
+
+  <!-- 单 Sensor 内部 -->
+  <text x="30" y="588" font-size="13" fill="#2c7fb8">单 Sensor 内部构成</text>
+  <g>
+    <rect x="30" y="600" width="160" height="46" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="1.6" rx="4"/>
+    <text x="110" y="620" text-anchor="middle" font-size="11" fill="#2c7fb8">Profile 匹配器</text>
+    <text x="110" y="636" text-anchor="middle" font-size="9" fill="#888">Host/Path/Header/Body</text>
+
+    <rect x="198" y="600" width="160" height="46" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="1.6" rx="4"/>
+    <text x="278" y="620" text-anchor="middle" font-size="11" fill="#2c7fb8">仿真响应器</text>
+    <text x="278" y="636" text-anchor="middle" font-size="9" fill="#888">状态码/Header/指纹</text>
+
+    <rect x="366" y="600" width="160" height="46" fill="none" stroke="#333" stroke-width="1.6" rx="4"/>
+    <text x="446" y="620" text-anchor="middle" font-size="11" fill="#333">请求日志器</text>
+    <text x="446" y="636" text-anchor="middle" font-size="9" fill="#888">完整请求/连接/会话</text>
+
+    <rect x="534" y="600" width="160" height="46" fill="none" stroke="#333" stroke-width="1.6" rx="4"/>
+    <text x="614" y="620" text-anchor="middle" font-size="11" fill="#333">Payload 分析器</text>
+    <text x="614" y="636" text-anchor="middle" font-size="9" fill="#888">URL/IP/域名/命令片段</text>
+
+    <rect x="702" y="600" width="168" height="46" fill="#d9534f" fill-opacity="0.07" stroke="#d9534f" stroke-width="1.6" rx="4"/>
+    <text x="786" y="620" text-anchor="middle" font-size="11" fill="#d9534f">IOC 归一化器</text>
+    <text x="786" y="636" text-anchor="middle" font-size="9" fill="#888">去重/打标签/置信度</text>
+  </g>
+  <rect x="30" y="660" width="840" height="30" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="5 4" rx="4"/>
+  <text x="46" y="680" font-size="10" fill="#666">先记录请求，再决定响应策略 · Sensor 与 Analyzer 解耦 · 输出不止于告警，还包含日志、IOC、规则样例与报告</text>
+</svg>

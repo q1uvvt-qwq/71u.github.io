@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 690" width="900" height="690" font-family="monospace">
+  <rect x="0" y="0" width="900" height="690" fill="#ffffff"/>
+
+  <text x="450" y="36" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">蜜罐分类：四种切法</text>
+  <line x1="230" y1="50" x2="670" y2="50" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="450" y="70" text-anchor="middle" font-size="12" fill="#888">同一套系统在不同切法下会有不同叫法 · 选型前先确定自己要看哪个维度</text>
+
+  <!-- 按交互程度 -->
+  <text x="30" y="128" font-size="13" fill="#2c7fb8">按交互程度</text>
+  <text x="30" y="146" font-size="10" fill="#888">越深越值钱</text>
+  <text x="30" y="160" font-size="10" fill="#888">也越容易被攻陷</text>
+
+  <g transform="rotate(-0.3 277 148)">
+    <rect x="165" y="110" width="225" height="76" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="277" y="136" text-anchor="middle" font-size="13" fill="#2c7fb8">低交互</text>
+    <text x="277" y="156" text-anchor="middle" font-size="10" fill="#333">只模拟握手、Banner、少量响应</text>
+    <text x="277" y="174" text-anchor="middle" font-size="10" fill="#888">风险低 · 易被识别</text>
+  </g>
+  <g transform="rotate(0.35 517 148)">
+    <rect x="405" y="110" width="225" height="76" fill="#2c7fb8" fill-opacity="0.14" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="517" y="136" text-anchor="middle" font-size="13" fill="#2c7fb8">中交互</text>
+    <text x="517" y="156" text-anchor="middle" font-size="10" fill="#333">模拟部分服务逻辑，允许有限会话</text>
+    <text x="517" y="174" text-anchor="middle" font-size="10" fill="#888">能抓命令与 Payload</text>
+  </g>
+  <g transform="rotate(-0.35 757 148)">
+    <rect x="645" y="110" width="225" height="76" fill="#d9534f" fill-opacity="0.10" stroke="#d9534f" stroke-width="2.2" rx="5"/>
+    <text x="757" y="136" text-anchor="middle" font-size="13" fill="#d9534f">高交互</text>
+    <text x="757" y="156" text-anchor="middle" font-size="10" fill="#333">使用接近真实的系统或应用</text>
+    <text x="757" y="174" text-anchor="middle" font-size="10" fill="#888">可看后渗透 · 需沙箱与合规评审</text>
+  </g>
+
+  <!-- 按用途 -->
+  <text x="30" y="258" font-size="13" fill="#2c7fb8">按用途</text>
+  <text x="30" y="276" font-size="10" fill="#888">决定产出</text>
+  <text x="30" y="290" font-size="10" fill="#888">落在谁手里</text>
+
+  <g transform="rotate(0.3 247 278)">
+    <rect x="165" y="240" width="165" height="76" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="247" y="266" text-anchor="middle" font-size="12" fill="#2c7fb8">生产型</text>
+    <text x="247" y="286" text-anchor="middle" font-size="10" fill="#333">辅助真实防御告警</text>
+    <text x="247" y="304" text-anchor="middle" font-size="10" fill="#888">内网诱捕 · 边界伪装</text>
+  </g>
+  <g transform="rotate(-0.3 427 278)">
+    <rect x="345" y="240" width="165" height="76" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="427" y="266" text-anchor="middle" font-size="12" fill="#333">研究型</text>
+    <text x="427" y="286" text-anchor="middle" font-size="10" fill="#333">收集攻击行为与样本</text>
+    <text x="427" y="304" text-anchor="middle" font-size="10" fill="#888">公网态势 · 样本链</text>
+  </g>
+  <g transform="rotate(0.35 607 278)">
+    <rect x="525" y="240" width="165" height="76" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="607" y="266" text-anchor="middle" font-size="12" fill="#333">教学/靶场型</text>
+    <text x="607" y="286" text-anchor="middle" font-size="10" fill="#333">用于训练和演示</text>
+    <text x="607" y="304" text-anchor="middle" font-size="10" fill="#888">培训 · 演练 · CTF</text>
+  </g>
+  <g transform="rotate(-0.35 787 278)">
+    <rect x="705" y="240" width="165" height="76" fill="#2c7fb8" fill-opacity="0.14" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="787" y="266" text-anchor="middle" font-size="12" fill="#2c7fb8">威胁情报型</text>
+    <text x="787" y="286" text-anchor="middle" font-size="10" fill="#333">产出 IOC 与检测规则</text>
+    <text x="787" y="304" text-anchor="middle" font-size="10" fill="#888">利用观测 · 基础设施跟踪</text>
+  </g>
+
+  <!-- 按部署位置 -->
+  <text x="30" y="388" font-size="13" fill="#2c7fb8">按部署位置</text>
+  <text x="30" y="406" font-size="10" fill="#888">位置决定</text>
+  <text x="30" y="420" font-size="10" fill="#888">能看到哪类攻击</text>
+
+  <g transform="rotate(0.3 229 408)">
+    <rect x="165" y="370" width="129" height="76" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="229" y="396" text-anchor="middle" font-size="12" fill="#2c7fb8">公网</text>
+    <text x="229" y="416" text-anchor="middle" font-size="10" fill="#333">扫描器 · 批量爆破</text>
+    <text x="229" y="434" text-anchor="middle" font-size="10" fill="#888">N-day 利用</text>
+  </g>
+  <g transform="rotate(-0.3 373 408)">
+    <rect x="309" y="370" width="129" height="76" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="373" y="396" text-anchor="middle" font-size="12" fill="#2c7fb8">DMZ</text>
+    <text x="373" y="416" text-anchor="middle" font-size="10" fill="#333">Web 探测 · 弱口令</text>
+    <text x="373" y="434" text-anchor="middle" font-size="10" fill="#888">暴露服务扫描</text>
+  </g>
+  <g transform="rotate(0.35 517 408)">
+    <rect x="453" y="370" width="129" height="76" fill="#2c7fb8" fill-opacity="0.09" stroke="#2c7fb8" stroke-width="2.2" rx="5"/>
+    <text x="517" y="396" text-anchor="middle" font-size="12" fill="#2c7fb8">内网</text>
+    <text x="517" y="416" text-anchor="middle" font-size="10" fill="#333">SMB/RDP/SSH 尝试</text>
+    <text x="517" y="434" text-anchor="middle" font-size="10" fill="#888">横向移动</text>
+  </g>
+  <g transform="rotate(-0.35 661 408)">
+    <rect x="597" y="370" width="129" height="76" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="661" y="396" text-anchor="middle" font-size="12" fill="#333">云上</text>
+    <text x="661" y="416" text-anchor="middle" font-size="10" fill="#333">元数据服务探测</text>
+    <text x="661" y="434" text-anchor="middle" font-size="10" fill="#888">云密钥 · 容器逃逸</text>
+  </g>
+  <g transform="rotate(0.3 805 408)">
+    <rect x="741" y="370" width="129" height="76" fill="#8a6d3b" fill-opacity="0.10" stroke="#8a6d3b" stroke-width="2.2" rx="5"/>
+    <text x="805" y="396" text-anchor="middle" font-size="12" fill="#8a6d3b">终端蜜标</text>
+    <text x="805" y="416" text-anchor="middle" font-size="10" fill="#333">诱饵文件被访问</text>
+    <text x="805" y="434" text-anchor="middle" font-size="10" fill="#888">数据泄露 · 越权读取</text>
+  </g>
+
+  <!-- 按模拟对象 -->
+  <text x="30" y="518" font-size="13" fill="#2c7fb8">按模拟对象</text>
+  <text x="30" y="536" font-size="10" fill="#888">模拟什么</text>
+  <text x="30" y="550" font-size="10" fill="#888">决定攻击面</text>
+
+  <g transform="rotate(-0.3 229 538)">
+    <rect x="165" y="500" width="129" height="76" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="229" y="526" text-anchor="middle" font-size="12" fill="#333">协议蜜罐</text>
+    <text x="229" y="546" text-anchor="middle" font-size="10" fill="#888">SSH/Telnet/FTP</text>
+    <text x="229" y="564" text-anchor="middle" font-size="10" fill="#888">SMB/RDP/数据库</text>
+  </g>
+  <g transform="rotate(0.3 373 538)">
+    <rect x="309" y="500" width="129" height="76" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="373" y="526" text-anchor="middle" font-size="12" fill="#333">Web 蜜罐</text>
+    <text x="373" y="546" text-anchor="middle" font-size="10" fill="#888">登录页 / 后台 / API</text>
+    <text x="373" y="564" text-anchor="middle" font-size="10" fill="#888">框架指纹 / 漏洞路径</text>
+  </g>
+  <g transform="rotate(-0.35 517 538)">
+    <rect x="453" y="500" width="129" height="76" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="517" y="526" text-anchor="middle" font-size="12" fill="#333">工控/IoT</text>
+    <text x="517" y="546" text-anchor="middle" font-size="10" fill="#888">Modbus/S7/IEC 104</text>
+    <text x="517" y="564" text-anchor="middle" font-size="10" fill="#888">摄像头 / 路由器</text>
+  </g>
+  <g transform="rotate(0.35 661 538)">
+    <rect x="597" y="500" width="129" height="76" fill="none" stroke="#333" stroke-width="1.8" rx="5"/>
+    <text x="661" y="526" text-anchor="middle" font-size="12" fill="#333">云蜜罐</text>
+    <text x="661" y="546" text-anchor="middle" font-size="10" fill="#888">S3 / 对象存储</text>
+    <text x="661" y="564" text-anchor="middle" font-size="10" fill="#888">云密钥 / K8s API</text>
+  </g>
+  <g transform="rotate(-0.3 805 538)">
+    <rect x="741" y="500" width="129" height="76" fill="#d9534f" fill-opacity="0.10" stroke="#d9534f" stroke-width="2.2" rx="5"/>
+    <text x="805" y="526" text-anchor="middle" font-size="12" fill="#d9534f">漏洞专项</text>
+    <text x="805" y="546" text-anchor="middle" font-size="10" fill="#888">Log4Shell</text>
+    <text x="805" y="564" text-anchor="middle" font-size="10" fill="#888">Confluence / RSC RCE</text>
+  </g>
+
+  <!-- 叠加结论 -->
+  <g transform="rotate(-0.2 450 636)">
+    <rect x="165" y="602" width="705" height="62" fill="#d9534f" fill-opacity="0.06" stroke="#d9534f" stroke-width="1.6" stroke-dasharray="6 4" rx="5"/>
+    <text x="181" y="624" font-size="11" fill="#d9534f">四个维度要叠起来看：模拟对象 = 漏洞专项蜜罐 · 位置 = 公网 / DMZ / 内网 · 交互程度 = 先做低交互与中交互</text>
+    <text x="181" y="646" font-size="11" fill="#888">高交互需要更严格的沙箱、出网限制、快照回滚与合规评审，不适合作为第一阶段目标</text>
+  </g>
+</svg>

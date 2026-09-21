@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" width="900" height="660" font-family="monospace">
+  <rect x="0" y="0" width="900" height="660" fill="#ffffff"/>
+
+  <text x="450" y="36" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">欺骗防御生态：蜜罐、蜜网与蜜标</text>
+  <line x1="230" y1="50" x2="670" y2="50" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="450" y="70" text-anchor="middle" font-size="12" fill="#888">三者不是替代关系 · 一个覆盖服务面、一个覆盖整个环境、一个覆盖数据对象</text>
+
+  <!-- 三形态 -->
+  <g transform="rotate(-0.3 155 190)">
+    <rect x="30" y="100" width="250" height="180" fill="#2c7fb8" fill-opacity="0.07" stroke="#2c7fb8" stroke-width="2.2" rx="6"/>
+    <text x="155" y="126" text-anchor="middle" font-size="15" fill="#2c7fb8">蜜罐</text>
+    <text x="155" y="148" text-anchor="middle" font-size="10" fill="#888">诱饵系统 / 服务</text>
+    <text x="48" y="176" font-size="11" fill="#333">开放端口或页面等交互入口</text>
+    <text x="48" y="198" font-size="11" fill="#333">吸引扫描、爆破、漏洞利用</text>
+    <text x="48" y="220" font-size="11" fill="#333">关注某个服务或某类攻击面</text>
+    <text x="48" y="248" font-size="10" fill="#888">主动等待被访问</text>
+    <text x="48" y="266" font-size="10" fill="#888">被访问本身就是信号</text>
+  </g>
+
+  <g transform="rotate(0.3 450 190)">
+    <rect x="325" y="100" width="250" height="180" fill="#2c7fb8" fill-opacity="0.13" stroke="#2c7fb8" stroke-width="2.4" rx="6"/>
+    <text x="450" y="126" text-anchor="middle" font-size="15" fill="#2c7fb8">蜜网</text>
+    <text x="450" y="148" text-anchor="middle" font-size="10" fill="#888">完整诱捕体系</text>
+    <text x="343" y="172" font-size="11" fill="#333">多个不同协议或系统类型的蜜罐</text>
+    <text x="343" y="192" font-size="11" fill="#333">流量镜像 / 抓包 + 集中日志平台</text>
+    <text x="343" y="212" font-size="11" fill="#333">攻击样本存储区 + 分析告警</text>
+    <text x="343" y="232" font-size="11" fill="#333">出网控制与命令执行限制</text>
+    <text x="343" y="258" font-size="10" fill="#888">能观察攻击者在多个节点</text>
+    <text x="343" y="274" font-size="10" fill="#888">之间的移动路径</text>
+  </g>
+
+  <g transform="rotate(-0.3 745 190)">
+    <rect x="620" y="100" width="250" height="180" fill="#8a6d3b" fill-opacity="0.09" stroke="#8a6d3b" stroke-width="2.2" rx="6"/>
+    <text x="745" y="126" text-anchor="middle" font-size="15" fill="#8a6d3b">蜜标</text>
+    <text x="745" y="148" text-anchor="middle" font-size="10" fill="#888">诱饵对象 / 凭据</text>
+    <text x="638" y="176" font-size="11" fill="#333">假的数据库账号、云访问密钥</text>
+    <text x="638" y="198" font-size="11" fill="#333">假的财务文件链接</text>
+    <text x="638" y="220" font-size="11" fill="#333">代码仓库里的 Canarytoken URL</text>
+    <text x="638" y="242" font-size="11" fill="#333">共享目录中的诱饵文件</text>
+    <text x="638" y="266" font-size="10" fill="#888">被动埋在正常数据流里</text>
+  </g>
+
+  <!-- 区别标注 -->
+  <text x="155" y="302" text-anchor="middle" font-size="10" fill="#888">要交互入口</text>
+  <text x="450" y="302" text-anchor="middle" font-size="10" fill="#888">要补齐日志 / 样本 / 出网控制</text>
+  <text x="745" y="302" text-anchor="middle" font-size="10" fill="#888">不经过网络扫描</text>
+  <line x1="285" y1="190" x2="320" y2="190" stroke="#333" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="580" y1="190" x2="615" y2="190" stroke="#333" stroke-width="1.2" stroke-dasharray="4 3"/>
+
+  <!-- 平台化分层 -->
+  <text x="30" y="336" font-size="13" fill="#d9534f">蜜网 + 采集能力之上的平台化形态</text>
+  <text x="870" y="336" text-anchor="end" font-size="11" fill="#888">从诱捕面一路做到情报与运营</text>
+
+  <g>
+    <rect x="30" y="350" width="840" height="40" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.2" rx="3"/>
+    <text x="46" y="368" font-size="12" fill="#2c7fb8">1 蜜罐采集层</text>
+    <text x="46" y="383" font-size="10" fill="#666">高仿真产品蜜罐 · SaaS 私有蜜罐节点 · Web/OA/数据库/工控/API 模板 · 攻击流量接入</text>
+
+    <rect x="30" y="394" width="840" height="40" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="46" y="412" font-size="12" fill="#333">2 数据处理层</text>
+    <text x="46" y="427" font-size="10" fill="#666">日志标准化 · Payload 解析 · 攻击类型识别 · 产品识别 · IP 归因基础字段 · 样本去重聚合</text>
+
+    <rect x="30" y="438" width="840" height="40" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.2" rx="3"/>
+    <text x="46" y="456" font-size="12" fill="#2c7fb8">3 威胁情报层</text>
+    <text x="46" y="471" font-size="10" fill="#666">攻击样本库 · 情报检索 DSL · 攻击上下文日志 · IOC 库 · 攻击类型库 · 产品漏洞利用态势</text>
+
+    <rect x="30" y="482" width="840" height="40" fill="none" stroke="#333" stroke-width="1.2" rx="3"/>
+    <text x="46" y="500" font-size="12" fill="#333">4 分析画像层</text>
+    <text x="46" y="515" font-size="10" fill="#666">产品攻击画像 · IP 攻击画像 · Web 攻击分析 · 攻击国家/地区统计 · 路径曝光度分析</text>
+
+    <rect x="30" y="526" width="840" height="40" fill="#d9534f" fill-opacity="0.06" stroke="#d9534f" stroke-width="1.2" rx="3"/>
+    <text x="46" y="544" font-size="12" fill="#d9534f">5 产品运营层</text>
+    <text x="46" y="559" font-size="10" fill="#666">蜜罐市场 · 我的模板 · 规则管理 · 会员/权限/配额 · 工单 · API 与 SIEM/SOC 对接</text>
+  </g>
+
+  <g transform="rotate(-0.2 450 612)">
+    <rect x="30" y="582" width="840" height="56" fill="none" stroke="#8a6d3b" stroke-width="1.6" stroke-dasharray="6 4" rx="5"/>
+    <text x="46" y="602" font-size="11" fill="#8a6d3b">对应关系：底层是蜜罐，中间是攻击流量和样本库，上层是情报检索、画像和分析，运营侧是模板市场与规则管理</text>
+    <text x="46" y="622" font-size="11" fill="#888">要观察横向移动或跨节点攻击链，得按蜜网形态补齐集中日志、样本存储与出网控制；对象层面的读取用蜜标补位更直接</text>
+  </g>
+</svg>
