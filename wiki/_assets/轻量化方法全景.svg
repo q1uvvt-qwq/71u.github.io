@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 640" width="920" height="640" font-family="monospace">
+  <rect x="0" y="0" width="920" height="640" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="460" y="40" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">轻量化方法全景 · 四类手段</text>
+  <line x1="150" y1="54" x2="770" y2="54" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="460" y="74" text-anchor="middle" font-size="12" fill="#888">数值精度 / 重复计算复用 / 执行调度 / 计算量本身　+　无损与有损的分界线</text>
+
+  <!-- ===== column 1 : 数值精度 (lossy) ===== -->
+  <rect x="30" y="100" width="200" height="410" fill="#d9534f" fill-opacity="0.05" stroke="#d9534f" stroke-width="1.5" stroke-dasharray="7 5" transform="rotate(-0.3 130 305)"/>
+  <text x="130" y="128" text-anchor="middle" font-size="15" fill="#d9534f">数值精度</text>
+  <text x="130" y="148" text-anchor="middle" font-size="10" fill="#888">改权重的表示精度</text>
+  <text x="130" y="166" text-anchor="middle" font-size="10" fill="#d9534f">精度风险：中到高</text>
+
+  <rect x="50" y="184" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(0.3 130 210)"/>
+  <text x="130" y="206" text-anchor="middle" font-size="12" fill="#333">INT8 动态量化</text>
+  <text x="130" y="224" text-anchor="middle" font-size="10" fill="#888">覆盖 Linear / MatMul</text>
+
+  <rect x="50" y="248" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(-0.3 130 274)"/>
+  <text x="130" y="270" text-anchor="middle" font-size="12" fill="#333">INT8 静态量化</text>
+  <text x="130" y="288" text-anchor="middle" font-size="10" fill="#888">依赖校准集</text>
+
+  <rect x="50" y="312" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(0.3 130 338)"/>
+  <text x="130" y="334" text-anchor="middle" font-size="12" fill="#333">FP16 / BF16</text>
+  <text x="130" y="352" text-anchor="middle" font-size="10" fill="#888">需硬件支持</text>
+
+  <rect x="50" y="376" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(-0.3 130 402)"/>
+  <text x="130" y="398" text-anchor="middle" font-size="12" fill="#333">QAT 量化感知训练</text>
+  <text x="130" y="416" text-anchor="middle" font-size="10" fill="#888">需重训</text>
+
+  <rect x="50" y="440" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(0.3 130 466)"/>
+  <text x="130" y="462" text-anchor="middle" font-size="12" fill="#333">INT4 / FP4</text>
+  <text x="130" y="480" text-anchor="middle" font-size="10" fill="#888">收益高，风险最高</text>
+
+  <!-- ===== column 2 : 重复计算复用 (lossless) ===== -->
+  <rect x="250" y="100" width="200" height="410" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.5" stroke-dasharray="7 5" transform="rotate(0.3 350 305)"/>
+  <text x="350" y="128" text-anchor="middle" font-size="15" fill="#2c7fb8">重复计算复用</text>
+  <text x="350" y="148" text-anchor="middle" font-size="10" fill="#888">相同输入是否重算</text>
+  <text x="350" y="166" text-anchor="middle" font-size="10" fill="#2c7fb8">精度风险：无损</text>
+
+  <rect x="270" y="184" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(-0.3 350 210)"/>
+  <text x="350" y="206" text-anchor="middle" font-size="12" fill="#333">Token 缓存</text>
+  <text x="350" y="224" text-anchor="middle" font-size="10" fill="#888">前处理复用</text>
+
+  <rect x="270" y="248" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(0.3 350 274)"/>
+  <text x="350" y="270" text-anchor="middle" font-size="12" fill="#333">Embedding 缓存</text>
+  <text x="350" y="288" text-anchor="middle" font-size="10" fill="#888">Message Encoder</text>
+
+  <rect x="270" y="312" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(-0.3 350 338)"/>
+  <text x="350" y="334" text-anchor="middle" font-size="12" fill="#333">模板缓存</text>
+  <text x="350" y="352" text-anchor="middle" font-size="10" fill="#888">parser 输出复用</text>
+
+  <rect x="270" y="376" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(0.3 350 402)"/>
+  <text x="350" y="398" text-anchor="middle" font-size="12" fill="#333">窗口 replay 缓存</text>
+  <text x="350" y="416" text-anchor="middle" font-size="10" fill="#888">整窗命中</text>
+
+  <text x="350" y="466" text-anchor="middle" font-size="10" fill="#2c7fb8">前提：缓存键覆盖</text>
+  <text x="350" y="482" text-anchor="middle" font-size="10" fill="#2c7fb8">全部版本维度</text>
+
+  <!-- ===== column 3 : 执行调度 (lossless) ===== -->
+  <rect x="470" y="100" width="200" height="410" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.5" stroke-dasharray="7 5" transform="rotate(-0.3 570 305)"/>
+  <text x="570" y="128" text-anchor="middle" font-size="15" fill="#2c7fb8">执行调度</text>
+  <text x="570" y="148" text-anchor="middle" font-size="10" fill="#888">什么时候算、怎么凑批</text>
+  <text x="570" y="166" text-anchor="middle" font-size="10" fill="#2c7fb8">精度风险：无损</text>
+
+  <rect x="490" y="184" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(0.3 570 210)"/>
+  <text x="570" y="206" text-anchor="middle" font-size="12" fill="#333">Dynamic batching</text>
+  <text x="570" y="224" text-anchor="middle" font-size="10" fill="#888">吞吐换延迟</text>
+
+  <rect x="490" y="248" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(-0.3 570 274)"/>
+  <text x="570" y="270" text-anchor="middle" font-size="12" fill="#333">Length bucketing</text>
+  <text x="570" y="288" text-anchor="middle" font-size="10" fill="#888">减少 padding</text>
+
+  <rect x="490" y="312" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(0.3 570 338)"/>
+  <text x="570" y="334" text-anchor="middle" font-size="12" fill="#333">Padding removal</text>
+  <text x="570" y="352" text-anchor="middle" font-size="10" fill="#888">按真实长度打包</text>
+
+  <rect x="490" y="376" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(-0.3 570 402)"/>
+  <text x="570" y="398" text-anchor="middle" font-size="12" fill="#333">线程矩阵</text>
+  <text x="570" y="416" text-anchor="middle" font-size="10" fill="#888">intra-op / inter-op</text>
+
+  <rect x="490" y="440" width="160" height="52" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(0.3 570 466)"/>
+  <text x="570" y="462" text-anchor="middle" font-size="12" fill="#333">推理流水线</text>
+  <text x="570" y="480" text-anchor="middle" font-size="10" fill="#888">多阶段重叠</text>
+
+  <!-- ===== column 4 : 计算量本身 (lossy) ===== -->
+  <rect x="690" y="100" width="200" height="410" fill="#d9534f" fill-opacity="0.05" stroke="#d9534f" stroke-width="1.5" stroke-dasharray="7 5" transform="rotate(0 790 305)"/>
+  <text x="790" y="128" text-anchor="middle" font-size="15" fill="#d9534f">计算量本身</text>
+  <text x="790" y="148" text-anchor="middle" font-size="10" fill="#888">算多少</text>
+  <text x="790" y="166" text-anchor="middle" font-size="10" fill="#d9534f">精度风险：中到高</text>
+
+  <rect x="710" y="184" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(-0.3 790 210)"/>
+  <text x="790" y="206" text-anchor="middle" font-size="12" fill="#333">知识蒸馏瘦身</text>
+  <text x="790" y="224" text-anchor="middle" font-size="10" fill="#888">小模型对齐大模型</text>
+
+  <rect x="710" y="248" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(0.3 790 274)"/>
+  <text x="790" y="270" text-anchor="middle" font-size="12" fill="#333">词表剪枝</text>
+  <text x="790" y="288" text-anchor="middle" font-size="10" fill="#888">直接缩 embedding</text>
+
+  <rect x="710" y="312" width="160" height="52" fill="#fff" stroke="#d9534f" stroke-width="1.2" transform="rotate(-0.3 790 338)"/>
+  <text x="790" y="334" text-anchor="middle" font-size="12" fill="#333">ContextScore 近似</text>
+  <text x="790" y="352" text-anchor="middle" font-size="10" fill="#888">改遮蔽重算方式</text>
+
+  <text x="790" y="398" text-anchor="middle" font-size="10" fill="#d9534f">会改变模型能力</text>
+  <text x="790" y="414" text-anchor="middle" font-size="10" fill="#d9534f">必须重验异常指标</text>
+  <text x="790" y="436" text-anchor="middle" font-size="10" fill="#888">参数量杠杆有限：</text>
+  <text x="790" y="452" text-anchor="middle" font-size="10" fill="#888">50,000 × 64 词表</text>
+  <text x="790" y="468" text-anchor="middle" font-size="10" fill="#888">是参数里的大头</text>
+
+  <!-- ===== divider : lossless vs lossy ===== -->
+  <line x1="240" y1="100" x2="240" y2="510" stroke="#999" stroke-width="1" stroke-dasharray="3 4"/>
+  <line x1="680" y1="100" x2="680" y2="510" stroke="#999" stroke-width="1" stroke-dasharray="3 4"/>
+
+  <!-- ===== footer : bottleneck ===== -->
+  <rect x="30" y="534" width="860" height="82" fill="#fff" stroke="#333" stroke-width="1" stroke-dasharray="6 4" transform="rotate(0.2 460 575)"/>
+  <text x="46" y="558" font-size="12" fill="#333">绕不过去的约束：Amdahl 定律</text>
+  <text x="46" y="580" font-size="11" fill="#2c7fb8">ContextScore 占整条评分链的绝大部分，其中又几乎全花在 Sequence Encoder 的 ONNX 推理上</text>
+  <text x="46" y="600" font-size="11" fill="#888">只量化一个编码器几乎看不出端到端收益，两个都量化也只提升有限</text>
+</svg>

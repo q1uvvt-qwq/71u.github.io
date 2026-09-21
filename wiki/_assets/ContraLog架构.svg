@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" width="1000" height="660" font-family="monospace">
+  <rect x="0" y="0" width="1000" height="660" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="500" y="40" text-anchor="middle" font-size="22" fill="#333" letter-spacing="1">ContraLog 双编码结构 · 异常判据建立在表示距离上</text>
+  <line x1="180" y1="54" x2="820" y2="54" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="500" y="74" text-anchor="middle" font-size="12" fill="#888">固定契约形状 D = 64　L = 256　T = 64　｜　只有 batch 维动态</text>
+
+  <!-- ===== row 1 : input -> message encoder ===== -->
+  <rect x="30" y="96" width="200" height="114" fill="#fff" stroke="#333" stroke-width="1.2" transform="rotate(-0.2 130 153)"/>
+  <text x="130" y="122" text-anchor="middle" font-size="13" fill="#333">输入</text>
+  <text x="46" y="148" font-size="9" fill="#888">message_input_ids int64 [B,256,64]</text>
+  <text x="46" y="168" font-size="9" fill="#888">message_attention_mask int64 [B,256,64]</text>
+  <text x="46" y="188" font-size="9" fill="#888">sequence_attention_mask int64 [B,256]</text>
+  <text x="46" y="206" font-size="9" fill="#888">固定 D = 64　L = 256　T = 64</text>
+
+  <line x1="234" y1="153" x2="266" y2="153" stroke="#2c7fb8" stroke-width="1.6"/>
+  <polygon points="266,148 276,153 266,158" fill="#2c7fb8"/>
+
+  <rect x="280" y="96" width="250" height="114" fill="#2c7fb8" fill-opacity="0.06" stroke="#2c7fb8" stroke-width="1.6" transform="rotate(0.2 405 153)"/>
+  <text x="405" y="124" text-anchor="middle" font-size="14" fill="#2c7fb8">Message Encoder</text>
+  <text x="405" y="150" text-anchor="middle" font-size="11" fill="#333">learnable 位置编码</text>
+  <text x="405" y="170" text-anchor="middle" font-size="11" fill="#333">4 层 · 4 head · d_model 64</text>
+  <text x="405" y="192" text-anchor="middle" font-size="11" fill="#888">50,000 × 64 Embedding 表</text>
+
+  <line x1="534" y1="153" x2="566" y2="153" stroke="#2c7fb8" stroke-width="1.6"/>
+  <polygon points="566,148 576,153 566,158" fill="#2c7fb8"/>
+
+  <rect x="580" y="96" width="180" height="114" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(-0.2 670 153)"/>
+  <text x="670" y="130" text-anchor="middle" font-size="12" fill="#333">message_embeddings</text>
+  <text x="670" y="154" text-anchor="middle" font-size="11" fill="#2c7fb8">float32 [B, 256, 64]</text>
+  <text x="670" y="180" text-anchor="middle" font-size="10" fill="#888">逐位置，不是整段一个向量</text>
+
+  <rect x="784" y="96" width="186" height="114" fill="#2c7fb8" fill-opacity="0.05" stroke="#2c7fb8" stroke-width="1.2" stroke-dasharray="7 5" transform="rotate(0.3 877 153)"/>
+  <text x="877" y="122" text-anchor="middle" font-size="11" fill="#2c7fb8">与上下文无关</text>
+  <text x="877" y="146" text-anchor="middle" font-size="10" fill="#888">同一条消息在任何窗口</text>
+  <text x="877" y="164" text-anchor="middle" font-size="10" fill="#888">得到同一个向量</text>
+  <text x="877" y="188" text-anchor="middle" font-size="10" fill="#2c7fb8">可离线预计算 / 可缓存</text>
+
+  <!-- ===== connector down to sequence encoder ===== -->
+  <path d="M 670 210 L 670 232 L 405 232 L 405 250" fill="none" stroke="#2c7fb8" stroke-width="1.6"/>
+  <polygon points="400,248 405,258 410,248" fill="#2c7fb8"/>
+
+  <!-- ===== row 2 : sequence encoder ===== -->
+  <rect x="280" y="260" width="250" height="114" fill="#2c7fb8" fill-opacity="0.06" stroke="#2c7fb8" stroke-width="1.6" transform="rotate(-0.2 405 317)"/>
+  <text x="405" y="288" text-anchor="middle" font-size="14" fill="#2c7fb8">Sequence Encoder</text>
+  <text x="405" y="314" text-anchor="middle" font-size="11" fill="#333">sinusoidal 位置编码（buffer）</text>
+  <text x="405" y="334" text-anchor="middle" font-size="11" fill="#333">4 层 · 4 head · d_model 64</text>
+  <text x="405" y="356" text-anchor="middle" font-size="11" fill="#888">learnable mask_token</text>
+
+  <line x1="534" y1="317" x2="566" y2="317" stroke="#2c7fb8" stroke-width="1.6"/>
+  <polygon points="566,312 576,317 566,322" fill="#2c7fb8"/>
+
+  <rect x="580" y="260" width="180" height="114" fill="#fff" stroke="#2c7fb8" stroke-width="1.2" transform="rotate(0.2 670 317)"/>
+  <text x="670" y="294" text-anchor="middle" font-size="12" fill="#333">context_embeddings</text>
+  <text x="670" y="318" text-anchor="middle" font-size="11" fill="#2c7fb8">float32 [B, 256, 64]</text>
+  <text x="670" y="344" text-anchor="middle" font-size="10" fill="#888">每个位置带上邻居信息</text>
+
+  <rect x="784" y="260" width="186" height="114" fill="#d9534f" fill-opacity="0.05" stroke="#d9534f" stroke-width="1.2" stroke-dasharray="7 5" transform="rotate(-0.3 877 317)"/>
+  <text x="877" y="286" text-anchor="middle" font-size="11" fill="#d9534f">依赖窗口上下文</text>
+  <text x="877" y="310" text-anchor="middle" font-size="10" fill="#888">每条消息参照其余 255 条</text>
+  <text x="877" y="334" text-anchor="middle" font-size="10" fill="#d9534f">不可缓存，每窗口重算</text>
+  <text x="877" y="356" text-anchor="middle" font-size="10" fill="#888">占整条评分链的大头</text>
+
+  <!-- ===== row 3 : two score lines ===== -->
+  <rect x="30" y="410" width="460" height="112" fill="#fff" stroke="#2c7fb8" stroke-width="1.4" transform="rotate(-0.2 260 466)"/>
+  <text x="46" y="436" font-size="13" fill="#2c7fb8">Point 分数</text>
+  <text x="46" y="462" font-size="11" fill="#333">point_i = 1 - max cos(message_embedding_i, normal_reference)</text>
+  <text x="46" y="488" font-size="10" fill="#888">参照物：全局正常参考集（只能取自训练侧的正常样本）</text>
+  <text x="46" y="508" font-size="10" fill="#888">问的是这条消息本身像不像正常，单条即可判</text>
+
+  <rect x="510" y="410" width="460" height="112" fill="#fff" stroke="#d9534f" stroke-width="1.4" transform="rotate(0.2 740 466)"/>
+  <text x="526" y="436" font-size="13" fill="#d9534f">Context 分数</text>
+  <text x="526" y="462" font-size="10" fill="#333">context_i = 1 - cos(masked-context prediction_i, message_embedding_i)</text>
+  <text x="526" y="488" font-size="10" fill="#888">参照物：同一窗口的其余 255 条（leave-one-out 遮蔽重建）</text>
+  <text x="526" y="508" font-size="10" fill="#888">问的是这条消息在这个位置上合不合理，必须带上下文</text>
+
+  <path d="M 670 374 L 670 392 L 740 392 L 740 410" fill="none" stroke="#d9534f" stroke-width="1.4"/>
+  <polygon points="735,408 740,418 745,408" fill="#d9534f"/>
+  <path d="M 260 374 L 260 410" fill="none" stroke="#2c7fb8" stroke-width="1.4"/>
+  <polygon points="255,408 260,418 265,408" fill="#2c7fb8"/>
+
+  <!-- ===== row 4 : features -> calibration ===== -->
+  <rect x="30" y="548" width="460" height="88" fill="#fff" stroke="#333" stroke-width="1.2" transform="rotate(0.2 260 592)"/>
+  <text x="46" y="574" font-size="12" fill="#333">四维特征（顺序冻结，改动即接口变更）</text>
+  <text x="46" y="600" font-size="11" fill="#2c7fb8">point_mean · point_max · context_mean · context_max</text>
+  <text x="46" y="622" font-size="10" fill="#888">均值看整体偏离，最大值看最可疑的那一个位置</text>
+
+  <line x1="494" y1="592" x2="506" y2="592" stroke="#2c7fb8" stroke-width="1.6"/>
+  <polygon points="506,587 516,592 506,597" fill="#2c7fb8"/>
+
+  <rect x="520" y="548" width="450" height="88" fill="#fff" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" transform="rotate(-0.2 745 592)"/>
+  <text x="536" y="574" font-size="12" fill="#333">Robust-Z 标准化 → L2 合成 → 阈值判定</text>
+  <text x="536" y="600" font-size="9" fill="#2c7fb8">robust_z_j = |(f_j - median_j) / max(mad_j, 1e-9)|　sequence_score = L2(robust_z)</text>
+  <text x="536" y="622" font-size="10" fill="#888">阈值取正常集高分位，分位点直接对应目标误报率</text>
+</svg>

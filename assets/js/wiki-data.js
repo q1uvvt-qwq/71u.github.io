@@ -2787,6 +2787,314 @@ window.WIKI = [
 		]
 	},
 	{
+		"id": "模型构建",
+		"title": "模型构建",
+		"children": [
+			{
+				"id": "01-数据工程",
+				"title": "数据工程",
+				"children": [
+					{
+						"id": "01-数据工程/安全日志清洗",
+						"title": "安全日志清洗",
+						"path": "01-数据工程/安全日志清洗.md",
+						"order": 1,
+						"tags": [
+							"日志清洗",
+							"离群值",
+							"去重",
+							"命令行",
+							"证据链"
+						],
+						"source": ""
+					},
+					{
+						"id": "01-数据工程/事件标准化",
+						"title": "事件标准化",
+						"path": "01-数据工程/事件标准化.md",
+						"order": 2,
+						"tags": [
+							"标准事件",
+							"缺失值",
+							"唯一标识",
+							"标签",
+							"分组排序"
+						],
+						"source": ""
+					},
+					{
+						"id": "01-数据工程/语义表示",
+						"title": "语义表示",
+						"path": "01-数据工程/语义表示.md",
+						"order": 3,
+						"tags": [
+							"canonical_message",
+							"占位符",
+							"structured_token",
+							"特征工程",
+							"special token"
+						],
+						"source": ""
+					},
+					{
+						"id": "01-数据工程/序列构造",
+						"title": "序列构造",
+						"path": "01-数据工程/序列构造.md",
+						"order": 4,
+						"tags": [
+							"滑窗",
+							"stride",
+							"定长张量",
+							"样本构造",
+							"缓存"
+						],
+						"source": ""
+					},
+					{
+						"id": "01-数据工程/划分与防泄漏",
+						"title": "划分与防泄漏",
+						"path": "01-数据工程/划分与防泄漏.md",
+						"order": 5,
+						"tags": [
+							"数据泄漏",
+							"分组切分",
+							"时间切分",
+							"train-only",
+							"阈值校准"
+						],
+						"source": ""
+					},
+					{
+						"id": "01-数据工程/词表与剪枝",
+						"title": "词表与剪枝",
+						"path": "01-数据工程/词表与剪枝.md",
+						"order": 6,
+						"tags": [
+							"信息增益",
+							"优势比",
+							"TF-IDF",
+							"词表剪枝",
+							"支持度"
+						],
+						"source": ""
+					}
+				],
+				"order": 1
+			},
+			{
+				"id": "02-模型",
+				"title": "模型",
+				"children": [
+					{
+						"id": "02-模型/ContraLog架构",
+						"title": "ContraLog架构",
+						"path": "02-模型/ContraLog架构.md",
+						"order": 1,
+						"tags": [
+							"双编码器",
+							"Transformer",
+							"MessageEncoder",
+							"SequenceEncoder",
+							"ONNX契约"
+						],
+						"source": ""
+					},
+					{
+						"id": "02-模型/评分定义",
+						"title": "评分定义",
+						"path": "02-模型/评分定义.md",
+						"order": 2,
+						"tags": [
+							"余弦距离",
+							"最近邻参考",
+							"逐位置重建",
+							"特征聚合",
+							"计算量"
+						],
+						"source": ""
+					},
+					{
+						"id": "02-模型/阈值与校准",
+						"title": "阈值与校准",
+						"path": "02-模型/阈值与校准.md",
+						"order": 3,
+						"tags": [
+							"Robust-Z",
+							"median",
+							"MAD",
+							"分位数阈值",
+							"误报率"
+						],
+						"source": ""
+					},
+					{
+						"id": "02-模型/Tokenizer",
+						"title": "Tokenizer",
+						"path": "02-模型/Tokenizer.md",
+						"order": 4,
+						"tags": [
+							"分词",
+							"子词",
+							"词表",
+							"特殊token",
+							"OOV"
+						],
+						"source": ""
+					},
+					{
+						"id": "02-模型/变体与蒸馏",
+						"title": "变体与蒸馏",
+						"path": "02-模型/变体与蒸馏.md",
+						"order": 5,
+						"tags": [
+							"知识蒸馏",
+							"遮蔽重建",
+							"对比损失",
+							"变体",
+							"Hit@10"
+						],
+						"source": ""
+					},
+					{
+						"id": "02-模型/相关方法",
+						"title": "相关方法",
+						"path": "02-模型/相关方法.md",
+						"order": 6,
+						"tags": [
+							"LogBERT",
+							"LAnoBERT",
+							"ADALog",
+							"DeepLog",
+							"模板化",
+							"parser-free"
+						],
+						"source": ""
+					}
+				],
+				"order": 2
+			},
+			{
+				"id": "03-轻量化",
+				"title": "轻量化",
+				"children": [
+					{
+						"id": "03-轻量化/轻量化总览",
+						"title": "轻量化总览",
+						"path": "03-轻量化/轻量化总览.md",
+						"order": 1,
+						"tags": [
+							"量化",
+							"缓存",
+							"批处理",
+							"ONNX",
+							"收益排序"
+						],
+						"source": ""
+					},
+					{
+						"id": "03-轻量化/INT8量化",
+						"title": "INT8量化",
+						"path": "03-轻量化/INT8量化.md",
+						"order": 2,
+						"tags": [
+							"量化",
+							"动态量化",
+							"静态量化",
+							"校准",
+							"组成敏感"
+						],
+						"source": ""
+					},
+					{
+						"id": "03-轻量化/ONNX部署",
+						"title": "ONNX部署",
+						"path": "03-轻量化/ONNX部署.md",
+						"order": 3,
+						"tags": [
+							"ONNX",
+							"ONNX Runtime",
+							"算子融合",
+							"动态维度",
+							"导出验收"
+						],
+						"source": ""
+					},
+					{
+						"id": "03-轻量化/缓存",
+						"title": "缓存",
+						"path": "03-轻量化/缓存.md",
+						"order": 4,
+						"tags": [
+							"embedding缓存",
+							"LRU",
+							"缓存键",
+							"命中率",
+							"fail-open"
+						],
+						"source": ""
+					},
+					{
+						"id": "03-轻量化/批与序列",
+						"title": "批与序列",
+						"path": "03-轻量化/批与序列.md",
+						"order": 5,
+						"tags": [
+							"batch",
+							"吞吐与延迟",
+							"线程数",
+							"长度分桶",
+							"Pareto"
+						],
+						"source": ""
+					},
+					{
+						"id": "03-轻量化/瓶颈归因",
+						"title": "瓶颈归因",
+						"path": "03-轻量化/瓶颈归因.md",
+						"order": 6,
+						"tags": [
+							"Amdahl",
+							"profiling",
+							"采样",
+							"冷启动",
+							"chunk"
+						],
+						"source": ""
+					},
+					{
+						"id": "03-轻量化/数值等价",
+						"title": "数值等价",
+						"path": "03-轻量化/数值等价.md",
+						"order": 7,
+						"tags": [
+							"ONNX",
+							"Golden",
+							"容差",
+							"余弦相似度",
+							"哈希"
+						],
+						"source": ""
+					},
+					{
+						"id": "03-轻量化/漂移度量",
+						"title": "漂移度量",
+						"path": "03-轻量化/漂移度量.md",
+						"order": 8,
+						"tags": [
+							"Spearman",
+							"Top-K重合",
+							"排序",
+							"决策翻转",
+							"阈值重校准"
+						],
+						"source": ""
+					}
+				],
+				"order": 3
+			}
+		]
+	},
+	{
 		"id": "11-逻辑漏洞",
 		"title": "逻辑漏洞",
 		"children": []
