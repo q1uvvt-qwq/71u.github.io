@@ -249,23 +249,6 @@ window.WIKI = [
 				"title": "SQL注入",
 				"children": [
 					{
-						"id": "web知识/02-SQL注入/SQL注入底层原理-解析与执行的博弈",
-						"title": "SQL注入底层原理：解析与执行的博弈",
-						"path": "web知识/02-SQL注入/SQL注入底层原理-解析与执行的博弈.md",
-						"order": 0,
-						"tags": [
-							"SQL注入",
-							"解析器",
-							"词法分析",
-							"语法分析",
-							"动态SQL",
-							"预处理",
-							"提前闭合",
-							"DNSLOG"
-						],
-						"source": "luvvvv 学习笔记《2. SQL 注入的底层原理：解析与执行的博弈》"
-					},
-					{
 						"id": "web知识/02-SQL注入/SQL基础语法",
 						"title": "SQL 基础语法",
 						"path": "web知识/02-SQL注入/SQL基础语法.md",
@@ -278,13 +261,44 @@ window.WIKI = [
 							"WHERE",
 							"增删改查"
 						],
-						"source": "luvvvv 学习笔记《SQL》"
+						"source": ""
+					},
+					{
+						"id": "web知识/02-SQL注入/MySQL基础",
+						"title": "MySQL 基础：SQL 与 MySQL 的区别",
+						"path": "web知识/02-SQL注入/MySQL基础.md",
+						"order": 2,
+						"tags": [
+							"MySQL",
+							"SQL",
+							"关系型数据库",
+							"DBMS",
+							"数据库指纹"
+						],
+						"source": ""
+					},
+					{
+						"id": "web知识/02-SQL注入/SQL注入底层原理-解析与执行的博弈",
+						"title": "SQL注入底层原理：解析与执行的博弈",
+						"path": "web知识/02-SQL注入/SQL注入底层原理-解析与执行的博弈.md",
+						"order": 3,
+						"tags": [
+							"SQL注入",
+							"解析器",
+							"词法分析",
+							"语法分析",
+							"动态SQL",
+							"预处理",
+							"提前闭合",
+							"DNSLOG"
+						],
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/SQL注入概览",
 						"title": "SQL 注入概览：拿到注入能力后去哪找 flag",
 						"path": "web知识/02-SQL注入/SQL注入概览.md",
-						"order": 2,
+						"order": 4,
 						"tags": [
 							"SQL注入",
 							"information_schema",
@@ -294,38 +308,7 @@ window.WIKI = [
 							"信息收集",
 							"flag路径"
 						],
-						"source": "luvvvv 学习笔记《SQLI》"
-					},
-					{
-						"id": "web知识/02-SQL注入/MySQL基础",
-						"title": "MySQL 基础：SQL 与 MySQL 的区别",
-						"path": "web知识/02-SQL注入/MySQL基础.md",
-						"order": 3,
-						"tags": [
-							"MySQL",
-							"SQL",
-							"关系型数据库",
-							"DBMS",
-							"数据库指纹"
-						],
-						"source": "luvvvv 学习笔记《MYSQL》"
-					},
-					{
-						"id": "web知识/02-SQL注入/MySQL核心原理",
-						"title": "MySQL 核心原理：从架构到\"谁在当 SQL 客户端",
-						"path": "web知识/02-SQL注入/MySQL核心原理.md",
-						"order": 4,
-						"tags": [
-							"MySQL",
-							"连接器",
-							"连接池",
-							"解析器",
-							"词法分析",
-							"预处理器",
-							"prepare",
-							"WAF"
-						],
-						"source": "luvvvv 学习笔记《mysql核心原理》"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/SQL注入核心概念速记",
@@ -344,24 +327,69 @@ window.WIKI = [
 							"字面量",
 							"正则"
 						],
-						"source": "luvvvv/love.md + base/love.md（两篇内容完全相同，此处合并为一篇）"
+						"source": ""
 					},
 					{
-						"id": "web知识/02-SQL注入/与SQL注入相似的其他漏洞",
-						"title": "与 SQL 注入相似的其他漏洞",
-						"path": "web知识/02-SQL注入/与SQL注入相似的其他漏洞.md",
+						"id": "web知识/02-SQL注入/MySQL核心原理",
+						"title": "MySQL 核心原理：从架构到\"谁在当 SQL 客户端",
+						"path": "web知识/02-SQL注入/MySQL核心原理.md",
 						"order": 6,
 						"tags": [
-							"注入类漏洞",
-							"命令注入",
-							"XSS",
-							"SSTI",
-							"LDAP注入",
-							"XPath注入",
-							"代码注入",
-							"反序列化"
+							"MySQL",
+							"连接器",
+							"连接池",
+							"解析器",
+							"词法分析",
+							"预处理器",
+							"prepare",
+							"WAF"
 						],
-						"source": "luvvvv 学习笔记《与sqli相似的其他漏洞》"
+						"source": ""
+					},
+					{
+						"id": "web知识/02-SQL注入/字符型与数字型注入-闭合原理",
+						"title": "字符型与数字型注入-闭合原理",
+						"path": "web知识/02-SQL注入/字符型与数字型注入-闭合原理.md",
+						"order": 7,
+						"tags": [
+							"闭合",
+							"注释符",
+							"字符型",
+							"数字型",
+							"order by",
+							"列数判断"
+						],
+						"source": ""
+					},
+					{
+						"id": "web知识/02-SQL注入/联合查询注入完整攻击流程",
+						"title": "联合查询注入完整攻击流程",
+						"path": "web知识/02-SQL注入/联合查询注入完整攻击流程.md",
+						"order": 8,
+						"tags": [
+							"union",
+							"order by",
+							"回显点",
+							"information_schema",
+							"hex",
+							"group_concat"
+						],
+						"source": ""
+					},
+					{
+						"id": "web知识/02-SQL注入/信息收集-库表列字段",
+						"title": "信息收集-库表列字段",
+						"path": "web知识/02-SQL注入/信息收集-库表列字段.md",
+						"order": 9,
+						"tags": [
+							"information_schema",
+							"group_concat",
+							"union",
+							"order by",
+							"group by",
+							"常用函数"
+						],
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/布尔盲注-原理与利用",
@@ -376,71 +404,59 @@ window.WIKI = [
 							"盲注",
 							"MySQL弱类型"
 						],
-						"source": "ctfshow web189"
-					},
-					{
-						"id": "web知识/02-SQL注入/字符型与数字型注入-闭合原理",
-						"title": "字符型与数字型注入-闭合原理",
-						"path": "web知识/02-SQL注入/字符型与数字型注入-闭合原理.md",
-						"order": 11,
-						"tags": [
-							"闭合",
-							"注释符",
-							"字符型",
-							"数字型",
-							"order by",
-							"列数判断"
-						],
-						"source": "字符型与数字型区分 + 注入&&闭合 + 闭合之后想要注入"
-					},
-					{
-						"id": "web知识/02-SQL注入/联合查询注入完整攻击流程",
-						"title": "联合查询注入完整攻击流程",
-						"path": "web知识/02-SQL注入/联合查询注入完整攻击流程.md",
-						"order": 12,
-						"tags": [
-							"union",
-							"order by",
-							"回显点",
-							"information_schema",
-							"hex",
-							"group_concat"
-						],
-						"source": "字符型注入完整攻击流程 + ctfshow union 题解"
-					},
-					{
-						"id": "web知识/02-SQL注入/信息收集-库表列字段",
-						"title": "信息收集-库表列字段",
-						"path": "web知识/02-SQL注入/信息收集-库表列字段.md",
-						"order": 13,
-						"tags": [
-							"information_schema",
-							"group_concat",
-							"union",
-							"order by",
-							"group by",
-							"常用函数"
-						],
-						"source": "通用的信息收集步骤 + 查询&&函数"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/子查询",
 						"title": "子查询",
 						"path": "web知识/02-SQL注入/子查询.md",
-						"order": 14,
+						"order": 11,
 						"tags": [
 							"子查询",
 							"括号",
 							"标量子查询",
 							"union"
 						],
-						"source": "子查询"
+						"source": ""
+					},
+					{
+						"id": "web知识/02-SQL注入/增删改与堆叠注入",
+						"title": "增删改与堆叠注入",
+						"path": "web知识/02-SQL注入/增删改与堆叠注入.md",
+						"order": 12,
+						"tags": [
+							"DDL",
+							"DML",
+							"insert",
+							"update",
+							"delete",
+							"堆叠注入",
+							"多语句",
+							"mysqli_multi_query"
+						],
+						"source": ""
+					},
+					{
+						"id": "web知识/02-SQL注入/LIKE注入与盲注脚本",
+						"title": "LIKE注入与盲注脚本",
+						"path": "web知识/02-SQL注入/LIKE注入与盲注脚本.md",
+						"order": 13,
+						"tags": [
+							"ctfshow",
+							"web183",
+							"like",
+							"regexp",
+							"盲注",
+							"服务器端爆破",
+							"反引号"
+						],
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/过滤绕过-空格与关键字",
 						"title": "过滤绕过-空格与关键字",
 						"path": "web知识/02-SQL注入/过滤绕过-空格与关键字.md",
-						"order": 15,
+						"order": 14,
 						"tags": [
 							"ctfshow",
 							"web176",
@@ -454,13 +470,13 @@ window.WIKI = [
 							"注释符",
 							"空白符"
 						],
-						"source": "ctfshow web176-181"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/过滤绕过-数字与引号",
 						"title": "过滤绕过-数字与引号",
 						"path": "web知识/02-SQL注入/过滤绕过-数字与引号.md",
-						"order": 16,
+						"order": 15,
 						"tags": [
 							"ctfshow",
 							"web174",
@@ -473,13 +489,13 @@ window.WIKI = [
 							"chr",
 							"十六进制"
 						],
-						"source": "ctfshow web174/web175/web185"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/过滤绕过-where与引号-having与join",
 						"title": "过滤绕过-where与引号-having与join",
 						"path": "web知识/02-SQL注入/过滤绕过-where与引号-having与join.md",
-						"order": 17,
+						"order": 16,
 						"tags": [
 							"ctfshow",
 							"web184",
@@ -490,13 +506,13 @@ window.WIKI = [
 							"十六进制",
 							"0x"
 						],
-						"source": "ctfshow web184"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/md5与弱比较绕过",
 						"title": "md5与弱比较绕过",
 						"path": "web知识/02-SQL注入/md5与弱比较绕过.md",
-						"order": 18,
+						"order": 17,
 						"tags": [
 							"ctfshow",
 							"web187",
@@ -507,13 +523,13 @@ window.WIKI = [
 							"隐式类型转换",
 							"ffifdyop"
 						],
-						"source": "ctfshow web187 + web188"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/输出编码绕过",
 						"title": "输出编码绕过",
 						"path": "web知识/02-SQL注入/输出编码绕过.md",
-						"order": 19,
+						"order": 18,
 						"tags": [
 							"ctfshow",
 							"web172",
@@ -523,46 +539,30 @@ window.WIKI = [
 							"union",
 							"回显"
 						],
-						"source": "ctfshow web172"
+						"source": ""
 					},
 					{
-						"id": "web知识/02-SQL注入/增删改与堆叠注入",
-						"title": "增删改与堆叠注入",
-						"path": "web知识/02-SQL注入/增删改与堆叠注入.md",
-						"order": 20,
+						"id": "web知识/02-SQL注入/与SQL注入相似的其他漏洞",
+						"title": "与 SQL 注入相似的其他漏洞",
+						"path": "web知识/02-SQL注入/与SQL注入相似的其他漏洞.md",
+						"order": 19,
 						"tags": [
-							"DDL",
-							"DML",
-							"insert",
-							"update",
-							"delete",
-							"堆叠注入",
-							"多语句",
-							"mysqli_multi_query"
+							"注入类漏洞",
+							"命令注入",
+							"XSS",
+							"SSTI",
+							"LDAP注入",
+							"XPath注入",
+							"代码注入",
+							"反序列化"
 						],
-						"source": "SQL 增删改语法笔记"
-					},
-					{
-						"id": "web知识/02-SQL注入/LIKE注入与盲注脚本",
-						"title": "LIKE注入与盲注脚本",
-						"path": "web知识/02-SQL注入/LIKE注入与盲注脚本.md",
-						"order": 21,
-						"tags": [
-							"ctfshow",
-							"web183",
-							"like",
-							"regexp",
-							"盲注",
-							"服务器端爆破",
-							"反引号"
-						],
-						"source": "ctfshow web183"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/题解-条件优先级与flag回显绕过",
 						"title": "题解-条件优先级与flag回显绕过",
 						"path": "web知识/02-SQL注入/题解-条件优先级与flag回显绕过.md",
-						"order": 22,
+						"order": 20,
 						"tags": [
 							"ctfshow",
 							"web171",
@@ -574,13 +574,13 @@ window.WIKI = [
 							"hex",
 							"输出过滤"
 						],
-						"source": "ctfshow web171 + web173"
+						"source": ""
 					},
 					{
 						"id": "web知识/02-SQL注入/SQLite布尔盲注题解",
 						"title": "SQLite 布尔盲注题解",
 						"path": "web知识/02-SQL注入/SQLite布尔盲注题解.md",
-						"order": 23,
+						"order": 21,
 						"tags": [
 							"SQLite",
 							"布尔盲注",
@@ -589,7 +589,7 @@ window.WIKI = [
 							"--+注释",
 							"geek"
 						],
-						"source": "geek 靶场 week2"
+						"source": ""
 					}
 				]
 			},
