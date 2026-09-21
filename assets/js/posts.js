@@ -18,17 +18,10 @@
 
 window.POSTS = [
 	{
-		slug: 'hello-notes',
-		title: '开篇：为什么我要写笔记',
-		date: '2026-09-19',
-		tags: ['随笔'],
-		summary: '记录项目、技术与思考的全过程。笔记不止于结果，更注重还原想法落地的轨迹。'
-	},
-	{
-		slug: 'engineering-mindset',
-		title: '工程化思维：从结果到轨迹',
+		slug: 'notes-opening',
+		title: '写在前面：为什么开始记录',
 		date: '2026-09-12',
-		tags: ['工程化', '方法论'],
-		summary: '为什么我更看重底层机制、系统可靠性与代码可维护性，而不是把能跑通当作终点。'
+		tags: ['随笔'],
+		summary: '写作是最廉价的验证手段：结果可以复制，轨迹不能。'
 	}
 ];

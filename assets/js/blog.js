@@ -3,7 +3,7 @@
 
 	加载顺序很重要：本文件必须在 assets/js/main.js 之前引入。main.js 在
 	执行瞬间会快照 #main 里的 <article> 列表，所以文章壳必须先存在于 DOM
-	中，模板的 hash 路由（如 index.html#post-hello-notes）才能找到并打开。
+	中，模板的 hash 路由（如 index.html#post-notes-opening）才能找到并打开。
 
 	正文存放在 posts/<slug>.html，仅在首次打开该文章时才 fetch 载入，
 	因此 index.html 的体积不会随文章数量增长。
