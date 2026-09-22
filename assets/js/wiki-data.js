@@ -237,6 +237,78 @@ window.WIKI = [
 					"黑盒推断"
 				],
 				"source": ""
+			},
+			{
+				"id": "01-信息收集/资产搜索引擎",
+				"title": "资产搜索引擎",
+				"path": "01-信息收集/资产搜索引擎.md",
+				"order": 20,
+				"tags": [
+					"FOFA",
+					"Hunter",
+					"ZoomEye",
+					"网络空间测绘",
+					"资产发现"
+				],
+				"source": ""
+			},
+			{
+				"id": "01-信息收集/子域名收集",
+				"title": "子域名收集",
+				"path": "01-信息收集/子域名收集.md",
+				"order": 21,
+				"tags": [
+					"子域名",
+					"爆破",
+					"域传输",
+					"证书透明度",
+					"robots.txt",
+					"site"
+				],
+				"source": ""
+			},
+			{
+				"id": "01-信息收集/收集工具",
+				"title": "信息收集工具",
+				"path": "01-信息收集/收集工具.md",
+				"order": 22,
+				"tags": [
+					"httpx",
+					"ARL",
+					"密探",
+					"OneForAll",
+					"被动信息收集"
+				],
+				"source": ""
+			},
+			{
+				"id": "01-信息收集/信息泄露",
+				"title": "常见信息泄露",
+				"path": "01-信息收集/信息泄露.md",
+				"order": 23,
+				"tags": [
+					"git泄露",
+					"配置文件",
+					"日志",
+					"目录遍历",
+					"备份文件",
+					"AK泄露",
+					"webpack"
+				],
+				"source": ""
+			},
+			{
+				"id": "01-信息收集/GoogleHacking",
+				"title": "Google Hacking 语法",
+				"path": "01-信息收集/GoogleHacking.md",
+				"order": 24,
+				"tags": [
+					"GoogleHacking",
+					"搜索引擎语法",
+					"密码获取",
+					"site"
+				],
+				"source": ""
 			}
 		]
 	},

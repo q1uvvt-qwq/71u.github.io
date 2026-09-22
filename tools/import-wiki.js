@@ -31,6 +31,11 @@
 	  D:/日志检测  主机日志异常检测笔记，3 个分区 20 篇，收进合成容器「模型构建」，
 	            紧跟在「蜜罐研究」后面。
 
+  D:/实训笔记/06-信息收集
+            另一套笔记（实训系列）里正好也是「信息收集」题材的 5 篇。它不新开分区，
+            而是**合并进 D:/ctf 建出来的 01-信息收集**（见 SOURCES 的 mergeInto）：
+            笔记挂到那个分区下，与该分区原有的 4 篇按 order 一起排序。源目录不动。
+
 	树里所有分区都去掉「数字-」前缀显示（基础、信息收集、Modbus …），但 id 与
 	文件路径保留前缀，和源目录逐字对应——编号在源目录里仍是排序依据，只是不显示。
 
@@ -59,6 +64,8 @@ const PARTITION_RE = /^\d{2}-/;
 	              只是若干分区的归类
 	  group       把该源扫出来的分区整体再收进一个合成容器（源目录里没有这层）
 	  after       合成容器排在哪个顶层节点之后；锚点必须来自先处理的源
+  mergeInto   不开新分区，把该源的笔记并进这个已存在的分区（分区 id）；
+              该分区必须由排在前面的源建出来
 
 	几个源的编号都从 00 起，所以合成容器不能按编号自动落位，得逐个给 after 串起来
 	（web知识 → 工控安全 → 蜜罐研究 → 模型构建）。
@@ -67,7 +74,9 @@ const SOURCES = [
 	{ dir: 'D:/ctf', containers: ['web知识'] },
 	{ dir: 'D:/工控', group: '工控安全', after: 'web知识' },
 	{ dir: 'D:/蜜罐', group: '蜜罐研究', after: '工控安全' },
-	{ dir: 'D:/日志检测', group: '模型构建', after: '蜜罐研究' }
+	{ dir: 'D:/日志检测', group: '模型构建', after: '蜜罐研究' },
+	// 实训系列里与已有分区同题材的，并进去而不是另开一个「信息收集」
+	{ dir: 'D:/实训笔记/06-信息收集', mergeInto: '01-信息收集' }
 ];
 
 // Windows 路径转成网页用的正斜杠路径
@@ -201,6 +210,9 @@ function buildSource(src, tree) {
 	const dir = path.resolve(src.dir);
 	if (!fs.existsSync(dir)) fail('源目录不存在：' + dir);
 
+	// 合并型源：不新建顶层节点，只把笔记挂到已有分区下
+	if (src.mergeInto) return mergeIntoTarget(src, dir, tree);
+
 	const containers = src.containers || [];
 	const names = fs.readdirSync(dir, { withFileTypes: true })
 		.filter(e => e.isDirectory() && (PARTITION_RE.test(e.name) || containers.includes(e.name)))
@@ -230,6 +242,38 @@ function buildSource(src, tree) {
 		order: anchor.order + 0.25,   // 紧跟在锚点后面，两边编号各自从 00 起也不冲突
 		children: nodes
 	});
+}
+
+/* ---------- 合并进已有分区 ---------- */
+
+// 排序键：笔记看 front-matter 的 order，分组和没写 order 的笔记都排最后
+function nodeOrder(node) {
+	return node.children || typeof node.order !== 'number' ? Number.MAX_SAFE_INTEGER : node.order;
+}
+
+// 把子树里的 id / path 统一加上分区前缀。title 不动（笔记名照旧、分组名顺手去掉数字前缀），
+// 只改定位用的字段——所以必须**先复制、后 reparent**，否则路径就对不上源文件了。
+function reparent(node, prefix) {
+	node.id = prefix + '/' + node.id;
+	if (node.path) node.path = prefix + '/' + node.path;
+	if (!node.children) return;
+	node.title = node.title.replace(PARTITION_RE, '');
+	for (const child of node.children) reparent(child, prefix);
+}
+
+// 把 src.dir 的笔记并进 tree 里 id === mergeInto 的那个分区，不新建顶层节点。
+// 目标分区必须已经由排在前面的源建出来——合并后两边的 order 会混在一起，所以再排一次。
+function mergeIntoTarget(src, dir, tree) {
+	const target = tree.filter(node => node.id === src.mergeInto)[0];
+	if (!target) fail('mergeInto 指向的分区不存在：' + src.mergeInto + '（得由排在前面的源建出来）');
+	if (!target.children) fail('mergeInto 指向的节点不是分区：' + src.mergeInto);
+
+	const scanned = scanDir(dir, '');
+	for (const node of scanned) collectAndCopy(dir, node, src.mergeInto);
+	for (const node of scanned) reparent(node, src.mergeInto);
+
+	Array.prototype.push.apply(target.children, scanned);
+	target.children.sort((a, b) => nodeOrder(a) - nodeOrder(b) || a.title.localeCompare(b.title, 'zh'));
 }
 
 // 复制图片资源：正文里统一以 ../_assets/xxx 引用，这里原样搬过来。
@@ -263,7 +307,8 @@ function main() {
 
 	writeManifest(tree);
 
-	console.log('源目录   ：' + SOURCES.map(s => path.resolve(s.dir)).join(' / '));
+	console.log('源目录   ：' + SOURCES.map(s =>
+		path.resolve(s.dir) + (s.mergeInto ? ' → ' + s.mergeInto : '')).join(' / '));
 	console.log('顶层     ：' + tree.map(n => n.title).join(' / '));
 	console.log('笔记数   ：' + noteCount);
 	console.log('图片数   ：' + assetCount);
@@ -271,15 +316,17 @@ function main() {
 }
 
 // 递归复制笔记文件到 wiki/。
-// node.path 已经是相对源目录（也相对 wiki/）的路径，源与目标同一相对路径。
-function collectAndCopy(srcDir, node) {
+// node.path 是相对源目录的路径；目标若不加 destPrefix 就与源同一相对路径
+// （分区自己的目录已经等于它的 id），合并进别的分区时才需要额外前缀。
+function collectAndCopy(srcDir, node, destPrefix) {
 	if (node.children) {
 		for (const child of node.children) {
-			collectAndCopy(srcDir, child);
+			collectAndCopy(srcDir, child, destPrefix);
 		}
 		return;
 	}
-	copyFile(path.join(srcDir, node.path), path.join(WIKI_DIR, node.path));
+	const dest = destPrefix ? destPrefix + '/' + node.path : node.path;
+	copyFile(path.join(srcDir, node.path), path.join(WIKI_DIR, dest));
 }
 
 function countNotes(nodes) {
