@@ -168,7 +168,7 @@
 		var meta = buildMeta(node);
 		if (meta) bodyEl.appendChild(meta);
 
-		bodyEl.appendChild(renderMarkdown(markdown));
+		bodyEl.appendChild(renderMarkdown(markdown, node.title));
 	}
 
 	function buildMeta(node) {
@@ -182,7 +182,7 @@
 		return p;
 	}
 
-	function renderMarkdown(markdown) {
+	function renderMarkdown(markdown, noteTitle) {
 		var holder = document.createElement('div');
 		holder.className = 'wiki-content';
 
@@ -215,6 +215,14 @@
 			while (heading.firstChild) shifted.appendChild(heading.firstChild);
 			heading.parentNode.replaceChild(shifted, heading);
 		});
+
+		// 有些笔记没有 front-matter，正文第一个标题就是笔记名本身（如 ## 交易），
+		// 面板上方已经显示过一遍了。只认第一个元素、且要逐字相同，不会误删小节标题。
+		var first = holder.firstElementChild;
+		if (first && /^H[1-6]$/.test(first.tagName) &&
+				first.textContent.trim() === (noteTitle || '').trim()) {
+			holder.removeChild(first);
+		}
 
 		return holder;
 	}

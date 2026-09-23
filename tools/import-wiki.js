@@ -36,6 +36,11 @@
             而是**合并进 D:/ctf 建出来的 01-信息收集**（见 SOURCES 的 mergeInto）：
             笔记挂到那个分区下，与该分区原有的 4 篇按 order 一起排序。源目录不动。
 
+  D:/区块链安全  区块链安全笔记。目前只导入「安全前置」这一个分区（另外 4 个目录还是空的），
+            收进合成容器「区块链安全」。分区目录没有数字前缀，所以在 SOURCES 里用
+            partitions 显式列出；笔记也**完全没有 front-matter**，因此用 byTime 按
+            文件创建时间（= 写作顺序）排。源目录一个字节都不动。
+
 	树里所有分区都去掉「数字-」前缀显示（基础、信息收集、Modbus …），但 id 与
 	文件路径保留前缀，和源目录逐字对应——编号在源目录里仍是排序依据，只是不显示。
 
@@ -66,6 +71,10 @@ const PARTITION_RE = /^\d{2}-/;
 	  after       合成容器排在哪个顶层节点之后；锚点必须来自先处理的源
   mergeInto   不开新分区，把该源的笔记并进这个已存在的分区（分区 id）；
               该分区必须由排在前面的源建出来
+  partitions  显式列出当作分区的子目录名，供没有「数字-名称」前缀的源使用
+              （写了它就不再按 PARTITION_RE 自动识别）
+  byTime      笔记缺 front-matter order 时按**文件创建时间**排，而不是退回文件名——
+              给「按写作先后顺序读」的笔记用
 
 	几个源的编号都从 00 起，所以合成容器不能按编号自动落位，得逐个给 after 串起来
 	（web知识 → 工控安全 → 蜜罐研究 → 模型构建）。
@@ -75,6 +84,10 @@ const SOURCES = [
 	{ dir: 'D:/工控', group: '工控安全', after: 'web知识' },
 	{ dir: 'D:/蜜罐', group: '蜜罐研究', after: '工控安全' },
 	{ dir: 'D:/日志检测', group: '模型构建', after: '蜜罐研究' },
+	// 区块链安全：分区目录没有数字前缀，用 partitions 显式列出；笔记没有 front-matter，
+	// 靠 byTime 按文件创建时间排（也就是写作顺序）
+	{ dir: 'D:/区块链安全', group: '区块链安全', after: '模型构建',
+	  partitions: ['安全前置'], byTime: true },
 	// 实训系列里与已有分区同题材的，并进去而不是另开一个「信息收集」
 	{ dir: 'D:/实训笔记/06-信息收集', mergeInto: '01-信息收集' }
 ];
@@ -130,14 +143,23 @@ function copyFile(from, to) {
 
 /* ---------- 扫描 ---------- */
 
+// 笔记的排序时间：优先创建时间（birthtime），个别文件系统不支持时返回 0，那就退回修改时间。
+// 用创建时间而不是 mtime，是因为改一下笔记内容不该让它换位置。
+function timeOf(stat) {
+	return stat.birthtimeMs > 0 ? stat.birthtimeMs : stat.mtimeMs;
+}
+
 // 递归扫描一个目录：
-//   直接属于它的 .md → notes（按 front-matter order 升序，order 相同或缺失则按文件名）
+//   直接属于它的 .md → notes（按 front-matter order 升序；order 缺失时，byTime 的源按文件
+//                      时间排、其余按文件名）
 //   子目录 → groups（按目录名升序），递归下去；groups 排在 notes 之后
 // 这样与 README 里的编号顺序一致（如 01-信息收集 的 1-4 是正文，5-6 在 爆破/ 子目录）。
-function scanDir(absDir, relDir) {
+function scanDir(absDir, relDir, byTime) {
 	const entries = fs.readdirSync(absDir, { withFileTypes: true });
 	const notes = [];
 	const groups = [];
+	// 文件时间只用于本次排序，存在这里而不是节点上，免得混进 wiki-data.js
+	const times = new Map();
 
 	for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name, 'zh'))) {
 		const abs = path.join(absDir, entry.name);
@@ -146,28 +168,35 @@ function scanDir(absDir, relDir) {
 			groups.push({
 				id: toPosix(relDir ? path.join(relDir, entry.name) : entry.name),
 				title: entry.name,
-				children: scanDir(abs, relDir ? path.join(relDir, entry.name) : entry.name)
+				children: scanDir(abs, relDir ? path.join(relDir, entry.name) : entry.name, byTime)
 			});
 		} else if (entry.name.toLowerCase().endsWith('.md')) {
 			const relFile = relDir ? path.join(relDir, entry.name) : entry.name;
 			const fm = parseFrontMatter(fs.readFileSync(abs, 'utf8'));
 			const base = entry.name.replace(/\.md$/i, '');
+			const relPosix = toPosix(relFile);
 
 			notes.push({
-				id: toPosix(relFile).replace(/\.md$/i, ''),
+				id: relPosix.replace(/\.md$/i, ''),
 				title: fm.title || base,
-				path: toPosix(relFile),
+				path: relPosix,
 				order: typeof fm.order === 'number' ? fm.order : null,
 				tags: Array.isArray(fm.tags) ? fm.tags : [],
 				source: fm.source || ''
 			});
+			times.set(relPosix, timeOf(fs.statSync(abs)));
 		}
 	}
 
 	notes.sort((a, b) => {
 		const ao = a.order === null ? Number.MAX_SAFE_INTEGER : a.order;
 		const bo = b.order === null ? Number.MAX_SAFE_INTEGER : b.order;
-		return ao - bo || a.title.localeCompare(b.title, 'zh');
+		if (ao !== bo) return ao - bo;
+		if (byTime) {
+			const d = times.get(a.path) - times.get(b.path);
+			if (d) return d;
+		}
+		return a.title.localeCompare(b.title, 'zh');
 	});
 
 	return notes.concat(groups);
@@ -177,8 +206,8 @@ function scanDir(absDir, relDir) {
 
 // 生成一个分区节点。id / 文件路径都用真实相对路径（含数字前缀，与源目录逐字对应），
 // 只有 title 去掉「数字-」前缀——编号在源目录里还承担排序作用，但没必要显示给人看。
-function partitionNode(srcDir, relDir) {
-	const children = scanDir(path.join(srcDir, relDir.split('/').join(path.sep)), relDir);
+function partitionNode(srcDir, relDir, byTime) {
+	const children = scanDir(path.join(srcDir, relDir.split('/').join(path.sep)), relDir, byTime);
 	for (const node of children) {
 		collectAndCopy(srcDir, node);
 	}
@@ -187,7 +216,7 @@ function partitionNode(srcDir, relDir) {
 }
 
 // 容器目录：id、显示名都用目录名本身，同名分区不重复前缀。
-function containerNode(srcDir, name) {
+function containerNode(srcDir, name, byTime) {
 	const members = fs.readdirSync(path.join(srcDir, name), { withFileTypes: true })
 		.filter(e => e.isDirectory() && PARTITION_RE.test(e.name))
 		.map(e => e.name)
@@ -199,7 +228,7 @@ function containerNode(srcDir, name) {
 		title: name,
 		// 容器落在这一组分区本该在的位置上（web知识 里是 02…12，就排在 01 之后）
 		order: numbers.length ? Math.min.apply(null, numbers) - 0.5 : Number.MAX_SAFE_INTEGER,
-		children: members.map(member => partitionNode(srcDir, name + '/' + member))
+		children: members.map(member => partitionNode(srcDir, name + '/' + member, byTime))
 	};
 }
 
@@ -211,21 +240,36 @@ function buildSource(src, tree) {
 	if (!fs.existsSync(dir)) fail('源目录不存在：' + dir);
 
 	// 合并型源：不新建顶层节点，只把笔记挂到已有分区下
-	if (src.mergeInto) return mergeIntoTarget(src, dir, tree);
+	if (src.mergeInto) return mergeIntoTarget(src, dir, tree, src.byTime);
 
 	const containers = src.containers || [];
-	const names = fs.readdirSync(dir, { withFileTypes: true })
-		.filter(e => e.isDirectory() && (PARTITION_RE.test(e.name) || containers.includes(e.name)))
-		.map(e => e.name)
-		.sort();
+	const byTime = !!src.byTime;
+
+	let names;
+	if (src.partitions) {
+		// 显式名单：源目录里没有「数字-名称」前缀时用它。名字写错要当场报错，
+		// 否则会在树上悄悄少一个分区。
+		for (const name of src.partitions) {
+			const abs = path.join(dir, name);
+			if (!fs.existsSync(abs) || !fs.statSync(abs).isDirectory()) {
+				fail('SOURCES 的 partitions 里写的不是目录：' + name + '（在 ' + dir + ' 下）');
+			}
+		}
+		names = src.partitions.slice();
+	} else {
+		names = fs.readdirSync(dir, { withFileTypes: true })
+			.filter(e => e.isDirectory() && (PARTITION_RE.test(e.name) || containers.includes(e.name)))
+			.map(e => e.name)
+			.sort();
+	}
 
 	if (names.length === 0) fail('在 ' + dir + ' 下没有找到「数字-名称」形式的分区目录');
 
-	const nodes = names.map(name => {
-		if (!containers.includes(name)) {
-			return Object.assign(partitionNode(dir, name), { order: parseInt(name, 10) });
-		}
-		return containerNode(dir, name);
+	const nodes = names.map((name, i) => {
+		if (containers.includes(name)) return containerNode(dir, name, byTime);
+		const num = parseInt(name, 10);
+		// 没有数字前缀时用下标垫底，别让 NaN 流进清单（JSON 里会变成 null）
+		return Object.assign(partitionNode(dir, name, byTime), { order: isNaN(num) ? i : num });
 	});
 
 	if (!src.group) {
@@ -263,12 +307,12 @@ function reparent(node, prefix) {
 
 // 把 src.dir 的笔记并进 tree 里 id === mergeInto 的那个分区，不新建顶层节点。
 // 目标分区必须已经由排在前面的源建出来——合并后两边的 order 会混在一起，所以再排一次。
-function mergeIntoTarget(src, dir, tree) {
+function mergeIntoTarget(src, dir, tree, byTime) {
 	const target = tree.filter(node => node.id === src.mergeInto)[0];
 	if (!target) fail('mergeInto 指向的分区不存在：' + src.mergeInto + '（得由排在前面的源建出来）');
 	if (!target.children) fail('mergeInto 指向的节点不是分区：' + src.mergeInto);
 
-	const scanned = scanDir(dir, '');
+	const scanned = scanDir(dir, '', byTime);
 	for (const node of scanned) collectAndCopy(dir, node, src.mergeInto);
 	for (const node of scanned) reparent(node, src.mergeInto);
 

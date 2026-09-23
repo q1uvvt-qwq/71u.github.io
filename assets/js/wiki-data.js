@@ -3167,6 +3167,75 @@ window.WIKI = [
 		]
 	},
 	{
+		"id": "区块链安全",
+		"title": "区块链安全",
+		"children": [
+			{
+				"id": "安全前置",
+				"title": "安全前置",
+				"children": [
+					{
+						"id": "安全前置/区块链",
+						"title": "区块链",
+						"path": "安全前置/区块链.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					},
+					{
+						"id": "安全前置/交易",
+						"title": "交易",
+						"path": "安全前置/交易.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					},
+					{
+						"id": "安全前置/以太坊、ETH和智能合约",
+						"title": "以太坊、ETH和智能合约",
+						"path": "安全前置/以太坊、ETH和智能合约.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					},
+					{
+						"id": "安全前置/比特币、挖矿、BTC",
+						"title": "比特币、挖矿、BTC",
+						"path": "安全前置/比特币、挖矿、BTC.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					},
+					{
+						"id": "安全前置/区块、哈希与节点",
+						"title": "区块、哈希与节点",
+						"path": "安全前置/区块、哈希与节点.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					},
+					{
+						"id": "安全前置/资产与余额",
+						"title": "资产与余额",
+						"path": "安全前置/资产与余额.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					},
+					{
+						"id": "安全前置/私钥、公钥、地址、钱包与助记词",
+						"title": "私钥、公钥、地址、钱包与助记词",
+						"path": "安全前置/私钥、公钥、地址、钱包与助记词.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					}
+				],
+				"order": 0
+			}
+		]
+	},
+	{
 		"id": "11-逻辑漏洞",
 		"title": "逻辑漏洞",
 		"children": []
