@@ -12,6 +12,21 @@
 	width: 56rem;
 }
 
+/* 最近更新时间：跟在 h2.major 下面的一行小字，内容由 wiki.js 从 wiki-updated.js 取 */
+
+	#wiki .wiki-updated {
+		/* h2.major 自带 margin-bottom: 2rem（见 main.css），用负上边距把这一行提上来贴住标题 */
+		margin: -1.5rem 0 1.5rem 0;
+		font-size: 0.75rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	/* 没有日期数据时（wiki-updated.js 未载入）整行不占位 */
+	#wiki .wiki-updated:empty {
+		display: none;
+	}
+
 	#wiki .wiki-layout {
 		display: grid;
 		grid-template-columns: 14rem 1fr;

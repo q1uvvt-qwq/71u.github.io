@@ -8,10 +8,11 @@
 	用法：
 		node tools/import-wiki.js
 
-	做三件事：
+	做四件事：
 	  1. 复制各分区的 .md 到 wiki/<分区>/…（保留目录结构，原样复制，含 front-matter）
 	  2. 复制 _assets/ 到 wiki/_assets/
 	  3. 生成 assets/js/wiki-data.js —— 树清单，供浏览器端 wiki.js 渲染
+	  4. 生成 assets/js/wiki-updated.js —— 网页上「最近更新时间」那一行（见 writeUpdated）
 
 	内容源见 SOURCES：
 
@@ -58,6 +59,10 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const WIKI_DIR = path.join(ROOT, 'wiki');
 const OUT_JS = path.join(ROOT, 'assets/js/wiki-data.js');
+const OUT_UPDATED = path.join(ROOT, 'assets/js/wiki-updated.js');
+
+// 本次导入实际复制进站点的文件里最新的源文件修改时间。网页上「最近更新时间」显示的就是它。
+let latestMs = 0;
 
 const PARTITION_RE = /^\d{2}-/;
 
@@ -138,6 +143,9 @@ function ensureDir(dir) {
 function copyFile(from, to) {
 	ensureDir(path.dirname(to));
 	if (fs.existsSync(to)) fail('两个源的文件路径撞车：' + path.relative(WIKI_DIR, to));
+	// 「最近更新时间」只认真正上了站的文件：笔记、图片、mergeInto 来的都一样走这里，
+	// 而源目录里那些不导入的目录（D:/ctf/RCE、base 等）自然不计入。
+	latestMs = Math.max(latestMs, fs.statSync(from).mtimeMs);
 	fs.copyFileSync(from, to);
 }
 
@@ -350,13 +358,15 @@ function main() {
 	const assetCount = copyAssets();
 
 	writeManifest(tree);
+	writeUpdated();
 
 	console.log('源目录   ：' + SOURCES.map(s =>
 		path.resolve(s.dir) + (s.mergeInto ? ' → ' + s.mergeInto : '')).join(' / '));
 	console.log('顶层     ：' + tree.map(n => n.title).join(' / '));
 	console.log('笔记数   ：' + noteCount);
 	console.log('图片数   ：' + assetCount);
-	console.log('已写出   ：wiki/ 与 assets/js/wiki-data.js');
+	console.log('最近更新 ：' + stamp(latestMs));
+	console.log('已写出   ：wiki/ 、assets/js/wiki-data.js 与 assets/js/wiki-updated.js');
 }
 
 // 递归复制笔记文件到 wiki/。
@@ -397,6 +407,33 @@ function writeManifest(tree) {
 
 	ensureDir(path.dirname(OUT_JS));
 	fs.writeFileSync(OUT_JS, out, 'utf8');
+}
+
+// 本地时间 YYYY-MM-DD HH:mm。刻意不用 toISOString()——那是 UTC，会把 14:11 写成 06:11，
+// 东八区晚上跑还可能整体错到前一天。
+function stamp(ms) {
+	const pad = n => String(n).padStart(2, '0');
+	const d = new Date(ms);
+	return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+		' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+}
+
+// 网页上「最近更新时间」那一行。单独成文件，不动 wiki-data.js（树变了才要重写它，
+// 而这个日期只要有一篇笔记改过就该变，两者不必绑在一起）。
+function writeUpdated() {
+	const out =
+		'/*\n' +
+		'\twiki-updated.js — 「知识库」里显示的最近更新时间。由 tools/import-wiki.js 自动生成，请勿手改。\n' +
+		'\n' +
+		'\t取值 = 本次导入复制进 wiki/ 的所有笔记与图片里最新的**源文件修改时间**（mtime），\n' +
+		'\t也就是「你最后动过哪篇笔记」的时刻。只重跑脚本、没改笔记时这个值不变。\n' +
+		'\n' +
+		'\t要更新它：改源笔记后重跑 node tools/import-wiki.js\n' +
+		'*/\n' +
+		'window.WIKI_UPDATED = ' + JSON.stringify(stamp(latestMs)) + ';\n';
+
+	ensureDir(path.dirname(OUT_UPDATED));
+	fs.writeFileSync(OUT_UPDATED, out, 'utf8');
 }
 
 main();

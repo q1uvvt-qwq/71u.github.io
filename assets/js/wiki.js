@@ -16,6 +16,9 @@
 	'use strict';
 
 	var TREE = Array.isArray(window.WIKI) ? window.WIKI : [];
+	// 最近更新时间由导入脚本写进 wiki-updated.js（源笔记里最新的修改时间）。
+	// 没载入那个脚本时是 undefined，那就整行不显示，绝不拼出「最近更新时间：undefined」。
+	var UPDATED = typeof window.WIKI_UPDATED === 'string' ? window.WIKI_UPDATED : '';
 	var OPEN_KEY = 'wiki-open';
 
 	// 笔记正文里图片统一写成 ../_assets/xxx。它相对「源文件所在目录」是对的，
@@ -26,6 +29,7 @@
 
 	var treeEl = document.querySelector('#wiki .wiki-tree');
 	var bodyEl = document.querySelector('#wiki .wiki-body');
+	var updatedEl = document.querySelector('#wiki .wiki-updated');
 	if (!treeEl || !bodyEl) return;
 
 	var currentId = null;   // 当前选中笔记的 id
@@ -229,6 +233,12 @@
 
 	/* ---------- 提示信息 ---------- */
 
+	// 标题下方那行小字。没数据就保持空元素，由 CSS 的 :empty 整行收起。
+	function showUpdated() {
+		if (!updatedEl || !UPDATED) return;
+		updatedEl.textContent = '最近更新时间：' + UPDATED;
+	}
+
 	function showMessage(text) {
 		bodyEl.textContent = '';
 		var p = document.createElement('p');
@@ -256,6 +266,8 @@
 	}
 
 	/* ---------- 启动 ---------- */
+
+	showUpdated();
 
 	if (TREE.length === 0) {
 		showMessage('知识库数据未载入，请确认 assets/js/wiki-data.js 已随页面一同部署。');
