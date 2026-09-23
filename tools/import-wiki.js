@@ -37,10 +37,13 @@
             而是**合并进 D:/ctf 建出来的 01-信息收集**（见 SOURCES 的 mergeInto）：
             笔记挂到那个分区下，与该分区原有的 4 篇按 order 一起排序。源目录不动。
 
-  D:/区块链安全  区块链安全笔记。目前只导入「安全前置」这一个分区（另外 4 个目录还是空的），
-            收进合成容器「区块链安全」。分区目录没有数字前缀，所以在 SOURCES 里用
-            partitions 显式列出；笔记也**完全没有 front-matter**，因此用 byTime 按
-            文件创建时间（= 写作顺序）排。源目录一个字节都不动。
+  D:/区块链安全  区块链安全笔记，按题材分成若干子目录（基础认识、网络、共识、最终性 …），
+            收进合成容器「区块链安全」。这些子目录没有数字前缀，所以用 allDirs：
+            凡是**有 .md 的子目录**都当分区，空目录不进树——以后往这里新建题材目录、
+            丢几篇笔记进去，重跑脚本就自动上站，不用再改本文件；分区顺序按目录名
+            拼音（想固定成别的顺序，给目录名加个 00- 前缀即可，显示时会去掉）。
+            笔记**完全没有 front-matter**，因此用 byTime 按文件时间（= 写作顺序）排。
+            源目录一个字节都不动。
 
 	树里所有分区都去掉「数字-」前缀显示（基础、信息收集、Modbus …），但 id 与
 	文件路径保留前缀，和源目录逐字对应——编号在源目录里仍是排序依据，只是不显示。
@@ -76,9 +79,9 @@ const PARTITION_RE = /^\d{2}-/;
 	  after       合成容器排在哪个顶层节点之后；锚点必须来自先处理的源
   mergeInto   不开新分区，把该源的笔记并进这个已存在的分区（分区 id）；
               该分区必须由排在前面的源建出来
-  partitions  显式列出当作分区的子目录名，供没有「数字-名称」前缀的源使用
-              （写了它就不再按 PARTITION_RE 自动识别）
-  byTime      笔记缺 front-matter order 时按**文件创建时间**排，而不是退回文件名——
+  allDirs     凡是有 .md 的子目录（含子目录）都当分区，空目录不进树；供目录名没有
+              「数字-名称」前缀的源使用（写了它就不再按 PARTITION_RE 自动识别）
+  byTime      笔记缺 front-matter order 时按**文件时间**排，而不是退回文件名——
               给「按写作先后顺序读」的笔记用
 
 	几个源的编号都从 00 起，所以合成容器不能按编号自动落位，得逐个给 after 串起来
@@ -89,10 +92,10 @@ const SOURCES = [
 	{ dir: 'D:/工控', group: '工控安全', after: 'web知识' },
 	{ dir: 'D:/蜜罐', group: '蜜罐研究', after: '工控安全' },
 	{ dir: 'D:/日志检测', group: '模型构建', after: '蜜罐研究' },
-	// 区块链安全：分区目录没有数字前缀，用 partitions 显式列出；笔记没有 front-matter，
-	// 靠 byTime 按文件创建时间排（也就是写作顺序）
+	// 区块链安全：分区目录没有数字前缀，用 allDirs 把「有笔记的子目录」全收进来
+	// （空目录不进树）；笔记没有 front-matter，靠 byTime 按文件时间排（也就是写作顺序）
 	{ dir: 'D:/区块链安全', group: '区块链安全', after: '模型构建',
-	  partitions: ['安全前置'], byTime: true },
+	  allDirs: true, byTime: true },
 	// 实训系列里与已有分区同题材的，并进去而不是另开一个「信息收集」
 	{ dir: 'D:/实训笔记/06-信息收集', mergeInto: '01-信息收集' }
 ];
@@ -151,10 +154,24 @@ function copyFile(from, to) {
 
 /* ---------- 扫描 ---------- */
 
-// 笔记的排序时间：优先创建时间（birthtime），个别文件系统不支持时返回 0，那就退回修改时间。
-// 用创建时间而不是 mtime，是因为改一下笔记内容不该让它换位置。
+// 笔记的排序时间：取创建时间与修改时间中较早的那个。
+//   用创建时间是因为改一下笔记内容不该让它换位置（mtime 会变）；
+//   但要取 min——目录被**复制/搬动**过时，mtime 保留、创建时间却被刷成搬动那一刻，
+//   光看 birthtime 会让老笔记凭空排到新笔记后面。两者取小对「编辑过」和「搬动过」都稳：
+//   新写的笔记 birth ≈ mtime，编辑过的靠 birth，搬动过的靠 mtime。
+// 个别文件系统不给创建时间（返回 0），那就只剩 mtime。
 function timeOf(stat) {
-	return stat.birthtimeMs > 0 ? stat.birthtimeMs : stat.mtimeMs;
+	const birth = stat.birthtimeMs > 0 ? stat.birthtimeMs : stat.mtimeMs;
+	return Math.min(birth, stat.mtimeMs);
+}
+
+// 这个目录（含子目录）里有没有 .md？给 allDirs 用：空目录不进树，
+// 免得给还没动笔的题材在站上留一堆空占位。
+function hasNotes(absDir) {
+	const entries = fs.readdirSync(absDir, { withFileTypes: true });
+	if (entries.some(e => !e.isDirectory() && /\.md$/i.test(e.name))) return true;
+	return entries.filter(e => e.isDirectory())
+		.some(e => hasNotes(path.join(absDir, e.name)));
 }
 
 // 递归扫描一个目录：
@@ -254,16 +271,13 @@ function buildSource(src, tree) {
 	const byTime = !!src.byTime;
 
 	let names;
-	if (src.partitions) {
-		// 显式名单：源目录里没有「数字-名称」前缀时用它。名字写错要当场报错，
-		// 否则会在树上悄悄少一个分区。
-		for (const name of src.partitions) {
-			const abs = path.join(dir, name);
-			if (!fs.existsSync(abs) || !fs.statSync(abs).isDirectory()) {
-				fail('SOURCES 的 partitions 里写的不是目录：' + name + '（在 ' + dir + ' 下）');
-			}
-		}
-		names = src.partitions.slice();
+	if (src.allDirs) {
+		// 自动识别：目录名没有「数字-名称」前缀时用它。只要子目录里有 .md 就是个分区，
+		// 空目录不进树——以后往源目录新建题材目录、丢几篇笔记进去，重跑即可，不用改这里。
+		names = fs.readdirSync(dir, { withFileTypes: true })
+			.filter(e => e.isDirectory() && hasNotes(path.join(dir, e.name)))
+			.map(e => e.name)
+			.sort((a, b) => a.localeCompare(b, 'zh'));
 	} else {
 		names = fs.readdirSync(dir, { withFileTypes: true })
 			.filter(e => e.isDirectory() && (PARTITION_RE.test(e.name) || containers.includes(e.name)))
@@ -271,7 +285,10 @@ function buildSource(src, tree) {
 			.sort();
 	}
 
-	if (names.length === 0) fail('在 ' + dir + ' 下没有找到「数字-名称」形式的分区目录');
+	if (names.length === 0) {
+		fail('在 ' + dir + ' 下没有找到分区目录' +
+			(src.allDirs ? '（allDirs：没有任何子目录装着 .md）' : '（形如「01-名称」）'));
+	}
 
 	const nodes = names.map((name, i) => {
 		if (containers.includes(name)) return containerNode(dir, name, byTime);
