@@ -3302,6 +3302,29 @@ window.WIKI = [
 					}
 				],
 				"order": 2
+			},
+			{
+				"id": "DeFi、预言机、MEV和跨链",
+				"title": "DeFi、预言机、MEV和跨链",
+				"children": [
+					{
+						"id": "DeFi、预言机、MEV和跨链/DeFi基础与安全",
+						"title": "DeFi基础与安全",
+						"path": "DeFi、预言机、MEV和跨链/DeFi基础与安全.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					},
+					{
+						"id": "DeFi、预言机、MEV和跨链/预言机与价格操纵",
+						"title": "预言机与价格操纵",
+						"path": "DeFi、预言机、MEV和跨链/预言机与价格操纵.md",
+						"order": null,
+						"tags": [],
+						"source": ""
+					}
+				],
+				"order": 3
 			}
 		]
 	},

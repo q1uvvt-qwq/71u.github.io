@@ -6,4 +6,4 @@
 
 	要更新它：改源笔记后重跑 node tools/import-wiki.js
 */
-window.WIKI_UPDATED = "2026-09-23 22:42";
+window.WIKI_UPDATED = "2026-09-24 15:13";
